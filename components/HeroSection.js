@@ -27,6 +27,9 @@ export const HeroContainer = styled.div`
       linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, transparent 100%);
     z-index: 2;
   }
+  @media screen and (max-width: 768px) {
+    height: 800px;
+  }
 `;
 
 export const HeroBg = styled.div`
@@ -125,7 +128,7 @@ const HeroSection = () => {
     <HeroContainer>
       <HeroBg>
         <VideoBg autoPlay loop muted>
-          <source src="video.mp4" type="video/mp4" />
+          <source src="champions.mp4" type="video/mp4" />
         </VideoBg>
       </HeroBg>
       <HeroContent>
