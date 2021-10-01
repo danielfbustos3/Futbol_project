@@ -20,5 +20,5 @@ a {
   background: #010606;
 }
 ::-webkit-scrollbar-thumb {
-  background: #01bf71;
+  background: linear-gradient(#010606, #01bf71, #010606);
 }
