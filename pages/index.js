@@ -9,5 +9,9 @@ export default function Home() {
     setIsOpen(!isOpen);
   };
 
-  return <HomePageLayout isOpen={isOpen} toggle={toggle}></HomePageLayout>;
+  return (
+    <>
+      <HomePageLayout isOpen={isOpen} toggle={toggle}></HomePageLayout>
+    </>
+  );
 }

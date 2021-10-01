@@ -12,10 +12,7 @@ import {
   homeObjFour,
   homeObjFive,
 } from "./InfoSectData";
-
-const Footer = styled.footer`
-  background: #010606;
-`;
+import Footer from "./Footer";
 
 export default function PageLayout({ isOpen, toggle }) {
   return (
@@ -41,9 +38,7 @@ export default function PageLayout({ isOpen, toggle }) {
       <InfoSection {...homeObjFour} />
       <InfoSection {...homeObjFive} />
 
-      <Footer>
-        <div>Holis este es el final</div>
-      </Footer>
+      <Footer />
     </>
   );
 }

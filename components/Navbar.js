@@ -1,9 +1,13 @@
 import styled from "@emotion/styled";
 import { Link as LinkS } from "react-scroll";
 import { FaBars } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { iconContext } from "react-icons/lib";
+import { IconContext } from "react-icons";
+import { animateScroll as scroll } from "react-scroll";
 
 export const Nav = styled.nav`
-  background: transparent;
+  background: ${({ scrollNav }) => (scrollNav ? "#000" : "transparent")};
   height: 80px;
   margin-top: -80px;
   display: flex;
@@ -13,6 +17,7 @@ export const Nav = styled.nav`
   position: sticky;
   top: 0;
   z-index: 10;
+  transition: 0.8s all ease;
 
   @media screen and (max-width: 960px) {
     transition: 0.8s all ease;
@@ -30,7 +35,7 @@ export const NavbarContainer = styled.div`
   max-width: 1800px;
 `;
 
-export const NavLogo = styled.a`
+export const NavLogo = styled(LinkS)`
   font-family: "Bebas Neue", cursive;
   letter-spacing: 0.1rem;
   color: #fff;
@@ -42,6 +47,12 @@ export const NavLogo = styled.a`
   margin-left: 0px;
   font-weight: bold;
   text-decoration: none;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    color: #01bf71;
+    transform: scale(1.05);
+  }
 `;
 
 export const MobileIcon = styled.div`
@@ -50,7 +61,7 @@ export const MobileIcon = styled.div`
   @media screen and (max-width: 1100px) {
     display: block;
     position: absolute;
-    top: 0;
+    top: -15px;
     right: 0;
     transform: translate(-100%, 60%);
     font-size: 1.8rem;
@@ -83,6 +94,12 @@ export const NavLinks = styled(LinkS)`
   padding: 0 1rem;
   height: 100%;
   cursor: pointer;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    color: #01bf71;
+    transform: scale(1.05);
+  }
 
   &.active {
     border-bottom: 3px solid #01bf71;
@@ -119,35 +136,106 @@ export const NavBtnLink = styled.a`
 `;
 
 const Navbar = ({ toggle }) => {
+  const [scrollNav, setScrollNav] = useState(false);
+  const changeNav = () => {
+    if (window.scrollY >= 80) {
+      setScrollNav(true);
+    } else {
+      setScrollNav(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", changeNav);
+  }, []);
+
+  const toggleHome = () => {
+    scroll.scrollToTop();
+  };
+
   return (
-    <Nav>
-      <NavbarContainer>
-        <NavLogo href="/">Fútbol</NavLogo>
-        <MobileIcon onClick={toggle}>
-          <FaBars />
-        </MobileIcon>
-        <NavMenu>
-          <NavItem>
-            <NavLinks to="manager">Manager</NavLinks>
-          </NavItem>
-          <NavItem>
-            <NavLinks to="playerperformance">PlayerPerformance</NavLinks>
-          </NavItem>
-          <NavItem>
-            <NavLinks to="scout">Scout</NavLinks>
-          </NavItem>
-          <NavItem>
-            <NavLinks to="tacticanalysis">TacticAnalysis</NavLinks>
-          </NavItem>
-          <NavItem>
-            <NavLinks to="teamwinners">TeamWinners</NavLinks>
-          </NavItem>
-        </NavMenu>
-        <NavBtn>
-          <NavBtnLink href="/signin">Iniciar Sesión</NavBtnLink>
-        </NavBtn>
-      </NavbarContainer>
-    </Nav>
+    <IconContext.Provider value={{ color: "fff" }}>
+      <Nav scrollNav={scrollNav}>
+        <NavbarContainer>
+          <NavLogo href="/" onClick={toggleHome}>
+            Fútbol
+          </NavLogo>
+          <MobileIcon onClick={toggle}>
+            <FaBars />
+          </MobileIcon>
+          <NavMenu>
+            <NavItem>
+              <NavLinks
+                to="manager"
+                smooth={true}
+                duration={500}
+                spy={true}
+                exact="true"
+                offset={-80}
+                activeClass="active"
+              >
+                Manager
+              </NavLinks>
+            </NavItem>
+            <NavItem>
+              <NavLinks
+                to="playerperformance"
+                smooth={true}
+                duration={500}
+                spy={true}
+                exact="true"
+                offset={-80}
+                activeClass="active"
+              >
+                PlayerPerformance
+              </NavLinks>
+            </NavItem>
+            <NavItem>
+              <NavLinks
+                to="scout"
+                smooth={true}
+                duration={500}
+                spy={true}
+                exact="true"
+                offset={-80}
+                activeClass="active"
+              >
+                Scout
+              </NavLinks>
+            </NavItem>
+            <NavItem>
+              <NavLinks
+                to="tacticanalysis"
+                smooth={true}
+                duration={500}
+                spy={true}
+                exact="true"
+                offset={-80}
+                activeClass="active"
+              >
+                TacticAnalysis
+              </NavLinks>
+            </NavItem>
+            <NavItem>
+              <NavLinks
+                to="teamwinners"
+                smooth={true}
+                duration={500}
+                spy={true}
+                exact="true"
+                offset={-80}
+                activeClass="active"
+              >
+                TeamWinners
+              </NavLinks>
+            </NavItem>
+          </NavMenu>
+          <NavBtn>
+            <NavBtnLink href="/signin">Iniciar Sesión</NavBtnLink>
+          </NavBtn>
+        </NavbarContainer>
+      </Nav>
+    </IconContext.Provider>
   );
 };
 
