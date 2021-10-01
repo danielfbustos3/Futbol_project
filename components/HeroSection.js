@@ -128,7 +128,7 @@ const HeroSection = () => {
     <HeroContainer>
       <HeroBg>
         <VideoBg autoPlay loop muted>
-          <source src="champions.mp4" type="video/mp4" />
+          <source src="golLuchoDiaz.mp4" type="video/mp4" />
         </VideoBg>
       </HeroBg>
       <HeroContent>

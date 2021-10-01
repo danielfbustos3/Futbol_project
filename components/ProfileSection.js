@@ -60,7 +60,7 @@ export const ProfilesH1 = styled.h1`
 const ProfileSection = () => {
   return (
     <ProfilesContainer id="profileintro">
-      <ProfilesH1>Seleccione su Perfil</ProfilesH1>
+      <ProfilesH1>Selecciona tu Perfil</ProfilesH1>
       <ProfilesWrapper>
         {cardObjArray.map((item, index) => (
           <ProfileCard item={item} key={index} />

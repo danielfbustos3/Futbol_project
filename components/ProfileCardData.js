@@ -8,7 +8,7 @@ export const cardObjArray = [
   {
     title: "Soy Administrador de Recursos de un Club",
     description:
-      "Crea un perfil como administrador y utiliza nuestras nuevas herramientas tecnológicas para disminuir costos en tu equipo.",
+      "Crea un perfil como administrador y utiliza nuestras nuevas herramientas tecnológicas para optimizar la relación costo/beneficio de tu equipo.",
     imageUrl: "2Canchalow.jpg",
   },
   {

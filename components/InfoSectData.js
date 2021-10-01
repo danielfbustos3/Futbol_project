@@ -6,7 +6,7 @@ export const homeObjOne = {
   topLine: "FÚTBOL",
   headline: "MANAGER",
   description:
-    "Programa que pretende comparar el jugador óptimo (por cada posición) basado en los criterios, idea de juego, presupuesto y principios morales del equipo. Método Monchi, Selección por modelos de clasificación (Naive - Bayes) y Método de valoración AHP. ",
+    "Programa que compara el jugador óptimo (por cada posición) basado en los criterios, idea de juego, presupuesto y principios éticos del equipo. Método Monchi, Selección por modelos de clasificación (Naive - Bayes) y Método de valoración AHP. ",
   buttonLabel: "Comenzar",
   imgStart: false,
   img: "goal.svg",
@@ -24,7 +24,7 @@ export const homeObjTwo = {
   topLine: "FÚTBOL",
   headline: "PLAYERPERFORMANCE",
   description:
-    "Programa que pretende mejorar el rendimiento y prevenir lesiones del jugador a través de un seguimiento detallado de sus condiciones físicas utilizando tecnologias de IoT (internet de las cosas).",
+    "Programa que mejora el rendimiento y preveniene lesiones del jugador a través de un seguimiento detallado de sus condiciones físicas utilizando tecnologias de IoT (internet de las cosas).",
   buttonLabel: "Comenzar",
   imgStart: true,
   img: "junior_soccer.svg",
@@ -60,7 +60,7 @@ export const homeObjFour = {
   topLine: "FÚTBOL",
   headline: "TACTICANALYSIS",
   description:
-    "Programa que pretende depurar y analizar la información suministrada por el rival (Pre-partido y durante el partido). Pretende ser la mano derecha del director técnico. Un dashboard de control que le dé un análisis detallado del juego y del rival para que el técnico se le posibilite tomar las decisiones tácticas.",
+    "Programa que depura y analiza la información suministrada por el rival (Pre-partido y durante el partido). Pretende ser la mano derecha del director técnico. Un dashboard de control que le dé un análisis detallado del juego y del rival para que el técnico apoye la toma de decisiones tácticas.",
   buttonLabel: "Comenzar",
   imgStart: true,
   img: "predictive_analytics.svg",
