@@ -6,7 +6,7 @@ export const homeObjOne = {
   topLine: "FÚTBOL",
   headline: "MANAGER",
   description:
-    "Programa que pretende comprar el jugar óptimo (por cada posición) basado en los criterios, idea de juego, presupuesto y principios morales del equipo. Método Monchi, Selección por modelos de clasificación (Naive - Bayes) y Método de valoración AHP. ",
+    "Programa que pretende comparar el jugador óptimo (por cada posición) basado en los criterios, idea de juego, presupuesto y principios morales del equipo. Método Monchi, Selección por modelos de clasificación (Naive - Bayes) y Método de valoración AHP. ",
   buttonLabel: "Comenzar",
   imgStart: false,
   img: "goal.svg",
