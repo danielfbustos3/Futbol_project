@@ -37,17 +37,10 @@ export const ProfilesWrapper = styled.div`
   }
 `;
 
-// export const ProCardImg = styled.img`
-//   display: none;
-//   margin-top: -100px;
-//   width: 100%;
-//   height: 100%;
-//   object-fit: cover;
-//   background: #232a34;
-// `;
+export const ProfilesGif = styled.img``;
 
 export const ProfilesH1 = styled.h1`
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   color: #fff;
   margin-bottom: 20px;
   padding: 30px;
@@ -59,8 +52,9 @@ export const ProfilesH1 = styled.h1`
 
 const ProfileSection = () => {
   return (
-    <ProfilesContainer id="profileintro">
+    <ProfilesContainer id="perfiles">
       <ProfilesH1>Selecciona tu Perfil</ProfilesH1>
+      <ProfilesGif />
       <ProfilesWrapper>
         {cardObjArray.map((item, index) => (
           <ProfileCard item={item} key={index} />
