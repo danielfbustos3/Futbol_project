@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 
 const ProfilesCard = styled.a`
-  background: #fff;
   background-size: cover;
   background-image: url(${({ imageUrl }) => imageUrl});
 
@@ -16,7 +15,7 @@ const ProfilesCard = styled.a`
   overflow: hidden;
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.02);
     transition: all 0.2s ease-in-out;
     cursor: pointer;
     opacity: 1;

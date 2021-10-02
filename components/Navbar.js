@@ -2,9 +2,10 @@ import styled from "@emotion/styled";
 import { Link as LinkS } from "react-scroll";
 import { FaBars } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import { iconContext } from "react-icons/lib";
 import { IconContext } from "react-icons";
 import { animateScroll as scroll } from "react-scroll";
+
+const activeSection = "";
 
 export const Nav = styled.nav`
   background: ${({ scrollNav }) => (scrollNav ? "#000" : "transparent")};
@@ -58,7 +59,7 @@ export const NavLogo = styled(LinkS)`
 export const MobileIcon = styled.div`
   display: none;
 
-  @media screen and (max-width: 1100px) {
+  @media screen and (max-width: 1200px) {
     display: block;
     position: absolute;
     top: -15px;
@@ -77,9 +78,36 @@ export const NavMenu = styled.ul`
   text-align: center;
   margin-right: -22px;
 
-  @media screen and (max-width: 1100px) {
+  @media screen and (max-width: 1200px) {
     display: none;
   }
+`;
+
+export const NavMiniMenu = styled.ul`
+  display: none;
+
+  @media screen and (max-width: 1200px) {
+    top: 25px;
+    margin-right: 40px;
+    width: 100%;
+    position: center;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
+export const MiniLink = styled.h1`
+  width: auto;
+  color: #fff;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-size: clamp(0.76rem, -0.875rem + 6.333vw, 1.3rem);
+  /* border-bottom: 3px solid #01bf71; */
 `;
 
 export const NavItem = styled.li`
@@ -94,6 +122,7 @@ export const NavLinks = styled(LinkS)`
   padding: 0 1rem;
   height: 100%;
   cursor: pointer;
+  text-transform: capitalize;
 
   &:hover {
     transition: all 0.2s ease-in-out;
@@ -110,7 +139,7 @@ export const NavBtn = styled.nav`
   display: flex;
   align-items: center;
 
-  @media screen and (max-width: 1100px) {
+  @media screen and (max-width: 1200px) {
     display: none;
   }
 `;
@@ -153,6 +182,15 @@ const Navbar = ({ toggle }) => {
     scroll.scrollToTop();
   };
 
+  const [activeSection, setActiveSection] = useState("");
+  const linksObj = [
+    "perfiles",
+    "manager",
+    "playerperformance",
+    "scout",
+    "tacticanalysis",
+    "teamwinners",
+  ];
   return (
     <IconContext.Provider value={{ color: "fff" }}>
       <Nav scrollNav={scrollNav}>
@@ -164,72 +202,27 @@ const Navbar = ({ toggle }) => {
             <FaBars />
           </MobileIcon>
           <NavMenu>
-            <NavItem>
-              <NavLinks
-                to="manager"
-                smooth={true}
-                duration={500}
-                spy={true}
-                exact="true"
-                offset={-80}
-                activeClass="active"
-              >
-                Manager
-              </NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks
-                to="playerperformance"
-                smooth={true}
-                duration={500}
-                spy={true}
-                exact="true"
-                offset={-80}
-                activeClass="active"
-              >
-                PlayerPerformance
-              </NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks
-                to="scout"
-                smooth={true}
-                duration={500}
-                spy={true}
-                exact="true"
-                offset={-80}
-                activeClass="active"
-              >
-                Scout
-              </NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks
-                to="tacticanalysis"
-                smooth={true}
-                duration={500}
-                spy={true}
-                exact="true"
-                offset={-80}
-                activeClass="active"
-              >
-                TacticAnalysis
-              </NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks
-                to="teamwinners"
-                smooth={true}
-                duration={500}
-                spy={true}
-                exact="true"
-                offset={-80}
-                activeClass="active"
-              >
-                TeamWinners
-              </NavLinks>
-            </NavItem>
+            {linksObj.map((link, index) => (
+              <NavItem key={index}>
+                <NavLinks
+                  to={link}
+                  smooth={true}
+                  duration={500}
+                  spy={true}
+                  exact="true"
+                  offset={-80}
+                  activeClass="active"
+                  onSetActive={() => setActiveSection(link)}
+                  onSetInactive={() => index == 0 && setActiveSection("")}
+                >
+                  {link}
+                </NavLinks>
+              </NavItem>
+            ))}
           </NavMenu>
+          <NavMiniMenu>
+            <MiniLink>{activeSection}</MiniLink>
+          </NavMiniMenu>
           <NavBtn>
             <NavBtnLink href="/signin">Iniciar Sesión</NavBtnLink>
           </NavBtn>

@@ -68,12 +68,14 @@ export const HeroH1 = styled.h1`
   letter-spacing: 0.1rem;
   color: #fff;
   text-align: center;
+  cursor: default;
   font-size: clamp(1.7rem, -0.875rem + 8.333vw, 3.8rem);
 `;
 
 export const HeroP = styled.p`
   font-family: "Bebas Neue", cursive;
   color: #fff;
+  cursor: default;
   font-size: clamp(1.5rem, -0.875rem + 5.333vw, 2.9rem);
   text-align: center;
   max-width: 1000px;

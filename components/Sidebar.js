@@ -56,6 +56,7 @@ export const SidebarLink = styled(LinkS)`
   transition: all 0.2s ease-in-out;
   color: #fff;
   cursor: pointer;
+  text-transform: capitalize;
 
   &:hover {
     color: #01bf71;
@@ -64,6 +65,7 @@ export const SidebarLink = styled(LinkS)`
 `;
 
 export const SideBtnWrap = styled.div`
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 `;
@@ -89,6 +91,14 @@ export const SidebarRoute = styled.a`
 `;
 
 const Sidebar = ({ isOpen, toggle }) => {
+  const linksObj = [
+    "perfiles",
+    "manager",
+    "playerperformance",
+    "scout",
+    "tacticanalysis",
+    "teamwinners",
+  ];
   return (
     <>
       <SidebarContainer isOpen={isOpen} onClick={toggle}>
@@ -97,21 +107,20 @@ const Sidebar = ({ isOpen, toggle }) => {
         </Icon>
         <SidebarWrapper>
           <SidebarMenu>
-            <SidebarLink to="manager" onClick={toggle}>
-              Manager
-            </SidebarLink>
-            <SidebarLink to="playerperformance" onClick={toggle}>
-              PlayerPerformance
-            </SidebarLink>
-            <SidebarLink to="scout" onClick={toggle}>
-              Scout
-            </SidebarLink>
-            <SidebarLink to="tacticanalysis" onClick={toggle}>
-              TacticAnalysis
-            </SidebarLink>
-            <SidebarLink to="teamwinners" onClick={toggle}>
-              TeamWinners
-            </SidebarLink>
+            {linksObj.map((link, index) => (
+              <SidebarLink
+                to={link}
+                smooth={true}
+                duration={500}
+                spy={true}
+                exact="true"
+                offset={-80}
+                onClick={toggle}
+                key={index}
+              >
+                {link}
+              </SidebarLink>
+            ))}
           </SidebarMenu>
           <SideBtnWrap>
             <SidebarRoute href="/signin" onClick={toggle}>
