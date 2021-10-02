@@ -108,7 +108,7 @@ export const MiniLink = styled.h1`
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
-  font-size: clamp(0.76rem, -0.875rem + 6.333vw, 1.3rem);
+  font-size: clamp(0.76rem, -0.875rem + 6.333vw, 1rem);
   border-bottom: 3px solid #01bf71;
 `;
 

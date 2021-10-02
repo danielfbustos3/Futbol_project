@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Signins from "components/Signins";
 
 const SigninPage = () => {
   return (
@@ -13,6 +14,7 @@ const SigninPage = () => {
           rel="stylesheet"
         />
       </Head>
+      <Signins />
     </>
   );
 };
