@@ -100,6 +100,8 @@ export const NavMiniMenu = styled.ul`
 
 export const MiniLink = styled.h1`
   width: auto;
+  height: 100%;
+  padding: ${({ activeSection }) => (activeSection == "" ? "0" : "15px")};
   color: #fff;
   cursor: default;
   display: flex;
@@ -107,7 +109,7 @@ export const MiniLink = styled.h1`
   justify-content: center;
   text-transform: uppercase;
   font-size: clamp(0.76rem, -0.875rem + 6.333vw, 1.3rem);
-  /* border-bottom: 3px solid #01bf71; */
+  border-bottom: 3px solid #01bf71;
 `;
 
 export const NavItem = styled.li`
@@ -221,7 +223,7 @@ const Navbar = ({ toggle }) => {
             ))}
           </NavMenu>
           <NavMiniMenu>
-            <MiniLink>{activeSection}</MiniLink>
+            <MiniLink activeSection={activeSection}>{activeSection}</MiniLink>
           </NavMiniMenu>
           <NavBtn>
             <NavBtnLink href="/signin">Iniciar Sesión</NavBtnLink>
