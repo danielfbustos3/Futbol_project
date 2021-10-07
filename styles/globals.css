@@ -15,7 +15,6 @@ a {
 ::-webkit-scrollbar {
   height: 0;
   width: 0.2rem;
-  overflow: visible;
 }
 ::-webkit-scrollbar-track {
   background: #010606;

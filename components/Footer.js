@@ -151,7 +151,7 @@ const Footer = () => {
           </FooterLinksContainer>
           <SocialMedia>
             <SocialMediaWrap>
-              <SocialLogo href="/" onClick={toggleHome}>
+              <SocialLogo to="/" onClick={toggleHome}>
                 FÚTBOL
               </SocialLogo>
               <WebsiteRights>FÚTBOL © 2021 All rights reserved</WebsiteRights>

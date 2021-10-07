@@ -5,8 +5,6 @@ import { useState, useEffect } from "react";
 import { IconContext } from "react-icons";
 import { animateScroll as scroll } from "react-scroll";
 
-const activeSection = "";
-
 export const Nav = styled.nav`
   background: ${({ scrollNav }) => (scrollNav ? "#000" : "transparent")};
   height: 80px;
@@ -197,7 +195,7 @@ const Navbar = ({ toggle }) => {
     <IconContext.Provider value={{ color: "fff" }}>
       <Nav scrollNav={scrollNav}>
         <NavbarContainer>
-          <NavLogo href="/" onClick={toggleHome}>
+          <NavLogo to="/" onClick={toggleHome}>
             Fútbol
           </NavLogo>
           <MobileIcon onClick={toggle}>
