@@ -4,12 +4,22 @@ import { FaBars } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { animateScroll as scroll } from "react-scroll";
 import { splitCamelCaseToString } from "utils/functions";
+import { useTheme } from "../utils/functions";
 
 const Nav = styled.nav`
-  background: ${({ scrollNav }) => (scrollNav ? "#0d0d0d" : "#0d0d0d")};
-  border-bottom: ${({ scrollNav }) => (scrollNav ? 0 : "1px solid #01bf71")};
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 1), 0 0 40px rgba(0, 0, 0, 0) inset;
-  height: 80px;
+  background: ${({ backgroundColor }) => backgroundColor};
+  border-bottom: ${({ scrollNav }) =>
+    scrollNav
+      ? 0
+      : ({ backgroundColor }) =>
+          backgroundColor == "#01bf71"
+            ? "1px solid #fff"
+            : "1px solid #01bf71"};
+
+  box-shadow: ${({ scrollNav }) =>
+    scrollNav ? "0 1px 4px rgba(0, 0, 0, 1)" : 0};
+  overflow: visible;
+  height: 3rem;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -28,8 +38,8 @@ const Nav = styled.nav`
     ul {
       display: flex;
       align-items: center;
-      color: #fff;
-      background: red;
+      color: ${({ backgroundColor }) =>
+        backgroundColor == "#f5f5f5" ? "#000" : "#fff"};
       list-style: none;
       text-align: center;
 
@@ -45,7 +55,8 @@ const Nav = styled.nav`
         padding: 0.2rem;
         &:hover {
           transition: all 0.2s ease-in-out;
-          color: #01bf71;
+          color: ${({ backgroundColor }) =>
+            backgroundColor == "#01bf71" ? "#000" : "#01bf71"};
         }
       }
       .nav-logo {
@@ -62,7 +73,8 @@ const Nav = styled.nav`
         padding: 10px;
         &:hover {
           transition: all 0.2s ease-in-out;
-          color: #01bf71;
+          color: ${({ backgroundColor }) =>
+            backgroundColor == "#01bf71" ? "#000" : "#01bf71"};
           transform: scale(1.05);
         }
       }
@@ -74,7 +86,6 @@ const Nav = styled.nav`
       align-items: center;
       list-style: none;
       text-align: center;
-      background: lightblue;
       .nav-btn-link {
         border-radius: 50px;
         background: #01bf71;
@@ -118,11 +129,12 @@ const ManagerNavbar = ({ toggle, setPage }) => {
   const toggleHome = () => {
     scroll.scrollToTop();
   };
+  const backgroundColor = useTheme();
 
   const linksObj = ["AllPlayers", "Clubs", "Nationality", "Position"];
 
   return (
-    <Nav scrollNav={scrollNav}>
+    <Nav scrollNav={scrollNav} backgroundColor={backgroundColor}>
       <div className="nav-container">
         <ul>
           <div className="mobile-icon" onClick={toggle}>

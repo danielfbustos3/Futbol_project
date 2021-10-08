@@ -4,20 +4,21 @@ import ManagerLayout from "components/ManagerLayout";
 import ManagerSidebar from "components/ManagerSidebar";
 import ManagerNavbar from "components/ManagerNavbar";
 import { useState } from "react";
-import Footer from "components/Footer";
+import ManagerFooter from "components/ManagerFooter";
+import { BackgroundTheme } from "utils/functions";
 
 const PageLayout = styled.div`
-  display: flex;
+  display: fixed;
   height: 100%;
   max-width: 100%;
   background: #0d0d0d;
-  transition: all 0.2s ease-in-out;
-  margin-left: ${({ isOpen }) => (isOpen ? "15rem" : "0")};
   .layout {
     height: 100%;
     width: 100%;
     display: grid;
     background: grey;
+    transition: all 0.2s ease-in-out;
+    margin-left: ${({ isOpen }) => (isOpen ? "12rem" : "3rem")};
   }
 `;
 
@@ -30,7 +31,7 @@ const ManagerPage = () => {
   };
 
   return (
-    <>
+    <BackgroundTheme>
       <Head>
         <link
           href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
@@ -46,10 +47,10 @@ const ManagerPage = () => {
         <ManagerSidebar isOpen={isOpen} toggle={toggle} />
         <div className="layout">
           <ManagerLayout page={page} isOpen={isOpen} />
-          <Footer />
+          <ManagerFooter />
         </div>
       </PageLayout>
-    </>
+    </BackgroundTheme>
   );
 };
 

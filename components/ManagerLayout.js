@@ -2,9 +2,10 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import AllPlayers from "./players/AllPlayers";
 import Clubs from "./players/Clubs";
+import { useTheme } from "../utils/functions";
 
 export const Container = styled.div`
-  display: flex;
+  display: grid;
   /* justify-content: center;
   align-items: center; */
   padding: 80px;
@@ -12,8 +13,9 @@ export const Container = styled.div`
   overflow: hidden;
   width: 100%;
   flex: wrap;
-  background: #0d0d0d;
-  color: white;
+  background: ${({ backgroundColor }) => backgroundColor};
+  color: ${({ backgroundColor }) =>
+    backgroundColor == "#f5f5f5" ? "#000" : "#fff"};
   /* background: linear-gradient(
     108deg,
     rgba(1, 147, 86, 1) 0%,
@@ -22,13 +24,14 @@ export const Container = styled.div`
 `;
 
 const Manager = ({ page, isOpen }) => {
+  const backgroundColor = useTheme();
+
   return (
     <>
       {/* {page === "allplayers" && <AllPlayers />} */}
       {/* {page === "clubs" && <Clubs />} */}
-      <Container>
-        Browse For
-        Playersasddddddddddddddddddddddddsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+      <Container backgroundColor={backgroundColor}>
+        Browse For Players
       </Container>
     </>
   );

@@ -1,17 +1,19 @@
 import styled from "@emotion/styled";
 import { FaTimes } from "react-icons/fa";
 import { Link as LinkS } from "react-scroll";
+import { useTheme } from "../utils/functions";
 
 const SidebarContainer = styled.aside`
   position: fixed;
   height: 100vh;
-  background: #0d0d0d;
+  background: ${({ backgroundColor }) => backgroundColor};
   display: grid;
   align-items: center;
-  width: 15rem;
-  margin-left: -15rem;
+  width: ${({ isOpen }) => (isOpen ? "12rem" : "3rem")};
   transition: all 0.2s ease-in-out;
-  /* opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")}; */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 1), 0 0 40px rgba(0, 0, 0, 0) inset;
+  /* margin-left: ${({ isOpen }) => (isOpen ? "0" : "-11rem")}; */
+  opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
 `;
 
 const SidebarMenu = styled.ul`
@@ -23,20 +25,6 @@ const SidebarMenu = styled.ul`
   @media screen and (max-width: 480px) {
     grid-template-rows: repeat(6, 60px);
   }
-`;
-
-const CloseIcon = styled(FaTimes)`
-  color: #fff;
-`;
-
-const Icon = styled.div`
-  position: absolute;
-  top: 1.2rem;
-  right: 1.5rem;
-  background: transparent;
-  font-size: 2rem;
-  cursor: pointer;
-  outline: none;
 `;
 
 const SidebarWrapper = styled.div`
@@ -88,6 +76,8 @@ const SidebarRoute = styled.a`
 `;
 
 const Sidebar = ({ isOpen, toggle }) => {
+  const backgroundColor = useTheme();
+
   const linksObj = [
     "manager",
     "playerperformance",
@@ -96,10 +86,11 @@ const Sidebar = ({ isOpen, toggle }) => {
     "teamwinners",
   ];
   return (
-    <SidebarContainer isOpen={isOpen} onClick={toggle}>
-      <Icon onClick={toggle}>
-        <CloseIcon />
-      </Icon>
+    <SidebarContainer
+      isOpen={isOpen}
+      onClick={toggle}
+      backgroundColor={backgroundColor}
+    >
       <SidebarWrapper>
         <SidebarMenu>
           {linksObj.map((link, index) => (
