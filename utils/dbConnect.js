@@ -7,14 +7,10 @@ async function dbConnect() {
     return;
   }
 
-  // const db = await mongoose.connect(process.env.MONGO_URI,
-  const db = await mongoose.connect(
-    "mongodb+srv://danielfbustos3:Futbol123@futbolp.1ygb1.mongodb.net/test?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  );
+  const db = await mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
   connection.isConnected = db.connections[0].readyState;
   console.log(connection.isConnected);
