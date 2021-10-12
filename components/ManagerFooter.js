@@ -1,13 +1,14 @@
 import styled from "@emotion/styled";
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { animateScroll as scroll } from "react-scroll";
-import { Link as LinkS } from "react-scroll";
 import { useTheme, useThemeUpdate } from "../utils/functions";
 
 export const FooterContainer = styled.div`
-  background: ${({ backgroundColor }) => backgroundColor};
+  background: ${({ myTheme }) => myTheme.backgroundColor};
   box-shadow: 0 1px 4px rgba(0, 0, 0, 1), 0 0 40px 0 rgba(0, 0, 0, 0.05) inset;
   align-items: center;
+  padding: 0 2rem;
+  width: 100%;
 `;
 
 export const FooterWrap = styled.div`
@@ -31,9 +32,8 @@ export const SocialMediaWrap = styled.div`
   align-items: center;
 `;
 
-export const SocialLogo = styled(LinkS)`
-  color: ${({ backgroundColor }) =>
-    backgroundColor == "#f5f5f5" ? "#000" : "#fff"};
+export const SocialLogo = styled.a`
+  color: ${({ myTheme }) => (myTheme == "#f5f5f5" ? "#000" : "#fff")};
   justify-self: start;
   cursor: pointer;
   text-decoration: none;
@@ -44,15 +44,13 @@ export const SocialLogo = styled(LinkS)`
 
   &:hover {
     transition: all 0.2s ease-in-out;
-    color: ${({ backgroundColor }) =>
-      backgroundColor == "#01bf71" ? "#000" : "#01bf71"};
+    color: ${({ myTheme }) => (myTheme == "#01bf71" ? "#000" : "#01bf71")};
     transform: scale(1.05);
   }
 `;
 
 export const WebsiteRights = styled.small`
-  color: ${({ backgroundColor }) =>
-    backgroundColor == "#f5f5f5" ? "#000" : "#fff"};
+  color: ${({ myTheme }) => (myTheme == "#f5f5f5" ? "#000" : "#fff")};
 `;
 
 export const SocialIcons = styled.div`
@@ -124,13 +122,11 @@ export const ColorSelector = styled.div`
 `;
 
 export const SocialIconLink = styled.a`
-  color: ${({ backgroundColor }) =>
-    backgroundColor == "#f5f5f5" ? "#000" : "#fff"};
+  color: ${({ myTheme }) => myTheme.textColor};
   font-size: 24px;
   &:hover {
     transition: all 0.2s ease-in-out;
-    color: ${({ backgroundColor }) =>
-      backgroundColor == "#01bf71" ? "#000" : "#01bf71"};
+    color: ${({ myTheme }) => (myTheme == "#01bf71" ? "#000" : "#01bf71")};
     transform: scale(1.2);
   }
 `;
@@ -140,26 +136,22 @@ const Footer = () => {
     scroll.scrollToTop();
   };
   const setColor = useThemeUpdate();
-  const backgroundColor = useTheme();
+  const myTheme = useTheme();
   return (
     <>
-      <FooterContainer backgroundColor={backgroundColor}>
+      <FooterContainer myTheme={myTheme}>
         <FooterWrap>
           <SocialMedia>
             <SocialMediaWrap>
-              <SocialLogo
-                to="/"
-                onClick={toggleHome}
-                backgroundColor={backgroundColor}
-              >
+              <SocialLogo to="/" onClick={toggleHome} myTheme={myTheme}>
                 FÚTBOL
               </SocialLogo>
-              <WebsiteRights backgroundColor={backgroundColor}>
+              <WebsiteRights myTheme={myTheme}>
                 FÚTBOL © 2021 All rights reserved
               </WebsiteRights>
               <SocialIcons>
                 <SocialIconLink
-                  backgroundColor={backgroundColor}
+                  myTheme={myTheme}
                   href="/"
                   target="_blank"
                   aria-label="Facebook"
@@ -167,7 +159,7 @@ const Footer = () => {
                   <FaFacebook />
                 </SocialIconLink>
                 <SocialIconLink
-                  backgroundColor={backgroundColor}
+                  myTheme={myTheme}
                   href="/"
                   target="_blank"
                   aria-label="Instagram"
@@ -175,7 +167,7 @@ const Footer = () => {
                   <FaInstagram />
                 </SocialIconLink>
                 <SocialIconLink
-                  backgroundColor={backgroundColor}
+                  myTheme={myTheme}
                   href="/"
                   target="_blank"
                   aria-label="Twitter"
@@ -183,7 +175,7 @@ const Footer = () => {
                   <FaTwitter />
                 </SocialIconLink>
                 <SocialIconLink
-                  backgroundColor={backgroundColor}
+                  myTheme={myTheme}
                   href="/"
                   target="_blank"
                   aria-label="Youtube"
@@ -192,13 +184,13 @@ const Footer = () => {
                 </SocialIconLink>
               </SocialIcons>
               <ColorSelector>
-                <button class="dark" onClick={() => setColor("dark")} />
-                <button class="light" onClick={() => setColor("light")} />
+                <button className="dark" onClick={() => setColor("dark")} />
+                <button className="light" onClick={() => setColor("light")} />
                 <button
-                  class="dark-green"
+                  className="dark-green"
                   onClick={() => setColor("dark-green")}
                 />
-                <button class="green" onClick={() => setColor("green")} />
+                <button className="green" onClick={() => setColor("green")} />
               </ColorSelector>
             </SocialMediaWrap>
           </SocialMedia>

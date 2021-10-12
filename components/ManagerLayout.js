@@ -1,8 +1,17 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
 import AllPlayers from "./players/AllPlayers";
 import Clubs from "./players/Clubs";
+import Nationality from "./players/Nationality";
+import Position from "./players/Position";
 import { useTheme } from "../utils/functions";
+import { useQuery, QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
+
+const fetchPlayers = async () => {
+  const res = await fetch("http://localhost:3000/api/players");
+  return res.json();
+};
 
 export const Container = styled.div`
   display: grid;
@@ -10,31 +19,61 @@ export const Container = styled.div`
   align-items: center; */
   padding: 80px;
   min-height: 1000px;
-  overflow: hidden;
   width: 100%;
   flex: wrap;
-  background: ${({ backgroundColor }) => backgroundColor};
-  color: ${({ backgroundColor }) =>
-    backgroundColor == "#f5f5f5" ? "#000" : "#fff"};
+  background: ${({ myTheme }) => myTheme.backgroundColor};
+  color: ${({ myTheme }) => myTheme.textColor};
   /* background: linear-gradient(
     108deg,
     rgba(1, 147, 86, 1) 0%,
     rgba(10, 201, 122, 1) 100%
   ); */
+  .content {
+  }
 `;
 
-const Manager = ({ page, isOpen }) => {
-  const backgroundColor = useTheme();
-
+const ManagerLayout = ({ page, isOpen }) => {
   return (
-    <>
-      {/* {page === "allplayers" && <AllPlayers />} */}
-      {/* {page === "clubs" && <Clubs />} */}
-      <Container backgroundColor={backgroundColor}>
-        Browse For Players
-      </Container>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <ShowPage page={page} isOpen={isOpen} />
+    </QueryClientProvider>
   );
 };
 
-export default Manager;
+function ShowPage({ page, isOpen }) {
+  const myTheme = useTheme();
+
+  const { data, status } = useQuery("players", fetchPlayers);
+
+  const switchPage = (page) => {
+    switch (page) {
+      case "allplayers":
+        return <AllPlayers data={data} status={status} />;
+        break;
+      case "clubs":
+        return <Clubs data={data} status={status} />;
+        break;
+      case "nationality":
+        return <Nationality data={data} status={status} />;
+        break;
+      case "position":
+        return <Position data={data} status={status} />;
+        break;
+      default:
+        "allplayers";
+    }
+  };
+  return (
+    <>
+      <Container myTheme={myTheme}>
+        <h1>Players Info:</h1>
+        <div className="content">
+          holi:
+          {switchPage(page)}
+        </div>
+      </Container>
+    </>
+  );
+}
+
+export default ManagerLayout;

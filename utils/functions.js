@@ -17,32 +17,64 @@ export function useThemeUpdate() {
   return useContext(ThemeUpdateContext);
 }
 
-export const BackgroundTheme = ({ children }) => {
-  const [backgroundColor, setBackgroundColor] = useState("#0d0d0d");
-  console.log(backgroundColor);
+export const ThemeProvider = ({ children }) => {
+  const [myTheme, setTheme] = useState({
+    backgroundColor: "#0d0d0d",
+    textColor: "#fff",
+    highlightColor: "#01bf71",
+    hoverColor: "#fff",
+    hoverText: "#0d0d0d",
+    boxColor: "gray",
+  });
 
   function setColor(Color) {
-    console.log("Background color set to:");
-    console.log(Color);
     switch (Color) {
       case "dark":
-        setBackgroundColor("#0d0d0d");
+        setTheme({
+          backgroundColor: "#0d0d0d",
+          textColor: "#fff",
+          highlightColor: "#01bf71",
+          hoverColor: "#01bf71",
+          hoverText: "#0d0d0d",
+          boxColor: "#262626",
+        });
         break;
       case "light":
-        setBackgroundColor("#f5f5f5");
+        setTheme({
+          backgroundColor: "#f5f5f5",
+          textColor: "#0d0d0d",
+          highlightColor: "#01bf71",
+          hoverColor: "#fff",
+          hoverText: "#0d0d0d",
+          boxColor: "gray",
+        });
         break;
       case "dark-green":
-        setBackgroundColor("#0f2520");
+        setTheme({
+          backgroundColor: "#0f2520",
+          textColor: "#fff",
+          highlightColor: "#01bf71",
+          hoverColor: "#fff",
+          hoverText: "#0d0d0d",
+          boxColor: "gray",
+        });
         break;
       case "green":
-        setBackgroundColor("#01bf71");
+        setTheme({
+          backgroundColor: "#01bf71",
+          textColor: "#fff",
+          highlightColor: "#01bf71",
+          hoverColor: "#fff",
+          hoverText: "#0d0d0d",
+          boxColor: "gray",
+        });
         break;
       default:
-        setBackgroundColor("#0d0d0d");
+        "dark";
     }
   }
   return (
-    <ThemeContext.Provider value={backgroundColor}>
+    <ThemeContext.Provider value={myTheme}>
       <ThemeUpdateContext.Provider value={setColor}>
         {children}
       </ThemeUpdateContext.Provider>

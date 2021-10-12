@@ -7,15 +7,9 @@ import { splitCamelCaseToString } from "utils/functions";
 import { useTheme } from "../utils/functions";
 
 const Nav = styled.nav`
-  background: ${({ backgroundColor }) => backgroundColor};
-  border-bottom: ${({ scrollNav }) =>
-    scrollNav
-      ? 0
-      : ({ backgroundColor }) =>
-          backgroundColor == "#01bf71"
-            ? "1px solid #fff"
-            : "1px solid #01bf71"};
-
+  background: ${({ myTheme }) => myTheme.backgroundColor};
+  border-bottom: ${({ scrollNav, myTheme }) =>
+    scrollNav ? 0 : "1px solid " + myTheme.highlightColor};
   box-shadow: ${({ scrollNav }) =>
     scrollNav ? "0 1px 4px rgba(0, 0, 0, 1)" : 0};
   overflow: visible;
@@ -38,8 +32,7 @@ const Nav = styled.nav`
     ul {
       display: flex;
       align-items: center;
-      color: ${({ backgroundColor }) =>
-        backgroundColor == "#f5f5f5" ? "#000" : "#fff"};
+      color: ${({ myTheme }) => myTheme.textColor};
       list-style: none;
       text-align: center;
 
@@ -55,8 +48,7 @@ const Nav = styled.nav`
         padding: 0.2rem;
         &:hover {
           transition: all 0.2s ease-in-out;
-          color: ${({ backgroundColor }) =>
-            backgroundColor == "#01bf71" ? "#000" : "#01bf71"};
+          color: ${({ myTheme }) => myTheme.hoverColor};
         }
       }
       .nav-logo {
@@ -73,8 +65,7 @@ const Nav = styled.nav`
         padding: 10px;
         &:hover {
           transition: all 0.2s ease-in-out;
-          color: ${({ backgroundColor }) =>
-            backgroundColor == "#01bf71" ? "#000" : "#01bf71"};
+          color: ${({ myTheme }) => myTheme.hoverColor};
           transform: scale(1.05);
         }
       }
@@ -88,10 +79,10 @@ const Nav = styled.nav`
       text-align: center;
       .nav-btn-link {
         border-radius: 50px;
-        background: #01bf71;
+        background: ${({ myTheme }) => myTheme.backgroundColor};
         white-space: nowrap;
         padding: 10px 22px;
-        color: #010606;
+        color: ${({ myTheme }) => myTheme.textColor};
         font-size: 20px;
         outline: none;
         border: none;
@@ -101,7 +92,9 @@ const Nav = styled.nav`
 
         &:hover {
           transition: all 0.2s ease-in-out;
-          background: #fff;
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 1);
+          color: ${({ myTheme }) => myTheme.hoverText};
+          background: ${({ myTheme }) => myTheme.hoverColor};
         }
       }
     }
@@ -129,12 +122,12 @@ const ManagerNavbar = ({ toggle, setPage }) => {
   const toggleHome = () => {
     scroll.scrollToTop();
   };
-  const backgroundColor = useTheme();
+  const myTheme = useTheme();
 
   const linksObj = ["AllPlayers", "Clubs", "Nationality", "Position"];
 
   return (
-    <Nav scrollNav={scrollNav} backgroundColor={backgroundColor}>
+    <Nav scrollNav={scrollNav} myTheme={myTheme}>
       <div className="nav-container">
         <ul>
           <div className="mobile-icon" onClick={toggle}>
@@ -146,7 +139,11 @@ const ManagerNavbar = ({ toggle, setPage }) => {
         </ul>
         <ul className="nav-menu">
           {linksObj.map((link, index) => (
-            <span className="nav-btn-link" key={index} setPage={link}>
+            <span
+              className="nav-btn-link"
+              key={index}
+              onClick={() => setPage(link.toLowerCase())}
+            >
               {splitCamelCaseToString(link)}
             </span>
           ))}
