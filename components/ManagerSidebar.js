@@ -161,7 +161,7 @@ const SidebarContainer = styled.aside`
       .profile-details {
         display: flex;
         align-items: center;
-        Image {
+        img {
           height: 45px;
           width: 45px;
           object-fit: cover;
@@ -250,7 +250,7 @@ const Sidebar = ({ isOpen, toggle }) => {
         <div className="profile-content">
           <div className="profile">
             <div className="profile-details">
-              <Image src="" alt="" />
+              <img src="4Jugadoreslow.jpg" alt="" />
               <div className="name-content">
                 <div className="name">Daniel Bustos</div>
                 <div className="info">Web developer</div>
