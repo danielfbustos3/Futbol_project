@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Image from "next/image";
 import { FiGrid, FiUser } from "react-icons/fi";
 import {
   BiChat,
@@ -160,7 +161,7 @@ const SidebarContainer = styled.aside`
       .profile-details {
         display: flex;
         align-items: center;
-        img {
+        Image {
           height: 45px;
           width: 45px;
           object-fit: cover;
@@ -249,7 +250,7 @@ const Sidebar = ({ isOpen, toggle }) => {
         <div className="profile-content">
           <div className="profile">
             <div className="profile-details">
-              <img src="" alt="" />
+              <Image src="" alt="" />
               <div className="name-content">
                 <div className="name">Daniel Bustos</div>
                 <div className="info">Web developer</div>

@@ -3,7 +3,7 @@ import dbConnect from "../../../utils/dbConnect";
 
 dbConnect();
 
-export default async (req, res) => {
+export default api = async (req, res) => {
   const { method } = req;
 
   switch (method) {
