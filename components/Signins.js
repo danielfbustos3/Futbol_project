@@ -119,7 +119,7 @@ const Signins = () => {
         <FormWrap>
           <Icon href="/">FÚTBOL</Icon>
           <FormContent>
-            <Form action="#">
+            <Form action="/manager">
               <FormH1>Sign in to your account</FormH1>
               <FormLabel htmlFor="for">E-mail</FormLabel>
               <FormInput type="email" required />

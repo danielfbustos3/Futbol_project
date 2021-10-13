@@ -9,7 +9,8 @@ import { useQuery, QueryClient, QueryClientProvider } from "react-query";
 const queryClient = new QueryClient();
 
 const fetchPlayers = async () => {
-  const res = await fetch("http://localhost:3000/api/players");
+  const res = await fetch(`${window.location.origin}/api/players`);
+  console.log(window.location.origin);
   return res.json();
 };
 
