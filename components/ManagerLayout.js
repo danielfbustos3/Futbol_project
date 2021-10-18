@@ -3,6 +3,7 @@ import AllPlayers from "./players/AllPlayers";
 import Clubs from "./players/Clubs";
 import Nationality from "./players/Nationality";
 import Position from "./players/Position";
+import Scout from "./players/Scout";
 import { useTheme } from "../utils/functions";
 import { useQuery, QueryClient, QueryClientProvider } from "react-query";
 
@@ -10,16 +11,12 @@ const queryClient = new QueryClient();
 
 const fetchPlayers = async () => {
   const res = await fetch(`${window.location.origin}/api/players`);
-  console.log(window.location.origin);
   return res.json();
 };
 
 export const Container = styled.div`
-  display: grid;
-  /* justify-content: center;
-  align-items: center; */
   padding: 80px;
-  min-height: 1000px;
+  min-height: 85vh;
   width: 100%;
   flex: wrap;
   background: ${({ myTheme }) => myTheme.backgroundColor};
@@ -51,6 +48,9 @@ function ShowPage({ page, isOpen }) {
       case "allplayers":
         return <AllPlayers data={data} status={status} />;
         break;
+      case "scout":
+        return <Scout data={data} status={status} />;
+        break;
       case "clubs":
         return <Clubs data={data} status={status} />;
         break;
@@ -66,13 +66,7 @@ function ShowPage({ page, isOpen }) {
   };
   return (
     <>
-      <Container myTheme={myTheme}>
-        <h1>Players Info:</h1>
-        <div className="content">
-          holi:
-          {switchPage(page)}
-        </div>
-      </Container>
+      <Container myTheme={myTheme}>{switchPage(page)}</Container>
     </>
   );
 }

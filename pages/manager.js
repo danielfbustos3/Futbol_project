@@ -11,14 +11,12 @@ const PageLayout = styled.div`
   display: flex;
   height: 100%;
   max-width: 100%;
-  /* overflow: hidden; */
   background: #0d0d0d;
   main {
     margin-left: ${({ isOpen }) => (isOpen ? "10rem" : "3rem")};
     height: 100%;
     width: 100%;
     display: grid;
-    background: grey;
     transition: all 0.3s ease;
   }
 `;
@@ -45,7 +43,7 @@ const ManagerPage = () => {
       </Head>
       <ManagerNavbar isOpen={isOpen} toggle={toggle} setPage={setPage} />
       <PageLayout isOpen={isOpen}>
-        <ManagerSidebar isOpen={isOpen} toggle={toggle} />
+        <ManagerSidebar isOpen={isOpen} setPage={setPage} toggle={toggle} />
         <main className="main-content">
           <ManagerLayout page={page} isOpen={isOpen} />
           <ManagerFooter />
