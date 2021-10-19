@@ -102,6 +102,12 @@ const FormWrap = styled.div`
         border-bottom: 1px solid #fff;
         outline: none;
         background: transparent;
+        &:focus label {
+          top: -20px;
+          left: 0;
+          color: #03e9f4;
+          font-size: 12px;
+        }
       }
       label {
         position: absolute;
