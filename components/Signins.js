@@ -9,33 +9,6 @@ const rotate = keyframes`
   }
 `;
 
-const rotateBackground = keyframes`
-0%{
-  background-image: linear-gradient(0deg, #5ddcff, #3c67e3 43%, #4e00c2);
-}
-25%{
-  background-image: linear-gradient(90deg, #5ddcff, #3c67e3 43%, #4e00c2);
-}
-50%{
-  background-image: linear-gradient(180deg, #5ddcff, #3c67e3 43%, #4e00c2);
-}
-75%{
-  background-image: linear-gradient(270deg, #5ddcff, #3c67e3 43%, #4e00c2);
-}
-100%{
-  background-image: linear-gradient(360deg, #5ddcff, #3c67e3 43%, #4e00c2);
-}
-`;
-
-const rotateDeg = keyframes`
-  from{
-    0deg
-  }
-  to {
-    180deg
-  }
-`;
-
 export const Container = styled.div`
   min-height: 692px;
   position: fixed;
