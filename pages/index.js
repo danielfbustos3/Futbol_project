@@ -2,7 +2,7 @@ import HomePageLayout from "components/HomePageLayout";
 
 import { useState } from "react";
 
-export default Home = () => {
+const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => {
@@ -15,3 +15,5 @@ export default Home = () => {
     </>
   );
 };
+
+export default Home;
