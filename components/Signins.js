@@ -45,7 +45,7 @@ const btnanim4 = keyframes`
   }
 `;
 
-export const Container = styled.div`
+const Container = styled.div`
   min-height: 692px;
   position: fixed;
   bottom: 0;
