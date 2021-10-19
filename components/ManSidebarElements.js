@@ -8,7 +8,7 @@ const ManSidebarElements = ({ toggle, setPage, myTheme, isOpen }) => {
       {linksObj.map((item, index) => {
         return (
           <ElementsContainer
-            index={index}
+            key={index}
             item={item}
             setPage={setPage}
             myTheme={myTheme}

@@ -241,36 +241,6 @@ const FormWrap = styled.div`
   }
 `;
 
-// export const FormWrap = styled.div`
-//   height: 100%;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-
-//   @media screen and (max-width: 400px) {
-//     height: 80%;
-//   }
-// `;
-
-const Icon = styled.a`
-  margin-left: 32px;
-  margin-top: 32px;
-  text-decoration: none;
-  color: #fff;
-  font-weight: 700;
-  font-size: 32px;
-  &:hover {
-    transition: all 0.2s ease-in-out;
-    color: #010606;
-    transform: scale(1.005);
-  }
-
-  @media screen and (max-width: 480px) {
-    margin-left: 16px;
-    margin-top: 8px;
-  }
-`;
-
 const FormButton = styled.button`
   position: absolute;
   top: 0;
@@ -305,7 +275,7 @@ const Signins = () => {
           <div className="cardBorder">
             holis
             <div className="cardContent">
-              <a className="icon" href="/">
+              <a className="icon" href="#">
                 FÚTBOL
               </a>
               <p>Iniciar sesión</p>
@@ -325,7 +295,7 @@ const Signins = () => {
                     onChange={handleParamUser()}
                   />
                 </div>
-                <div class="user-box">
+                <div className="user-box">
                   <label className={passLabel ? "inlabel" : "offlabel"}>
                     Password
                   </label>
@@ -351,18 +321,6 @@ const Signins = () => {
               </form>
             </div>
           </div>
-          {/* <Icon href="/">FÚTBOL</Icon>
-          <FormContent>
-            <Form action="/manager">
-              <FormH1>Sign in to your account</FormH1>
-              <FormLabel htmlFor="for">E-mail</FormLabel>
-              <FormInput type="email" required />
-              <FormLabel htmlFor="for">Password</FormLabel>
-              <FormInput type="password" required />
-              <FormButton type="submit">Continue</FormButton>
-              <Text>Forgot Password</Text>
-            </Form>
-          </FormContent> */}
         </FormWrap>
       </Container>
     </>
