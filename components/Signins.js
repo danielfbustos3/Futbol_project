@@ -109,8 +109,9 @@ const FormWrap = styled.div`
       height: 140%;
       min-height: 26rem;
       background-image: linear-gradient(135deg, #faffe4, #01bf71 55%, #340096);
+      border-radius: 50%;
       position: absolute;
-      top: -5rem;
+      top: -4.5rem;
       left: -8rem;
       animation: ${rotate} 1.5s linear infinite;
     }
