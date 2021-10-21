@@ -11,10 +11,10 @@ const ElemContent = styled.li`
   padding: ${({ isOpen }) => (isOpen ? "0 30px 0 0" : "0 13px")};
   justify-content: center;
   align-items: center;
-  margin-bottom: 3px;
   display: block;
   &:hover a {
     background: ${({ myTheme }) => myTheme.hoverColor};
+    cursor: pointer;
   }
   &:hover .menuItem {
     color: ${({ myTheme }) => myTheme.hoverText};
@@ -46,7 +46,7 @@ const ElemContent = styled.li`
   }
   .listSelected {
     display: none;
-    left: 0;
+    /* left: 0;
     width: 100%;
 
     .list-item {
@@ -64,30 +64,33 @@ const ElemContent = styled.li`
         transition: box-shadow 0.3s linear, text-indent 0.3s linear;
         text-indent: 31px;
       }
-    }
+    } */
   }
   .listSelectedActive {
     display: grid;
     left: 0;
-    width: 100%;
-
+    width: 90%;
     .list-item {
+      top: 0;
+      /* border-radius: 0 25px 25px 0; */
       width: 100%;
       opacity: 1;
       left: 0;
-      /* height: ${({ active }) => (active ? "0px" : "auto")}; */
       transition: all 0.8s ease;
-      background: #15a4fa;
+      background: ${({ myTheme }) => myTheme.boxColor};
+      color: ${({ myTheme }) => myTheme.textColor};
+      border-radius: 0 0 10px 0;
       padding: 0 25px;
       text-indent: 25px;
       font-size: 0.7rem;
-      box-shadow: 0px 0px #126ca1 inset;
+      box-shadow: 0px 0px #fff inset;
       transition: box-shadow 0.3s, text-indent 0.3s;
       &:hover {
-        background: #0c93e4;
-        box-shadow: 5px 0px #126ca1 inset;
+        box-shadow: ${({ myTheme }) =>
+          `0.5rem 0px ${myTheme.highlightColor} inset`};
         transition: box-shadow 0.3s linear, text-indent 0.3s linear;
         text-indent: 31px;
+        cursor: pointer;
       }
     }
   }
@@ -101,11 +104,10 @@ const ElementsContainer = ({ key, item, setPage, myTheme, isOpen, toggle }) => {
       key={key}
       myTheme={myTheme}
       isOpen={isOpen}
-      onClick={() => (isOpen ? toggleActive() : "")}
       onMouseLeave={() => setActive(false)}
       active={active}
     >
-      <a onClick={() => (isOpen ? "" : toggle())}>
+      <a onClick={() => (isOpen ? toggleActive() : toggle())}>
         <div className="menuItem">
           <i className="icon">{item.icon}</i>
           <span className="links-name">{item.title}</span>

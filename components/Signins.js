@@ -57,20 +57,21 @@ const Container = styled.div`
     rgba(1, 147, 86, 1) 0%,
     rgba(10, 201, 122, 1) 100%
   ); */
-  background: #051f14;
+  /* background: #051f14; */
+  background: #000;
 `;
 
 const CardShadow = styled.div`
   position: absolute;
   content: "";
-  top: 8rem;
+  top: 7rem;
   left: 50%;
   margin-left: -6rem;
   height: 16rem;
   width: 12rem;
   transform: scale(0.8);
   filter: blur(10vh);
-  background-image: linear-gradient(120deg, #faffe4, #01bf71 43%, #340096);
+  background-image: linear-gradient(120deg, #faffe4, #01bf71 50%, #340096);
   opacity: 1;
   transition: opacity 0.5s;
   animation: ${rotate} 5s linear infinite;
@@ -100,19 +101,24 @@ const FormWrap = styled.div`
     color: rgb(88 199 250 / 0%);
     z-index: 2;
     justify-content: center;
-    padding: 0.2rem;
+    padding: 0.15rem;
     align-items: center;
 
     &:before {
       content: "";
-      width: 210%;
-      height: 140%;
+      width: 220%;
+      height: 150%;
       min-height: 26rem;
-      background-image: linear-gradient(135deg, #faffe4, #01bf71 55%, #340096);
+      background-image: linear-gradient(
+        135deg,
+        #faffe4 15%,
+        #01bf71 50%,
+        #340096
+      );
       border-radius: 50%;
       position: absolute;
-      top: -4.5rem;
-      left: -8rem;
+      top: -5.5rem;
+      left: -9rem;
       animation: ${rotate} 1.5s linear infinite;
     }
   }
@@ -139,7 +145,7 @@ const FormWrap = styled.div`
       &:hover {
         transition: all 0.2s ease-in-out;
         color: #01bf71;
-        transform: scale(1.005);
+        transform: scale(1.08);
       }
     }
     p {
@@ -167,13 +173,13 @@ const FormWrap = styled.div`
         top: -0.5rem;
         left: 0;
         color: #01bf71;
-        font-size: 0.5rem;
+        font-size: 0.55rem;
         transition: 0.2s;
       }
       .offlabel {
         position: absolute;
         top: 0.1rem;
-        left: 0.2rem;
+        left: 0.4rem;
         padding: 10px 0;
         font-size: 0.7rem;
         color: #fff;
@@ -196,8 +202,8 @@ const FormWrap = styled.div`
         background: #01bf71;
         color: #fff;
         border-radius: 5px;
-        box-shadow: 0 0 0.3rem #01bf71, 0 0 1rem #01bf71, 0 0 2rem #01bf71,
-          0 0 3rem #01bf71;
+        box-shadow: 0 0 0.3rem #01bf71, 0 0 0.5rem #01bf71, 0 0 0.75rem #01bf71,
+          0 0 1rem #01bf71;
       }
     }
     span {
@@ -287,7 +293,6 @@ const Signins = () => {
                   </label>
                   <input
                     type="email"
-                    name=""
                     required
                     value={userValue}
                     userValue={userValue}
@@ -302,7 +307,6 @@ const Signins = () => {
                   </label>
                   <input
                     type="password"
-                    name=""
                     required
                     value={passValue}
                     passValue={passValue}

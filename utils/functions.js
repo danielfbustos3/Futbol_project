@@ -22,9 +22,9 @@ export const ThemeProvider = ({ children }) => {
     backgroundColor: "#0d0d0d",
     textColor: "#fff",
     highlightColor: "#01bf71",
-    hoverColor: "#fff",
+    hoverColor: "#01bf71",
     hoverText: "#0d0d0d",
-    boxColor: "gray",
+    boxColor: "#1d1d1d",
   });
 
   function setColor(Color) {
@@ -36,7 +36,7 @@ export const ThemeProvider = ({ children }) => {
           highlightColor: "#01bf71",
           hoverColor: "#01bf71",
           hoverText: "#0d0d0d",
-          boxColor: "#262626",
+          boxColor: "#1d1d1d",
         });
         break;
       case "light":
