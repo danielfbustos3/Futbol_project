@@ -8,7 +8,7 @@ const ScoutContainer = styled.div`
   align-items: center;
   justify-content: center;
   .inputContainer {
-    position: relative;
+    position: fixed;
     width: 10rem;
     input {
       width: 12rem;
@@ -48,9 +48,12 @@ const ScoutContainer = styled.div`
   }
   .labelContainer {
     display: flex;
-    width: 33rem;
+    justify-content: center;
+    align-items: left;
     .label {
-      text-align: center;
+      width: 100%;
+      margin-right: 1rem;
+      text-align: right;
       font-size: 4rem;
     }
   }

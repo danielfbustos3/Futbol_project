@@ -12,6 +12,7 @@ const ElemContent = styled.li`
   justify-content: center;
   align-items: center;
   display: block;
+  transition: 1s;
   &:hover a {
     background: ${({ myTheme }) => myTheme.hoverColor};
     cursor: pointer;
@@ -45,7 +46,10 @@ const ElemContent = styled.li`
     }
   }
   .listSelected {
-    display: none;
+    display: grid;
+    opacity: 0;
+    height: 0px;
+    transition: 1s;
     /* left: 0;
     width: 100%;
 
@@ -68,8 +72,11 @@ const ElemContent = styled.li`
   }
   .listSelectedActive {
     display: grid;
+    opacity: 1;
     left: 0;
     width: 90%;
+    height: auto;
+    transition: 1s;
     .list-item {
       top: 0;
       /* border-radius: 0 25px 25px 0; */
@@ -83,6 +90,7 @@ const ElemContent = styled.li`
       padding: 0 25px;
       text-indent: 25px;
       font-size: 0.7rem;
+      text-overflow: ellipsis;
       box-shadow: 0px 0px #fff inset;
       transition: box-shadow 0.3s, text-indent 0.3s;
       &:hover {
@@ -107,7 +115,7 @@ const ElementsContainer = ({ key, item, setPage, myTheme, isOpen, toggle }) => {
       onMouseLeave={() => setActive(false)}
       active={active}
     >
-      <a onClick={() => (isOpen ? toggleActive() : toggle())}>
+      <a onClick={() => (isOpen ? toggleActive() : toggle() & toggleActive())}>
         <div className="menuItem">
           <i className="icon">{item.icon}</i>
           <span className="links-name">{item.title}</span>
