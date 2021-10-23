@@ -25,6 +25,7 @@ export const ThemeProvider = ({ children }) => {
     hoverColor: "#01bf71",
     hoverText: "#0d0d0d",
     boxColor: "#1d1d1d",
+    fondoCancha: "#0d0d0d",
   });
 
   function setColor(Color) {
@@ -37,6 +38,7 @@ export const ThemeProvider = ({ children }) => {
           hoverColor: "#01bf71",
           hoverText: "#0d0d0d",
           boxColor: "#1d1d1d",
+          fondoCancha: "#0d0d0d",
         });
         break;
       case "light":
@@ -47,6 +49,7 @@ export const ThemeProvider = ({ children }) => {
           hoverColor: "#fff",
           hoverText: "#0d0d0d",
           boxColor: "gray",
+          fondoCancha: "#0d0d0d",
         });
         break;
       case "dark-green":
@@ -57,6 +60,7 @@ export const ThemeProvider = ({ children }) => {
           hoverColor: "#fff",
           hoverText: "#0d0d0d",
           boxColor: "gray",
+          fondoCancha: "#0d0d0d",
         });
         break;
       case "green":
@@ -67,6 +71,7 @@ export const ThemeProvider = ({ children }) => {
           hoverColor: "#fff",
           hoverText: "#0d0d0d",
           boxColor: "gray",
+          fondoCancha: "#0d0d0d",
         });
         break;
       default:

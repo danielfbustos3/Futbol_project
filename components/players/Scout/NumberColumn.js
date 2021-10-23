@@ -24,7 +24,7 @@ const TickerColumnContainer = styled.div`
   }
 `;
 
-const NumberColumn = ({ key, digit }) => {
+const NumberColumn = ({ digit }) => {
   const [position, setPosition] = useState(0);
   const columnContainer = useRef();
 
@@ -34,15 +34,12 @@ const NumberColumn = ({ key, digit }) => {
         ? columnContainer.current.clientHeight * parseInt(10)
         : columnContainer.current.clientHeight * parseInt(digit)
     );
-    console.log(digit + " holi antes");
   };
 
   useEffect(() => setColumnToNumber(digit), [digit]);
 
-  console.log({ position });
-
   return (
-    <TickerColumnContainer key={key} ref={columnContainer} digit={digit}>
+    <TickerColumnContainer ref={columnContainer} digit={digit}>
       <motion.div
         animate={{ bottom: -position, transition: { duration: 0.8 } }}
         className="tickerColumn"

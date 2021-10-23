@@ -3,7 +3,7 @@ import AllPlayers from "./players/AllPlayers";
 import Clubs from "./players/Clubs";
 import Nationality from "./players/Nationality";
 import Position from "./players/Position";
-import Scout from "./players/Scout";
+import Scout from "./players/Scout/Scout";
 import { useTheme } from "../utils/functions";
 import { useQuery, QueryClient, QueryClientProvider } from "react-query";
 

@@ -1,22 +1,22 @@
 import styled from "@emotion/styled";
-import PlayerCard from "./PlayerCard";
 import { useEffect, useState } from "react";
 import AnimatingNumber from "./AnimatingNumber";
 
-const ScoutContainer = styled.div`
-  display: grid;
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
   align-items: center;
-  justify-content: center;
   .inputContainer {
-    position: fixed;
-    width: 10rem;
+    position: relative;
+    display: flex;
+    align-items: center;
     input {
-      width: 12rem;
+      width: 10rem;
       padding: 10px 0;
       text-align: center;
       font-size: 1.5rem;
       color: #fff;
-      margin-bottom: 50px;
       border: none;
       border-bottom: 1px solid #fff;
       outline: none;
@@ -59,7 +59,7 @@ const ScoutContainer = styled.div`
   }
 `;
 
-const Scout = ({ data, status }) => {
+const ValueInput = () => {
   const [playerValueLabel, setPlayerValueLabel] = useState(false);
   const [playerValue, setPlayerValue] = useState("");
 
@@ -70,7 +70,7 @@ const Scout = ({ data, status }) => {
     }
   };
   return (
-    <ScoutContainer>
+    <Container>
       <div className="inputContainer">
         <label className={playerValueLabel ? "inlabel" : "offlabel"}>
           Player Value
@@ -79,7 +79,6 @@ const Scout = ({ data, status }) => {
           type="number"
           maxLength={10}
           value={playerValue}
-          playerValue={playerValue}
           onFocus={() => setPlayerValueLabel(true)}
           onBlur={() => (playerValue == "" ? setPlayerValueLabel(false) : "")}
           onChange={handleParamUser()}
@@ -89,8 +88,8 @@ const Scout = ({ data, status }) => {
         <p className="label"> €</p>
         <AnimatingNumber value={playerValue} />
       </div>
-    </ScoutContainer>
+    </Container>
   );
 };
 
-export default Scout;
+export default ValueInput;

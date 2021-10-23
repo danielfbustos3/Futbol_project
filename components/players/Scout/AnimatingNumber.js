@@ -18,7 +18,6 @@ const AnimatingNumber = ({ value }) => {
     numArray.splice(i, 0, ",");
   }
 
-  console.log(numArray + "this is my array");
   return (
     <TickerView>
       {numArray.map((number, index) => (
