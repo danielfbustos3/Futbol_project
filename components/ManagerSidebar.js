@@ -81,7 +81,7 @@ const SidebarContainer = styled.aside`
           cursor: default;
 
           ::placeholder {
-            color: white;
+            color: ${({ myTheme }) => myTheme.textColor};
             font-size: 16px;
             cursor: text;
             opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
