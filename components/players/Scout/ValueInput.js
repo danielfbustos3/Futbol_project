@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AnimatingNumber from "./AnimatingNumber";
+import { useTheme } from "../../../utils/functions";
 
 const Container = styled.div`
   display: flex;
@@ -16,9 +17,9 @@ const Container = styled.div`
       padding: 10px 0;
       text-align: center;
       font-size: 1.5rem;
-      color: #fff;
+      color: ${({ myTheme }) => myTheme.textColor};
       border: none;
-      border-bottom: 1px solid #fff;
+      border-bottom: ${({ myTheme }) => `1px solid ${myTheme.textColor}`};
       outline: none;
       background: transparent;
     }
@@ -31,7 +32,7 @@ const Container = styled.div`
       position: absolute;
       top: -0.7rem;
       left: 0;
-      color: #01bf71;
+      color: ${({ myTheme }) => myTheme.highlightColor};
       font-size: 1rem;
       transition: 0.2s;
     }
@@ -41,7 +42,7 @@ const Container = styled.div`
       left: 2rem;
       padding: 10px 0;
       font-size: 1.5rem;
-      color: #fff;
+      color: ${({ myTheme }) => myTheme.textColor};
       pointer-events: none;
       transition: 0.5s;
     }
@@ -60,6 +61,7 @@ const Container = styled.div`
 `;
 
 const ValueInput = () => {
+  const myTheme = useTheme();
   const [playerValueLabel, setPlayerValueLabel] = useState(false);
   const [playerValue, setPlayerValue] = useState("");
 
@@ -70,7 +72,7 @@ const ValueInput = () => {
     }
   };
   return (
-    <Container>
+    <Container myTheme={myTheme}>
       <div className="inputContainer">
         <label className={playerValueLabel ? "inlabel" : "offlabel"}>
           Player Value

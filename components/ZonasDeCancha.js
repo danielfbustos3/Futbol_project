@@ -21,18 +21,19 @@ const Zonas = styled.div`
     top: 30%;
     left: 0;
     height: 40%;
-    width: 11%;
-    background: blue;
-    transition: all 1s ease;
+    width: 8%;
+    background: ${({ myTheme }) => myTheme.zonasCancha};
+    transition: all 0.2s ease-in;
     z-index: 10;
     &:hover {
       opacity: ${({ exit }) => (exit ? "0" : "1")};
       cursor: ${({ exit }) => (exit ? "default" : "pointer")};
+      width: 12%;
     }
     &:hover .tooltip {
-      transition: all 0.5s ease;
+      transition: all 0.3s ease;
       opacity: ${({ exit }) => (exit ? "0" : "1")};
-      top: 0;
+      top: 30%;
       z-index: 100;
     }
   }
@@ -53,15 +54,17 @@ const Zonas = styled.div`
     left: 15%;
     height: 92%;
     width: 18%;
-    background: blue;
-    transition: all 1s ease;
+    background: ${({ myTheme }) => myTheme.zonasCancha};
+    transition: all 0.2s ease-in;
     z-index: 9;
     &:hover {
       opacity: ${({ exit }) => (exit ? "0" : "1")};
       cursor: ${({ exit }) => (exit ? "default" : "pointer")};
+      left: 12%;
+      width: 28%;
     }
     &:hover .tooltip {
-      transition: all 0.5s ease;
+      transition: all 0.3s ease;
       opacity: ${({ exit }) => (exit ? "0" : "1")};
       top: 40%;
       z-index: 100;
@@ -81,18 +84,20 @@ const Zonas = styled.div`
     position: absolute;
     opacity: 0;
     top: 7.5%;
-    left: 37.5%;
+    left: 40%;
     height: 85%;
-    width: 27%;
-    background: blue;
-    transition: all 1s ease;
+    width: 20%;
+    background: ${({ myTheme }) => myTheme.zonasCancha};
+    transition: all 0.2s ease-in;
     z-index: 8;
     &:hover {
       opacity: ${({ exit }) => (exit ? "0" : "1")};
       cursor: ${({ exit }) => (exit ? "default" : "pointer")};
+      left: 25%;
+      width: 50%;
     }
     &:hover .tooltip {
-      transition: all 0.5s ease;
+      transition: all 0.3s ease;
       opacity: ${({ exit }) => (exit ? "0" : "1")};
       top: 40%;
       z-index: 100;
@@ -112,18 +117,20 @@ const Zonas = styled.div`
     position: absolute;
     opacity: 0;
     top: 12.5%;
-    left: 72%;
+    left: 75%;
     height: 75%;
-    width: 28%;
-    background: blue;
-    transition: all 1s ease;
+    width: 20%;
+    background: ${({ myTheme }) => myTheme.zonasCancha};
+    transition: all 0.2s ease-in;
     z-index: 7;
     &:hover {
       opacity: ${({ exit }) => (exit ? "0" : "1")};
       cursor: ${({ exit }) => (exit ? "default" : "pointer")};
+      left: 70%;
+      width: 30%;
     }
     &:hover .tooltip {
-      transition: all 0.5s ease;
+      transition: all 0.3s ease;
       opacity: ${({ exit }) => (exit ? "0" : "1")};
       top: 40%;
       z-index: 100;
@@ -141,17 +148,18 @@ const Zonas = styled.div`
   }
   .tooltip {
     position: absolute;
-    left: 110%;
+    left: 105%;
     top: 80%;
     transform: translateY(-50%);
     border-radius: 10px;
-    height: 37px;
-    width: 122px;
+    height: 1.5rem;
+    width: 5.5rem;
     background: ${({ myTheme }) => myTheme.hoverColor};
+    color: ${({ myTheme }) => myTheme.hoverText};
     line-height: 35px;
     text-align: center;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    transition: 0.5s;
+    transition: 0.3s;
     opacity: 0;
     pointer-events: none;
     z-index: 100;

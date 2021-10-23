@@ -10,7 +10,8 @@ const ContenedorCancha = styled.div`
     aspect-ratio: 1.5;
     position: relative;
     background: ${({ myTheme }) => myTheme.fondoCancha};
-    border: ${({ anchoLineas }) => `${anchoLineas} solid white`};
+    border: ${({ anchoLineas, myTheme }) =>
+      `${anchoLineas} solid ${myTheme.textColor}`};
     display: grid;
     grid-gap: 0px;
     grid-template-rows: 0.25fr 0.75fr 2fr 0.75fr 0.25fr;
@@ -18,7 +19,7 @@ const ContenedorCancha = styled.div`
       `0.09fr 1fr ${anchoLineas} 1fr 0.09fr`};
     grid-template-areas: "esi . lvmcar . esd" ". .  lvmcar  . . " "zc zc zc zc zc " ". . lvmcab . . " "eii . lvmcab . eid ";
     transition: all 0.5s ease;
-    box-shadow: 0 0 10px black;
+    box-shadow: ${({ myTheme }) => `0 0 10px ${myTheme.textColor}`};
     &:hover {
       transform: scale(1.1);
       transition: all 0.5s ease;
@@ -148,7 +149,7 @@ const ZonaCentral = styled(Section)`
   .lineaVerticalMedioCampoMedio {
     position: relative;
     background: ${({ myTheme }) => myTheme.textColor};
-    grid-area: 1 / 13 / span 20 / span 1;
+    grid-area: 1 / 13 / span 22 / span 1;
     &:after {
       position: absolute;
       top: calc(50% - 3px);
@@ -161,30 +162,38 @@ const ZonaCentral = styled(Section)`
     }
   }
   .circuloCentral {
-    border: ${({ anchoLineas }) => `${anchoLineas} solid white`};
+    border: ${({ anchoLineas, myTheme }) =>
+      `${anchoLineas} solid ${myTheme.textColor}`};
     border-radius: 50%;
     z-index: 2;
     grid-area: 5 / 11 / span 12 / span 5;
   }
   .areaGrandeDerecha {
     background: ${({ myTheme }) => myTheme.fondoCancha};
-    border-top: ${({ anchoLineas }) => `${anchoLineas} solid white`};
-    border-left: ${({ anchoLineas }) => `${anchoLineas} solid white`};
-    border-bottom: ${({ anchoLineas }) => `${anchoLineas} solid white`};
+    border-top: ${({ anchoLineas, myTheme }) =>
+      `${anchoLineas} solid ${myTheme.textColor}`};
+    border-left: ${({ anchoLineas, myTheme }) =>
+      `${anchoLineas} solid ${myTheme.textColor}`};
+    border-bottom: ${({ anchoLineas, myTheme }) =>
+      `${anchoLineas} solid ${myTheme.textColor}`};
     z-index: 2;
     grid-area: 1 / 22 / span 20 / span 4;
   }
   .areaPequenaDerecha {
-    border-top: ${({ anchoLineas }) => `${anchoLineas} solid white`};
-    border-left: ${({ anchoLineas }) => `${anchoLineas} solid white`};
-    border-bottom: ${({ anchoLineas }) => `${anchoLineas} solid white`};
+    border-top: ${({ anchoLineas, myTheme }) =>
+      `${anchoLineas} solid ${myTheme.textColor}`};
+    border-left: ${({ anchoLineas, myTheme }) =>
+      `${anchoLineas} solid ${myTheme.textColor}`};
+    border-bottom: ${({ anchoLineas, myTheme }) =>
+      `${anchoLineas} solid ${myTheme.textColor}`};
     z-index: 3;
     grid-area: 5 / 24 / span 12 / span 2;
   }
   .medioCampoDerecha {
   }
   .semicirculoDerecha {
-    border: ${({ anchoLineas }) => `${anchoLineas} solid white`};
+    border: ${({ anchoLineas, myTheme }) =>
+      `${anchoLineas} solid ${myTheme.textColor}`};
     border-radius: 50%;
     z-index: 1;
     grid-area: 6 / 21 / span 10 / span 3;

@@ -1,12 +1,13 @@
 import styled from "@emotion/styled";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { useTheme } from "../../../utils/functions";
 
 const TickerColumnContainer = styled.div`
   height: 100%;
   overflow: hidden;
   position: relative;
-  color: white;
+  color: ${({ myTheme }) => myTheme.textColor};
   width: ${({ digit }) => (digit == "," ? "0.8rem" : "")};
   .tickerColumn {
     position: absolute;
@@ -25,6 +26,7 @@ const TickerColumnContainer = styled.div`
 `;
 
 const NumberColumn = ({ digit }) => {
+  const myTheme = useTheme();
   const [position, setPosition] = useState(0);
   const columnContainer = useRef();
 
@@ -39,7 +41,11 @@ const NumberColumn = ({ digit }) => {
   useEffect(() => setColumnToNumber(digit), [digit]);
 
   return (
-    <TickerColumnContainer ref={columnContainer} digit={digit}>
+    <TickerColumnContainer
+      ref={columnContainer}
+      digit={digit}
+      myTheme={myTheme}
+    >
       <motion.div
         animate={{ bottom: -position, transition: { duration: 0.8 } }}
         className="tickerColumn"
