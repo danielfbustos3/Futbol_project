@@ -11,6 +11,8 @@ export const linksObj = [
     listItems: [
       { title: "Fetch1", link: "allplayers" },
       { title: "browse1", link: "allplayers" },
+      { title: "Fetch1", link: "allplayers" },
+      { title: "browse1", link: "allplayers" },
     ],
   },
   {
@@ -19,6 +21,9 @@ export const linksObj = [
     listItems: [
       { title: "Fetch2", link: "allplayers" },
       { title: "browse2", link: "allplayers" },
+      { title: "Fetch2", link: "allplayers" },
+      { title: "browse2", link: "allplayers" },
+      { title: "Fetch2", link: "allplayers" },
     ],
   },
   {
@@ -26,7 +31,7 @@ export const linksObj = [
     icon: <RiUserStarLine />,
     listItems: [
       { title: "Encuentra un jugador", link: "scout" },
-      { title: "browse2.56", link: "allplayers" },
+      { title: "Jugadores encontrados", link: "scout" },
     ],
   },
   {

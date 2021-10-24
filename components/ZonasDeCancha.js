@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
 import { useTheme } from "../utils/functions";
+import Positions from "./players/Scout/Positions";
 
 const Zonas = styled.div`
   position: absolute;
@@ -173,7 +174,8 @@ const ZonasDeCancha = () => {
   const [medioCampoAct, setMedioCampo] = useState(false);
   const [ataqueAct, setAtaque] = useState(false);
   const [exit, setExit] = useState(false);
-
+  const [selPositions, setSelPositions] = useState([]);
+  console.log("Posiciones seleccionadas: " + selPositions);
   const exitAll = () => {
     setPorteria(false);
     setDefensa(false);
@@ -199,24 +201,48 @@ const ZonasDeCancha = () => {
         className={porteriaAct ? "porteriaAct" : "porteria"}
         onClick={() => (exit ? "" : setPorteria(true) & setExit(true))}
       >
+        {porteriaAct ? (
+          <Positions
+            section={"porteria"}
+            setSelPositions={setSelPositions}
+            selPositions={selPositions}
+          />
+        ) : (
+          ""
+        )}
         <span className="tooltip">Portería</span>
       </div>
       <div
         className={defensaAct ? "defensaAct" : "defensa"}
         onClick={() => (exit ? "" : setDefensa(true) & setExit(true))}
       >
+        {defensaAct ? (
+          <Positions section={"defensa"} selPositions={selPositions} />
+        ) : (
+          ""
+        )}
         <span className="tooltip">Defensa</span>
       </div>
       <div
         className={medioCampoAct ? "medioCampoAct" : "medioCampo"}
         onClick={() => (exit ? "" : setMedioCampo(true) & setExit(true))}
       >
+        {medioCampoAct ? (
+          <Positions section={"medioCampo"} selPositions={selPositions} />
+        ) : (
+          ""
+        )}
         <span className="tooltip">Medio Campo</span>
       </div>
       <div
         className={ataqueAct ? "ataqueAct" : "ataque"}
         onClick={() => (exit ? "" : setAtaque(true) & setExit(true))}
       >
+        {ataqueAct ? (
+          <Positions section={"ataque"} selPositions={selPositions} />
+        ) : (
+          ""
+        )}
         <span className="tooltip">Ataque</span>
       </div>
     </Zonas>

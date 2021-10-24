@@ -79,7 +79,6 @@ const SidebarContainer = styled.aside`
           font-size: 20px;
           color: ${({ myTheme }) => myTheme.textColor};
           cursor: default;
-
           ::placeholder {
             color: ${({ myTheme }) => myTheme.textColor};
             font-size: 16px;

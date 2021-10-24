@@ -9,34 +9,6 @@ const PositionContainer = styled.div`
   }
 `;
 
-const positionsObj = [
-  {
-    section: "defensa",
-    positions: [
-      {
-        position: "MCO",
-        description: "Medio Campista Ofensivo",
-      },
-      {
-        position: "DC",
-        description: "Defensa Central",
-      },
-      {
-        position: "LB",
-        description: "Lateral Izquierdo",
-      },
-      {
-        position: "ST",
-        description: "Striker",
-      },
-      {
-        position: "MCD",
-        description: "Medio Campista Defensivo",
-      },
-    ],
-  },
-];
-
 const PositionInput = () => {
   return (
     <PositionContainer>

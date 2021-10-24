@@ -92,7 +92,7 @@ const Nav = styled.nav`
 
         &:hover {
           transition: all 0.2s ease-in-out;
-          box-shadow: 0 1px 4px rgba(0, 0, 0, 1);
+          box-shadow: ${({ myTheme }) => `0 1px 4px ${myTheme.textColor}`};
           color: ${({ myTheme }) => myTheme.hoverText};
           background: ${({ myTheme }) => myTheme.hoverColor};
         }

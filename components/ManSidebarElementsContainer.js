@@ -4,7 +4,9 @@ import { useState } from "react";
 const ElemContent = styled.li`
   position: relative;
   width: 100%;
-  margin: 0;
+  margin-top: 10rem;
+  height: ${({ active, items }) =>
+    active ? `${1.9 + 2.12 * items}rem` : "1.9rem"};
   list-style: none;
   line-height: 50px;
   transition: all 0.5s ease;
@@ -13,25 +15,29 @@ const ElemContent = styled.li`
   align-items: center;
   display: block;
   transition: 1s;
+  overflow: ${({ isOpen }) => (isOpen ? "hidden" : "")};
   &:hover a {
-    background: ${({ myTheme }) => myTheme.hoverColor};
-    cursor: pointer;
-  }
-  &:hover .menuItem {
-    color: ${({ myTheme }) => myTheme.hoverText};
+    background: ${({ myTheme, active }) => (active ? myTheme.hoverColor : "")};
+    cursor: ${({ active }) => (active ? "pointer" : "default")};
+    color: ${({ myTheme, active }) =>
+      active ? myTheme.hoverText : myTheme.textColor};
   }
   a {
     color: ${({ myTheme }) => myTheme.textColor};
     display: grid;
+    top: 0;
     grid-template-columns: 1fr;
-    height: 48px;
+    height: 1.9rem;
     align-items: center;
     text-decoration: none;
-    transition: all 0.2s ease;
     border-radius: ${({ isOpen }) => (isOpen ? "0 25px 25px 0" : "50%")};
+    z-index: 10;
+    background: ${({ myTheme }) => myTheme.backgroundColor};
     .menuItem {
       display: flex;
+      z-index: 12;
       .icon {
+        z-index: 14;
         margin-top: 4px;
         min-width: 50px;
         border-radius: 12px;
@@ -39,31 +45,34 @@ const ElemContent = styled.li`
         text-align: center;
       }
       .links-name {
-        transition: all 0.2s ease;
+        z-index: 14;
         cursor: pointer;
         opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
       }
+      &:hover {
+        color: ${({ myTheme }) => myTheme.hoverText};
+      }
+    }
+    &:hover {
+      background: ${({ myTheme }) => myTheme.hoverColor};
     }
   }
   .listSelected {
     display: grid;
-    opacity: 0;
-    height: 0px;
-    transition: 1s;
-  }
-  .listSelectedActive {
-    display: grid;
-    opacity: 1;
+    top: 0;
     left: 0;
     width: 90%;
-    height: auto;
-    transition: 1s;
+    height: 0;
+    transition: 0.5s;
+    font-size: 0.7rem;
+    overflow: hidden;
     .list-item {
-      top: 0;
+      position: absolute;
+      top: -4rem;
+      z-index: 0;
       width: 100%;
-      opacity: 1;
       left: 0;
-      transition: all 0.8s ease;
+      transition: all 0.8s ease-in;
       background: ${({ myTheme }) => myTheme.boxColor};
       color: ${({ myTheme }) => myTheme.textColor};
       border-radius: 0 0 10px 0;
@@ -73,11 +82,36 @@ const ElemContent = styled.li`
       text-overflow: ellipsis;
       box-shadow: 0px 0px #fff inset;
       transition: box-shadow 0.3s, text-indent 0.3s;
+    }
+  }
+  .listSelectedActive {
+    display: grid;
+    left: 0;
+    top: 0;
+    height: ${({ items }) => `${2.12 * items}rem`};
+    width: 90%;
+    transition: 0.5s;
+    font-size: 0.7rem;
+    overflow: hidden;
+    .list-item {
+      top: 0;
+      height: 2rem;
+      width: 100%;
+      opacity: 1;
+      left: 0;
+      transition: all 0.8s ease;
+      background: ${({ myTheme }) => myTheme.boxColor};
+      color: ${({ myTheme }) => myTheme.textColor};
+      border-radius: 0 0 10px 0;
+      text-indent: 10px;
+      font-size: 0.7rem;
+      box-shadow: 0px 0px #fff inset;
+      transition: box-shadow 0.3s, text-indent 0.3s;
       &:hover {
         box-shadow: ${({ myTheme }) =>
           `0.25rem 0px ${myTheme.highlightColor} inset`};
         transition: box-shadow 0.3s linear, text-indent 0.3s linear;
-        text-indent: 31px;
+        text-indent: 25px;
         cursor: pointer;
       }
     }
@@ -87,12 +121,14 @@ const ElemContent = styled.li`
 const ElementsContainer = ({ item, setPage, myTheme, isOpen, toggle }) => {
   const [active, setActive] = useState(false);
   const toggleActive = () => setActive(!active);
+  const items = item.listItems.length;
   return (
     <ElemContent
       myTheme={myTheme}
       isOpen={isOpen}
       onMouseLeave={() => setActive(false)}
       active={active}
+      items={items}
     >
       <a onClick={() => (isOpen ? toggleActive() : toggle())}>
         <div className="menuItem">
@@ -102,15 +138,17 @@ const ElementsContainer = ({ item, setPage, myTheme, isOpen, toggle }) => {
       </a>
       <span className="tooltip">{item.title}</span>
       <ul className={active ? "listSelectedActive" : "listSelected"}>
-        {item.listItems?.map((list, idx) => (
-          <li
-            className="list-item"
-            key={idx}
-            onClick={() => setPage(list.link)}
-          >
-            {list.title}
-          </li>
-        ))}
+        {item.listItems?.map((list, idx) => {
+          return (
+            <li
+              className="list-item"
+              key={idx}
+              onClick={() => setPage(list.link)}
+            >
+              {list.title}
+            </li>
+          );
+        })}
       </ul>
     </ElemContent>
   );
