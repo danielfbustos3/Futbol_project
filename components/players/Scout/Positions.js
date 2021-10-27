@@ -110,6 +110,7 @@ const CircPosition = styled.div`
     position: absolute;
     left: 105%;
     top: 40%;
+    width: 9rem;
     transition: all 0.3s ease;
     opacity: 1;
     z-index: 100;
@@ -124,8 +125,9 @@ const CircChecked = styled.div`
   width: 2rem;
   border-radius: 50%;
   background: ${({ myTheme }) => myTheme.hoverColor};
-  color: ${({ myTheme }) => myTheme.textColor};
-  box-shadow: 0 0 0.3rem 0.1rem #01bf71, 0 0 0.2rem white inset;
+  color: ${({ myTheme }) => myTheme.hoverText};
+  box-shadow: ${({ myTheme }) =>
+    `0 0 0.3rem 0.1rem ${myTheme.hoverColor}, 0 0 0.2rem ${myTheme.hoverText} inset`};
   cursor: default;
   margin-bottom: ${({ position }) =>
     (position == "LB" || position == "RB") && "1rem"};
