@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import { useTheme } from "../utils/functions";
 import Positions from "./players/Scout/Positions";
+import { BiXCircle } from "react-icons/bi";
 
 const Zonas = styled.div`
   position: absolute;
@@ -10,11 +11,21 @@ const Zonas = styled.div`
   z-index: 4;
   .salir {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 5%;
+    right: 10%;
+    z-index: 30;
+    color: ${({ myTheme }) => myTheme.textColor};
+    &:hover {
+      transform: scale(1.2);
+      color: ${({ myTheme }) => myTheme.hoverColor};
+    }
+    .exit {
+      font-size: 1.8rem;
+    }
   }
   .off {
     display: none;
+    font-size: 2rem;
   }
   .porteria {
     position: absolute;
@@ -23,7 +34,7 @@ const Zonas = styled.div`
     left: 0;
     height: 40%;
     width: 8%;
-    background: ${({ myTheme }) => myTheme.zonasCancha};
+    background: ${({ myTheme }) => `rgba(${myTheme.zonasCancha}, 0.5)`};
     transition: all 0.2s ease-in;
     z-index: 10;
     &:hover {
@@ -38,16 +49,6 @@ const Zonas = styled.div`
       z-index: 100;
     }
   }
-  .porteriaAct {
-    background: blue;
-    position: absolute;
-    transition: all 1s ease;
-    transform: rotate(270deg);
-    width: 50%;
-    height: 140%;
-    left: 25%;
-    top: -20%;
-  }
   .defensa {
     position: absolute;
     opacity: 0;
@@ -55,7 +56,7 @@ const Zonas = styled.div`
     left: 15%;
     height: 92%;
     width: 18%;
-    background: ${({ myTheme }) => myTheme.zonasCancha};
+    background: ${({ myTheme }) => `rgba(${myTheme.zonasCancha}, 0.5)`};
     transition: all 0.2s ease-in;
     z-index: 9;
     &:hover {
@@ -71,16 +72,6 @@ const Zonas = styled.div`
       z-index: 100;
     }
   }
-  .defensaAct {
-    background: blue;
-    position: absolute;
-    transition: all 1s ease;
-    transform: rotate(270deg);
-    width: 50%;
-    height: 140%;
-    left: 25%;
-    top: -20%;
-  }
   .medioCampo {
     position: absolute;
     opacity: 0;
@@ -88,7 +79,7 @@ const Zonas = styled.div`
     left: 40%;
     height: 85%;
     width: 20%;
-    background: ${({ myTheme }) => myTheme.zonasCancha};
+    background: ${({ myTheme }) => `rgba(${myTheme.zonasCancha}, 0.5)`};
     transition: all 0.2s ease-in;
     z-index: 8;
     &:hover {
@@ -104,16 +95,6 @@ const Zonas = styled.div`
       z-index: 100;
     }
   }
-  .medioCampoAct {
-    background: blue;
-    position: absolute;
-    transition: all 1s ease;
-    transform: rotate(270deg);
-    width: 50%;
-    height: 140%;
-    left: 25%;
-    top: -20%;
-  }
   .ataque {
     position: absolute;
     opacity: 0;
@@ -121,7 +102,7 @@ const Zonas = styled.div`
     left: 75%;
     height: 75%;
     width: 20%;
-    background: ${({ myTheme }) => myTheme.zonasCancha};
+    background: ${({ myTheme }) => `rgba(${myTheme.zonasCancha}, 0.5)`};
     transition: all 0.2s ease-in;
     z-index: 7;
     &:hover {
@@ -136,16 +117,6 @@ const Zonas = styled.div`
       top: 40%;
       z-index: 100;
     }
-  }
-  .ataqueAct {
-    background: blue;
-    position: absolute;
-    transition: all 1s ease;
-    transform: rotate(270deg);
-    width: 50%;
-    height: 140%;
-    left: 25%;
-    top: -20%;
   }
   .tooltip {
     position: absolute;
@@ -165,16 +136,32 @@ const Zonas = styled.div`
     pointer-events: none;
     z-index: 100;
   }
+  .seccionAct {
+    background: ${({ myTheme }) => `linear-gradient(
+      90deg,
+      rgba(${myTheme.zonasCancha}, 0),
+      rgba(${myTheme.zonasCancha}, 0.7)
+      )`};
+    border-radius: 0 1rem 1rem 0;
+    position: absolute;
+    transition: all 0.5s ease;
+    transform: rotate(-90deg);
+    width: 40%;
+    height: 140%;
+    left: 30%;
+    top: -20%;
+    z-index: 20;
+    opacity: 1;
+  }
 `;
 
-const ZonasDeCancha = () => {
+const ZonasDeCancha = ({ selPositions, setSelPositions }) => {
   const myTheme = useTheme();
   const [porteriaAct, setPorteria] = useState(false);
   const [defensaAct, setDefensa] = useState(false);
   const [medioCampoAct, setMedioCampo] = useState(false);
   const [ataqueAct, setAtaque] = useState(false);
   const [exit, setExit] = useState(false);
-  const [selPositions, setSelPositions] = useState([]);
   console.log("Posiciones seleccionadas: " + selPositions);
   const exitAll = () => {
     setPorteria(false);
@@ -195,51 +182,61 @@ const ZonasDeCancha = () => {
         className={exit ? "salir" : "off"}
         onClick={() => exitAll() & setExit(false)}
       >
-        X
+        <BiXCircle className="exit" />
       </p>
       <div
-        className={porteriaAct ? "porteriaAct" : "porteria"}
+        className={porteriaAct ? "seccionAct" : "porteria"}
         onClick={() => (exit ? "" : setPorteria(true) & setExit(true))}
       >
-        {porteriaAct ? (
+        {porteriaAct && (
           <Positions
             section={"porteria"}
             setSelPositions={setSelPositions}
             selPositions={selPositions}
           />
-        ) : (
-          ""
         )}
         <span className="tooltip">Portería</span>
       </div>
       <div
-        className={defensaAct ? "defensaAct" : "defensa"}
+        className={defensaAct ? "seccionAct" : "defensa"}
         onClick={() => (exit ? "" : setDefensa(true) & setExit(true))}
       >
         {defensaAct ? (
-          <Positions section={"defensa"} selPositions={selPositions} />
+          <Positions
+            section={"defensa"}
+            selPositions={selPositions}
+            setSelPositions={setSelPositions}
+          />
         ) : (
           ""
         )}
         <span className="tooltip">Defensa</span>
       </div>
       <div
-        className={medioCampoAct ? "medioCampoAct" : "medioCampo"}
+        className={medioCampoAct ? "seccionAct" : "medioCampo"}
         onClick={() => (exit ? "" : setMedioCampo(true) & setExit(true))}
       >
         {medioCampoAct ? (
-          <Positions section={"medioCampo"} selPositions={selPositions} />
+          <Positions
+            section={"medioCampo"}
+            selPositions={selPositions}
+            setSelPositions={setSelPositions}
+          />
         ) : (
           ""
         )}
         <span className="tooltip">Medio Campo</span>
       </div>
       <div
-        className={ataqueAct ? "ataqueAct" : "ataque"}
+        className={ataqueAct ? "seccionAct" : "ataque"}
         onClick={() => (exit ? "" : setAtaque(true) & setExit(true))}
       >
         {ataqueAct ? (
-          <Positions section={"ataque"} selPositions={selPositions} />
+          <Positions
+            section={"ataque"}
+            selPositions={selPositions}
+            setSelPositions={setSelPositions}
+          />
         ) : (
           ""
         )}

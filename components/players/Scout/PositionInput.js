@@ -1,19 +1,44 @@
 import CanchaFutbol from "components/CanchaFutbol";
 import styled from "styled-components";
+import { useState } from "react";
+import { useTheme } from "../../../utils/functions";
 
 const PositionContainer = styled.div`
+  margin-top: 1rem;
   display: flex;
+  justify-content: space-between;
+  width: 100%;
   .contCancha {
-    margin-top: 5rem;
     width: 600px;
+  }
+  .selecPos {
+    margin-top: 3rem;
+    margin-right: 3rem;
+    width: 42%;
+    h1 {
+      font-size: 1.5rem;
+      color: ${({ myTheme }) => myTheme.textColor};
+    }
+    p {
+      font-size: 1.5rem;
+    }
   }
 `;
 
-const PositionInput = () => {
+const PositionInput = ({ selPositions, setSelPositions }) => {
+  const myTheme = useTheme();
+
   return (
-    <PositionContainer>
+    <PositionContainer myTheme={myTheme}>
       <div className="contCancha">
-        <CanchaFutbol />
+        <CanchaFutbol
+          selPositions={selPositions}
+          setSelPositions={setSelPositions}
+        />
+      </div>
+      <div className="selecPos">
+        <h1>Posiciones Seleccionadas:</h1>
+        <p>{selPositions.join(", ")}</p>
       </div>
     </PositionContainer>
   );

@@ -26,7 +26,7 @@ export const ThemeProvider = ({ children }) => {
     hoverText: "#0d0d0d",
     boxColor: "#1d1d1d",
     fondoCancha: "#0d0d0d",
-    zonasCancha: "rgba(64, 172, 138, 0.5)",
+    zonasCancha: "64, 172, 138",
   });
 
   function setColor(Color) {
@@ -40,7 +40,7 @@ export const ThemeProvider = ({ children }) => {
           hoverText: "#0d0d0d",
           boxColor: "#1d1d1d",
           fondoCancha: "#0d0d0d",
-          zonasCancha: "rgba(64, 172, 138, 0.5)",
+          zonasCancha: "64, 172, 138",
         });
         break;
       case "light":
@@ -52,7 +52,7 @@ export const ThemeProvider = ({ children }) => {
           hoverText: "#0d0d0d",
           boxColor: "#dfdfdf",
           fondoCancha: "#f5f5f5",
-          zonasCancha: "rgba(64, 172, 138, 0.8)",
+          zonasCancha: "64, 172, 138",
         });
         break;
       case "dark-green":
@@ -64,7 +64,7 @@ export const ThemeProvider = ({ children }) => {
           hoverText: "#0d0d0d",
           boxColor: "#091714",
           fondoCancha: "#0f2520",
-          zonasCancha: "rgba(64, 172, 138, 0.8)",
+          zonasCancha: "64, 172, 138",
         });
         break;
       case "green":
@@ -76,7 +76,7 @@ export const ThemeProvider = ({ children }) => {
           hoverText: "#0d0d0d",
           boxColor: "#009357",
           fondoCancha: "#01bf71",
-          zonasCancha: "rgba(178, 218, 14, 0.8)",
+          zonasCancha: "178, 218, 14",
         });
         break;
       default:

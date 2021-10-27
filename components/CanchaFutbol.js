@@ -21,8 +21,8 @@ const ContenedorCancha = styled.div`
     transition: all 0.5s ease;
     box-shadow: ${({ myTheme }) => `0 0 10px ${myTheme.textColor}`};
     &:hover {
-      transform: scale(1.1);
-      transition: all 0.5s ease;
+      /* transform: scale(1.1);
+      transition: all 0.5s ease; */
     }
   }
 `;
@@ -210,13 +210,16 @@ const ZonaCentral = styled(Section)`
   }
 `;
 
-const CanchaFutbol = () => {
+const CanchaFutbol = ({ selPositions, setSelPositions }) => {
   const myTheme = useTheme();
   const anchoLineas = "3px";
   return (
     <ContenedorCancha anchoLineas={anchoLineas} myTheme={myTheme}>
       <div className="contenidoCancha">
-        <ZonasDeCancha />
+        <ZonasDeCancha
+          selPositions={selPositions}
+          setSelPositions={setSelPositions}
+        />
         <EsquinaSuperiorIzquierda anchoLineas={anchoLineas} myTheme={myTheme} />
         <EsquinaSuperiorDerecha anchoLineas={anchoLineas} myTheme={myTheme} />
         <EsquinaInferiorIzquierda anchoLineas={anchoLineas} myTheme={myTheme} />
