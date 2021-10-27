@@ -27,6 +27,7 @@ export const ThemeProvider = ({ children }) => {
     boxColor: "#1d1d1d",
     fondoCancha: "#0d0d0d",
     zonasCancha: "64, 172, 138",
+    checkColor: "#fff",
   });
 
   function setColor(Color) {
@@ -41,6 +42,7 @@ export const ThemeProvider = ({ children }) => {
           boxColor: "#1d1d1d",
           fondoCancha: "#0d0d0d",
           zonasCancha: "64, 172, 138",
+          checkColor: "#fff",
         });
         break;
       case "light":
@@ -53,6 +55,7 @@ export const ThemeProvider = ({ children }) => {
           boxColor: "#dfdfdf",
           fondoCancha: "#f5f5f5",
           zonasCancha: "64, 172, 138",
+          checkColor: "#fff",
         });
         break;
       case "dark-green":
@@ -65,6 +68,7 @@ export const ThemeProvider = ({ children }) => {
           boxColor: "#091714",
           fondoCancha: "#0f2520",
           zonasCancha: "64, 172, 138",
+          checkColor: "#01bf71",
         });
         break;
       case "green":
@@ -77,6 +81,7 @@ export const ThemeProvider = ({ children }) => {
           boxColor: "#009357",
           fondoCancha: "#01bf71",
           zonasCancha: "178, 218, 14",
+          checkColor: "#01bf71",
         });
         break;
       default:

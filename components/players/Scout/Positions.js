@@ -125,7 +125,7 @@ const CircChecked = styled.div`
   width: 2rem;
   border-radius: 50%;
   background: ${({ myTheme }) => myTheme.hoverColor};
-  color: ${({ myTheme }) => myTheme.hoverText};
+  color: ${({ myTheme }) => myTheme.checkColor};
   box-shadow: ${({ myTheme }) =>
     `0 0 0.3rem 0.1rem ${myTheme.hoverColor}, 0 0 0.2rem ${myTheme.hoverText} inset`};
   cursor: default;
