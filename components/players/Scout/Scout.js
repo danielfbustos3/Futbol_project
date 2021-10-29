@@ -30,6 +30,7 @@ const ScoutContainer = styled.div`
 
 const Scout = ({ data, status }) => {
   const [selPositions, setSelPositions] = useState([]);
+  const [selAttributes, setSelAttributes] = useState([]);
   const myTheme = useTheme();
   return (
     <ScoutContainer myTheme={myTheme}>
@@ -47,7 +48,11 @@ const Scout = ({ data, status }) => {
       <p className="indicator">
         Seleccione los atributos requeridos para el jugador
       </p>
-      <AttributesInput />
+      <AttributesInput
+        selAttributes={selAttributes}
+        setSelAttributes={setSelAttributes}
+      />
+      <div className="separator"></div>
       <ContractInput />
       <AgeInput />
     </ScoutContainer>

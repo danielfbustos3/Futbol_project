@@ -12,9 +12,8 @@ const PositionContainer = styled.div`
     width: 600px;
   }
   .selecPos {
-    margin-top: 3rem;
-    margin-right: 3rem;
-    width: 42%;
+    padding: 3rem;
+    width: 40%;
     h1 {
       font-size: 1.5rem;
       color: ${({ myTheme }) => myTheme.textColor};
