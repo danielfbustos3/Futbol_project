@@ -7,9 +7,9 @@ const SidebarContainer = styled.aside`
   width: ${({ isOpen }) => (isOpen ? "10rem" : "3rem")};
   transition: all 0.3s ease;
   /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); */
-  background: red;
   height: calc(100vh - 3rem);
   position: fixed;
+  z-index: 100;
   .sidebar {
     top: 0;
     left: 0;
@@ -147,12 +147,12 @@ const SidebarContainer = styled.aside`
   }
 `;
 
-const Sidebar = ({ isOpen, setPage, toggle }) => {
+const Sidebar = ({ isOpen, setPage, toggle, setIsOpen }) => {
   const myTheme = useTheme();
 
   return (
     <SidebarContainer isOpen={isOpen} myTheme={myTheme}>
-      <div className="sidebar">
+      <div className="sidebar" onMouseLeave={() => setIsOpen(false)}>
         <ul className="nav-list">
           <li onClick={() => (isOpen ? "" : toggle())}>
             <input type="text" placeholder="Search..." />

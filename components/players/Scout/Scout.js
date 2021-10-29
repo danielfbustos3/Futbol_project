@@ -53,6 +53,9 @@ const Scout = ({ data, status }) => {
         setSelAttributes={setSelAttributes}
       />
       <div className="separator"></div>
+      <p className="indicator">
+        Seleccione la edad y el término del contrato para el jugador
+      </p>
       <ContractInput />
       <AgeInput />
     </ScoutContainer>

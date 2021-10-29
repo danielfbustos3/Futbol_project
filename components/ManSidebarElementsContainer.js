@@ -130,7 +130,7 @@ const ElementsContainer = ({ item, setPage, myTheme, isOpen, toggle }) => {
       active={active}
       items={items}
     >
-      <a onClick={() => (isOpen ? toggleActive() : toggle())}>
+      <a onClick={() => (isOpen ? toggleActive() : toggleActive() & toggle())}>
         <div className="menuItem">
           <i className="icon">{item.icon}</i>
           <span className="links-name">{item.title}</span>

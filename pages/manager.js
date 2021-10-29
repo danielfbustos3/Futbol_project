@@ -43,7 +43,12 @@ const ManagerPage = () => {
       </Head>
       <ManagerNavbar isOpen={isOpen} toggle={toggle} setPage={setPage} />
       <PageLayout isOpen={isOpen}>
-        <ManagerSidebar isOpen={isOpen} setPage={setPage} toggle={toggle} />
+        <ManagerSidebar
+          isOpen={isOpen}
+          setPage={setPage}
+          toggle={toggle}
+          setIsOpen={setIsOpen}
+        />
         <main className="main-content">
           <ManagerLayout page={page} isOpen={isOpen} />
           <ManagerFooter />
