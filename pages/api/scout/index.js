@@ -9,22 +9,21 @@ export default async (req, res) => {
   const value = parseInt(req.query.value);
   console.log(value);
   // const positions = req.query.positions.replaceAll(",", "|");
-  // const contract = parseInt(req.query.contract);
-  // const minAge = parseInt(req.query.minage);
-  // const maxAge = parseInt(req.query.maxage);
+  const contract = parseInt(req.query.contract);
+  const minAge = parseInt(req.query.minage);
+  const maxAge = parseInt(req.query.maxage);
 
   switch (method) {
     case "GET":
       try {
         // console.log(maxAge);
         const players = await Player.find({
-          ValueEUR: { $lte: value },
-          // $and: [
-          //   { ValueEUR: { $lte: value } },
-          //   { Positions: { $regex: positions } },
-          //   { ContractUntil: { $lte: contract } },
-          //   { Age: { $gte: minAge, $lte: maxAge } },
-          // ],
+          $and: [
+            { ValueEUR: { $lte: value } },
+            //   { Positions: { $regex: positions } },
+            { ContractUntil: { $lte: contract } },
+            { Age: { $gte: minAge, $lte: maxAge } },
+          ],
         })
           .sort("-Overall")
           .limit(30)
