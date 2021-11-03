@@ -6,7 +6,8 @@ dbConnect();
 export default async (req, res) => {
   const { method } = req;
 
-  // const value = parseInt(req.query.value);
+  const value = parseInt(req.query.value);
+  console.log(value);
   // const positions = req.query.positions.replaceAll(",", "|");
   // const contract = parseInt(req.query.contract);
   // const minAge = parseInt(req.query.minage);
@@ -17,6 +18,7 @@ export default async (req, res) => {
       try {
         // console.log(maxAge);
         const players = await Player.find({
+          ValueEUR: { $lte: value },
           // $and: [
           //   { ValueEUR: { $lte: value } },
           //   { Positions: { $regex: positions } },

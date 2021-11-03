@@ -30,7 +30,7 @@ function ShowResults() {
     return res.json();
   };
 
-  const { data, status } = useQuery("players", fetchPlayers);
+  // const { data, status } = useQuery("players", fetchPlayers);
 
   return (
     <ResultsContainer>
