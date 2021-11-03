@@ -8,7 +8,6 @@ export default async (req, res) => {
 
   const value = parseInt(req.query.value);
   const positions = req.query.positions;
-  // .replaceAll(",", "|");
   const contract = parseInt(req.query.contract);
   const minAge = parseInt(req.query.minage);
   const maxAge = parseInt(req.query.maxage);
