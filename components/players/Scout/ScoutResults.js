@@ -22,12 +22,7 @@ function ShowResults() {
   const minAge = useGlobalState("scoutMinAge")[0];
   const maxAge = useGlobalState("scoutMaxAge")[0];
 
-  console.log("doble holis");
-  console.log(typeof positions);
-  console.log(positions);
-
   const fetchPlayers = async () => {
-    console.log(value);
     const res = await fetch(
       `${window.location.origin}/api/scout?value=${value}&positions=${positions}&contract=${contract}&minage=${minAge}&maxage=${maxAge}`
     );
