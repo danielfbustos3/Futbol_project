@@ -24,7 +24,7 @@ const playerSchema = new mongoose.Schema({
   WageEUR: { type: Number },
   ReleaseClause: { type: Number },
   ClubPosition: { type: String },
-  contractUntil: { type: Number },
+  ContractUntil: { type: Number },
   ClubNumber: { type: Number },
   ClubJoined: { type: Number },
   OnLoad: { type: Boolean },

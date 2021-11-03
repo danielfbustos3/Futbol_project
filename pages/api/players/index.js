@@ -9,9 +9,9 @@ export default async (req, res) => {
   switch (method) {
     case "GET":
       try {
-        const players = await Player.find({}).limit(5).skip(3);
-        res.status(200).json({ success: true, data: players });
+        const players = await Player.find().sort("-Overall").limit(50).skip(0);
 
+        res.status(200).json({ success: true, data: players });
         // paginatedResults(Player);
         // res.json(res.paginatedResults);
       } catch (error) {

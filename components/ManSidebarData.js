@@ -31,7 +31,7 @@ export const linksObj = [
     icon: <RiUserStarLine />,
     listItems: [
       { title: "Encuentra un jugador", link: "scout" },
-      { title: "Jugadores encontrados", link: "scout" },
+      { title: "Jugadores encontrados", link: "scoutresults" },
     ],
   },
   {

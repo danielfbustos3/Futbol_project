@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from "../../../utils/functions";
 import { motion } from "framer-motion";
 import { BiCheckCircle } from "react-icons/bi";
+import { setGlobalState } from "../../../state";
 
 const PosContent = styled.div`
   display: flex;
@@ -247,8 +248,15 @@ const ataqueObj = [
   },
 ];
 
-const Positions = ({ section, setSelPositions, selPositions }) => {
+const Positions = ({ section }) => {
   const myTheme = useTheme();
+
+  const [selPositions, setSelPositions] = useState([]);
+
+  useEffect(() => {
+    setGlobalState("scoutPositions", selPositions);
+  }, [selPositions]);
+
   switch (section) {
     case "porteria":
       return (

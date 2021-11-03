@@ -50,7 +50,7 @@ const ManagerPage = () => {
           setIsOpen={setIsOpen}
         />
         <main className="main-content">
-          <ManagerLayout page={page} isOpen={isOpen} />
+          <ManagerLayout page={page} setPage={setPage} isOpen={isOpen} />
           <ManagerFooter />
         </main>
       </PageLayout>

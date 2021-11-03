@@ -210,16 +210,13 @@ const ZonaCentral = styled(Section)`
   }
 `;
 
-const CanchaFutbol = ({ selPositions, setSelPositions }) => {
+const CanchaFutbol = ({}) => {
   const myTheme = useTheme();
   const anchoLineas = "3px";
   return (
     <ContenedorCancha anchoLineas={anchoLineas} myTheme={myTheme}>
       <div className="contenidoCancha">
-        <ZonasDeCancha
-          selPositions={selPositions}
-          setSelPositions={setSelPositions}
-        />
+        <ZonasDeCancha />
         <EsquinaSuperiorIzquierda anchoLineas={anchoLineas} myTheme={myTheme} />
         <EsquinaSuperiorDerecha anchoLineas={anchoLineas} myTheme={myTheme} />
         <EsquinaInferiorIzquierda anchoLineas={anchoLineas} myTheme={myTheme} />

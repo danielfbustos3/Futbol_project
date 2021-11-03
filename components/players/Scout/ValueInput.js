@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import AnimatingNumber from "./AnimatingNumber";
 import { useTheme } from "../../../utils/functions";
+import { setGlobalState } from "state";
 
 const Container = styled.div`
   display: flex;
@@ -67,8 +68,9 @@ const ValueInput = () => {
 
   const handleParamUser = () => (e) => {
     if (e.target.value.length <= 10) {
-      const playerValue = e.target.value;
-      setPlayerValue(playerValue);
+      const handleValue = e.target.value;
+      setPlayerValue(handleValue);
+      setGlobalState("scoutValue", handleValue);
     }
   };
   return (
@@ -79,7 +81,6 @@ const ValueInput = () => {
         </label>
         <input
           type="number"
-          maxLength={10}
           value={playerValue}
           onFocus={() => setPlayerValueLabel(true)}
           onBlur={() => (playerValue == "" ? setPlayerValueLabel(false) : "")}

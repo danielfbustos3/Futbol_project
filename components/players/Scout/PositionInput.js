@@ -2,6 +2,7 @@ import CanchaFutbol from "components/CanchaFutbol";
 import styled from "styled-components";
 import { useState } from "react";
 import { useTheme } from "../../../utils/functions";
+import { useGlobalState } from "../../../state";
 
 const PositionContainer = styled.div`
   margin-top: 1rem;
@@ -24,20 +25,17 @@ const PositionContainer = styled.div`
   }
 `;
 
-const PositionInput = ({ selPositions, setSelPositions }) => {
+const PositionInput = ({}) => {
   const myTheme = useTheme();
-
+  const selPositions = useGlobalState("scoutPositions");
   return (
     <PositionContainer myTheme={myTheme}>
       <div className="contCancha">
-        <CanchaFutbol
-          selPositions={selPositions}
-          setSelPositions={setSelPositions}
-        />
+        <CanchaFutbol />
       </div>
       <div className="selecPos">
         <h1>Posiciones Seleccionadas:</h1>
-        <p>{selPositions.join(", ")}</p>
+        <p>{selPositions[0].join(", ")}</p>
       </div>
     </PositionContainer>
   );

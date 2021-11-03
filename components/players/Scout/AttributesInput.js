@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useTheme } from "../../../utils/functions";
 import Attributes from "./Attributes";
+import { useState } from "react";
 
 const AttributesContainer = styled.div`
   margin-top: 1rem;
@@ -134,7 +135,8 @@ const atributosObj = [
   },
 ];
 
-const AttributesInput = ({ selAttributes, setSelAttributes }) => {
+const AttributesInput = () => {
+  const [selAttributes, setSelAttributes] = useState([]);
   const myTheme = useTheme();
 
   return (

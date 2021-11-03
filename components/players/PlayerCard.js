@@ -24,6 +24,10 @@ const PlayerCard = ({ player }) => {
       <p className="content">Overall - {player.Overall}</p>
       <p className="content">Potential - {player.Potential}</p>
       <p className="content">Club - {player.Club}</p>
+      <p className="content">Positions - {player.Positions}</p>
+      <p className="content">Age - {player.Age}</p>
+      <p className="content">Contract Until - {player.ContractUntil}</p>
+      <p className="content">Value - {player.ValueEUR}</p>
     </CardContent>
   );
 };

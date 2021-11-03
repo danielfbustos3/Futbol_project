@@ -1,12 +1,9 @@
 import styled from "@emotion/styled";
-import PlayerCard from "../PlayerCard";
 import ValueInput from "./ValueInput";
 import PositionInput from "./PositionInput";
 import AttributesInput from "./AttributesInput";
-import ContractInput from "./ContractInput";
-import AgeInput from "./AgeInput";
+import AgeContractInput from "./AgeContractInput";
 import { useTheme } from "../../../utils/functions";
-import { useState } from "react";
 
 const ScoutContainer = styled.div`
   display: flex;
@@ -26,11 +23,14 @@ const ScoutContainer = styled.div`
     border-bottom: ${({ myTheme }) => `1px solid  ${myTheme.boxColor}`};
     margin-bottom: 2rem;
   }
+  .submitBtn {
+    width: 100px;
+    height: 30px;
+    background: green;
+  }
 `;
 
-const Scout = ({ data, status }) => {
-  const [selPositions, setSelPositions] = useState([]);
-  const [selAttributes, setSelAttributes] = useState([]);
+const Scout = ({ setPage }) => {
   const myTheme = useTheme();
   return (
     <ScoutContainer myTheme={myTheme}>
@@ -40,24 +40,20 @@ const Scout = ({ data, status }) => {
       <p className="indicator">
         Seleccione las posiciones donde requiere el jugador
       </p>
-      <PositionInput
-        selPositions={selPositions}
-        setSelPositions={setSelPositions}
-      />
+      <PositionInput />
       <div className="separator"></div>
       <p className="indicator">
         Seleccione los atributos requeridos para el jugador
       </p>
-      <AttributesInput
-        selAttributes={selAttributes}
-        setSelAttributes={setSelAttributes}
-      />
+      <AttributesInput />
       <div className="separator"></div>
       <p className="indicator">
-        Seleccione la edad y el término del contrato para el jugador
+        Seleccione la edad y el término del contrato para el jugador por si
+        acaso:
       </p>
-      <ContractInput />
-      <AgeInput />
+      <AgeContractInput />
+      <div className="separator"></div>
+      <button className="submitBtn" onClick={() => setPage("scoutresults")} />
     </ScoutContainer>
   );
 };

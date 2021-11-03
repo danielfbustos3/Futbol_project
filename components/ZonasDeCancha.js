@@ -155,14 +155,13 @@ const Zonas = styled.div`
   }
 `;
 
-const ZonasDeCancha = ({ selPositions, setSelPositions }) => {
+const ZonasDeCancha = ({}) => {
   const myTheme = useTheme();
   const [porteriaAct, setPorteria] = useState(false);
   const [defensaAct, setDefensa] = useState(false);
   const [medioCampoAct, setMedioCampo] = useState(false);
   const [ataqueAct, setAtaque] = useState(false);
   const [exit, setExit] = useState(false);
-  console.log("Posiciones seleccionadas: " + selPositions);
   const exitAll = () => {
     setPorteria(false);
     setDefensa(false);
@@ -188,58 +187,28 @@ const ZonasDeCancha = ({ selPositions, setSelPositions }) => {
         className={porteriaAct ? "seccionAct" : "porteria"}
         onClick={() => (exit ? "" : setPorteria(true) & setExit(true))}
       >
-        {porteriaAct && (
-          <Positions
-            section={"porteria"}
-            setSelPositions={setSelPositions}
-            selPositions={selPositions}
-          />
-        )}
+        {porteriaAct && <Positions section={"porteria"} />}
         <span className="tooltip">Portería</span>
       </div>
       <div
         className={defensaAct ? "seccionAct" : "defensa"}
         onClick={() => (exit ? "" : setDefensa(true) & setExit(true))}
       >
-        {defensaAct ? (
-          <Positions
-            section={"defensa"}
-            selPositions={selPositions}
-            setSelPositions={setSelPositions}
-          />
-        ) : (
-          ""
-        )}
+        {defensaAct ? <Positions section={"defensa"} /> : ""}
         <span className="tooltip">Defensa</span>
       </div>
       <div
         className={medioCampoAct ? "seccionAct" : "medioCampo"}
         onClick={() => (exit ? "" : setMedioCampo(true) & setExit(true))}
       >
-        {medioCampoAct ? (
-          <Positions
-            section={"medioCampo"}
-            selPositions={selPositions}
-            setSelPositions={setSelPositions}
-          />
-        ) : (
-          ""
-        )}
+        {medioCampoAct ? <Positions section={"medioCampo"} /> : ""}
         <span className="tooltip">Medio Campo</span>
       </div>
       <div
         className={ataqueAct ? "seccionAct" : "ataque"}
         onClick={() => (exit ? "" : setAtaque(true) & setExit(true))}
       >
-        {ataqueAct ? (
-          <Positions
-            section={"ataque"}
-            selPositions={selPositions}
-            setSelPositions={setSelPositions}
-          />
-        ) : (
-          ""
-        )}
+        {ataqueAct ? <Positions section={"ataque"} /> : ""}
         <span className="tooltip">Ataque</span>
       </div>
     </Zonas>

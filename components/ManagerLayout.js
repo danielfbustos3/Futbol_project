@@ -4,17 +4,14 @@ import Clubs from "./players/Clubs";
 import Nationality from "./players/Nationality";
 import Position from "./players/Position";
 import Scout from "./players/Scout/Scout";
+import ScoutResults from "./players/Scout/ScoutResults";
 import { useTheme } from "../utils/functions";
 import { useQuery, QueryClient, QueryClientProvider } from "react-query";
+import { useGlobalState } from "../state";
 
 const queryClient = new QueryClient();
 
-const fetchPlayers = async () => {
-  const res = await fetch(`${window.location.origin}/api/players`);
-  return res.json();
-};
-
-export const Container = styled.div`
+const Container = styled.div`
   padding: 80px;
   min-height: 85vh;
   width: 100%;
@@ -30,16 +27,21 @@ export const Container = styled.div`
   }
 `;
 
-const ManagerLayout = ({ page, isOpen }) => {
+const ManagerLayout = ({ page, setPage, isOpen }) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <ShowPage page={page} isOpen={isOpen} />
+      <ShowPage page={page} setPage={setPage} isOpen={isOpen} />
     </QueryClientProvider>
   );
 };
 
-function ShowPage({ page, isOpen }) {
+function ShowPage({ page, setPage, isOpen }) {
   const myTheme = useTheme();
+
+  const fetchPlayers = async () => {
+    const res = await fetch(`${window.location.origin}/api/players`);
+    return res.json();
+  };
 
   const { data, status } = useQuery("players", fetchPlayers);
 
@@ -49,7 +51,7 @@ function ShowPage({ page, isOpen }) {
         return <AllPlayers data={data} status={status} />;
         break;
       case "scout":
-        return <Scout data={data} status={status} />;
+        return <Scout setPage={setPage} />;
         break;
       case "clubs":
         return <Clubs data={data} status={status} />;
@@ -59,6 +61,9 @@ function ShowPage({ page, isOpen }) {
         break;
       case "position":
         return <Position data={data} status={status} />;
+        break;
+      case "scoutresults":
+        return <ScoutResults />;
         break;
       default:
         "allplayers";
