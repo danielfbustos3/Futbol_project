@@ -40,7 +40,7 @@ function ShowResults() {
       {status === "loading" && <div>Loading data...</div>}
       {status === "success" && (
         <div>
-          {data.data.slice(0, 200).map((player, index) => (
+          {data?.data.slice(0, 200).map((player, index) => (
             <PlayerCard key={index} player={player} />
           ))}
         </div>
