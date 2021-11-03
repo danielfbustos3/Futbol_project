@@ -5,26 +5,27 @@ dbConnect();
 
 export default async (req, res) => {
   const { method } = req;
-  const value = parseInt(req.query.value);
-  const positions = req.query.positions.replaceAll(",", "|");
-  const contract = parseInt(req.query.contract);
-  const minAge = parseInt(req.query.minage);
-  const maxAge = parseInt(req.query.maxage);
+
+  // const value = parseInt(req.query.value);
+  // const positions = req.query.positions.replaceAll(",", "|");
+  // const contract = parseInt(req.query.contract);
+  // const minAge = parseInt(req.query.minage);
+  // const maxAge = parseInt(req.query.maxage);
 
   switch (method) {
     case "GET":
       try {
-        console.log(maxAge);
+        // console.log(maxAge);
         const players = await Player.find({
-          $and: [
-            { ValueEUR: { $lte: value } },
-            { Positions: { $regex: positions } },
-            { ContractUntil: { $lte: contract } },
-            { Age: { $gte: minAge, $lte: maxAge } },
-          ],
+          // $and: [
+          //   { ValueEUR: { $lte: value } },
+          //   { Positions: { $regex: positions } },
+          //   { ContractUntil: { $lte: contract } },
+          //   { Age: { $gte: minAge, $lte: maxAge } },
+          // ],
         })
           .sort("-Overall")
-          .limit()
+          .limit(30)
           .skip(0);
 
         res.status(200).json({ success: true, data: players });
