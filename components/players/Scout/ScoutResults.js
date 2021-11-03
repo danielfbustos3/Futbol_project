@@ -19,7 +19,7 @@ function ShowResults() {
   const value = useGlobalState("scoutValue")[0];
   const positions = useGlobalState("scoutPositions")[0]
     .toString()
-    .replaceAll(",", "|");
+    .replace(/,/g, "|");
   const contract = useGlobalState("scoutContract")[0];
   const minAge = useGlobalState("scoutMinAge")[0];
   const maxAge = useGlobalState("scoutMaxAge")[0];
