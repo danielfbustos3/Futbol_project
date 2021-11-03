@@ -25,12 +25,13 @@ function ShowResults() {
   const fetchPlayers = async () => {
     console.log(value);
     const res = await fetch(
-      `${window.location.origin}/api/scout?value=${value}&positions=${positions}&contract=${contract}&minage=${minAge}&maxage=${maxAge}`
+      `${window.location.origin}/api/scout?value=${value}`
+      // &positions=${positions}&contract=${contract}&minage=${minAge}&maxage=${maxAge}
     );
     return res.json();
   };
 
-  // const { data, status } = useQuery("players", fetchPlayers);
+  const { data, status } = useQuery("players", fetchPlayers);
 
   return (
     <ResultsContainer>
