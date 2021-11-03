@@ -17,10 +17,14 @@ const ScoutResults = () => {
 
 function ShowResults() {
   const value = useGlobalState("scoutValue")[0];
-  const positions = useGlobalState("scoutPositions")[0];
+  const positions = useGlobalState("scoutPositions")[0].toString();
   const contract = useGlobalState("scoutContract")[0];
   const minAge = useGlobalState("scoutMinAge")[0];
   const maxAge = useGlobalState("scoutMaxAge")[0];
+
+  console.log("doble holis");
+  console.log(typeof positions);
+  console.log(positions);
 
   const fetchPlayers = async () => {
     console.log(value);
