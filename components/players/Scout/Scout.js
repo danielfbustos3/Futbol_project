@@ -35,16 +35,18 @@ const ScoutContainer = styled.div`
   }
 `;
 
-const refreshData = () => {
-  setGlobalState("scoutValue", "");
-  setGlobalState("scoutPositions", []);
-  setGlobalState("scoutMinAge", 23);
-  setGlobalState("scoutMaxAge", 35);
-  setGlobalState("scoutContract", 2023);
-};
-
 const Scout = ({ setPage }) => {
   const myTheme = useTheme();
+
+  const refreshData = () => {
+    setGlobalState("scoutValue", "");
+    setGlobalState("scoutPositions", []);
+    setGlobalState("scoutMinAge", 23);
+    setGlobalState("scoutMaxAge", 35);
+    setGlobalState("scoutContract", 2023);
+    setPage("scout");
+  };
+
   return (
     <ScoutContainer myTheme={myTheme}>
       <button className="refreshBtn" onClick={() => refreshData()}>

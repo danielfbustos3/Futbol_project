@@ -161,7 +161,7 @@ const ACSlider = ({ tip }) => {
 
   const globalMaxAge = useGlobalState("scoutMaxAge")[0];
   const [percent2, setPercent2] = useState(
-    ((globalMinAge - minAge) / (maxAge - minAge)) * 100
+    ((globalMaxAge - minAge) / (maxAge - minAge)) * 100
   );
   const handleParam2 = () => (e) => {
     if (e.target.value >= globalMinAge + minGap) {
@@ -180,6 +180,14 @@ const ACSlider = ({ tip }) => {
     setGlobalState("scoutContract", handle);
     setPercent3(((handle - contractMin) / (contractMax - contractMin)) * 100);
   };
+
+  useEffect(() => {
+    setPercent1(((globalMinAge - minAge) / (maxAge - minAge)) * 100);
+    setPercent2(((globalMaxAge - minAge) / (maxAge - minAge)) * 100);
+    setPercent3(
+      ((globalContract - contractMin) / (contractMax - contractMin)) * 100
+    );
+  }, [globalMinAge, globalMaxAge, globalContract]);
 
   switch (tip) {
     case "age":
