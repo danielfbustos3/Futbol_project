@@ -19,7 +19,7 @@ const CardContent = styled.div`
 const PlayerCard = ({ player }) => {
   return (
     <CardContent>
-      <h3 className="title">{player.Name}</h3>
+      <h3 className="title">{player.FullName}</h3>
       <p className="content">Nationality - {player.Nationality}</p>
       <p className="content">Overall - {player.Overall}</p>
       <p className="content">Potential - {player.Potential}</p>
