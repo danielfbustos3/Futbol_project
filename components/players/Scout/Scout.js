@@ -4,6 +4,7 @@ import PositionInput from "./PositionInput";
 import AttributesInput from "./AttributesInput";
 import AgeContractInput from "./AgeContractInput";
 import { useTheme } from "../../../utils/functions";
+import { setGlobalState } from "state";
 
 const ScoutContainer = styled.div`
   display: flex;
@@ -23,6 +24,10 @@ const ScoutContainer = styled.div`
     border-bottom: ${({ myTheme }) => `1px solid  ${myTheme.boxColor}`};
     margin-bottom: 2rem;
   }
+  .refreshBtn {
+    width: 100px;
+    height: 30px;
+  }
   .submitBtn {
     width: 100px;
     height: 30px;
@@ -30,10 +35,21 @@ const ScoutContainer = styled.div`
   }
 `;
 
+const refreshData = () => {
+  setGlobalState("scoutValue", "");
+  setGlobalState("scoutPositions", []);
+  setGlobalState("scoutMinAge", 23);
+  setGlobalState("scoutMaxAge", 35);
+  setGlobalState("scoutContract", 2023);
+};
+
 const Scout = ({ setPage }) => {
   const myTheme = useTheme();
   return (
     <ScoutContainer myTheme={myTheme}>
+      <button className="refreshBtn" onClick={() => refreshData()}>
+        Refresh
+      </button>
       <p className="indicator">Ingrese el valor del jugador</p>
       <ValueInput />
       <div className="separator"></div>
@@ -53,7 +69,9 @@ const Scout = ({ setPage }) => {
       </p>
       <AgeContractInput />
       <div className="separator"></div>
-      <button className="submitBtn" onClick={() => setPage("scoutresults")} />
+      <button className="submitBtn" onClick={() => setPage("scoutresults")}>
+        Search!
+      </button>
     </ScoutContainer>
   );
 };

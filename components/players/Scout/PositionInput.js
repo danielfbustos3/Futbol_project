@@ -27,7 +27,7 @@ const PositionContainer = styled.div`
 
 const PositionInput = ({}) => {
   const myTheme = useTheme();
-  const selPositions = useGlobalState("scoutPositions");
+  const selPositions = useGlobalState("scoutPositions")[0];
   return (
     <PositionContainer myTheme={myTheme}>
       <div className="contCancha">
@@ -35,7 +35,7 @@ const PositionInput = ({}) => {
       </div>
       <div className="selecPos">
         <h1>Posiciones Seleccionadas:</h1>
-        <p>{selPositions[0].join(", ")}</p>
+        <p>{selPositions.join(", ")}</p>
       </div>
     </PositionContainer>
   );

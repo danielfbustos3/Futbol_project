@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from "../../../utils/functions";
 import { motion } from "framer-motion";
 import { BiCheckCircle } from "react-icons/bi";
-import { setGlobalState } from "../../../state";
+import { useGlobalState, setGlobalState } from "../../../state";
 
 const PosContent = styled.div`
   display: flex;
@@ -250,12 +250,7 @@ const ataqueObj = [
 
 const Positions = ({ section }) => {
   const myTheme = useTheme();
-
-  const [selPositions, setSelPositions] = useState([]);
-
-  useEffect(() => {
-    setGlobalState("scoutPositions", selPositions);
-  }, [selPositions]);
+  const globalSelPositions = useGlobalState("scoutPositions")[0];
 
   switch (section) {
     case "porteria":
@@ -266,12 +261,13 @@ const Positions = ({ section }) => {
             initial={{ scale: 0 }}
             animate={{ scale: 1, transition: { duration: 0.2 } }}
           >
-            {selPositions?.includes(porteriaObj.position) ? (
+            {globalSelPositions?.includes(porteriaObj.position) ? (
               <CircChecked
                 myTheme={myTheme}
                 onClick={() =>
-                  setSelPositions(
-                    selPositions.filter((i) => i !== porteriaObj.position)
+                  setGlobalState(
+                    "scoutPositions",
+                    globalSelPositions.filter((i) => i !== porteriaObj.position)
                   )
                 }
               >
@@ -281,8 +277,8 @@ const Positions = ({ section }) => {
               <CircPosition
                 myTheme={myTheme}
                 onClick={() =>
-                  setSelPositions((selPositions) => [
-                    ...selPositions,
+                  setGlobalState("scoutPositions", (globalSelPositions) => [
+                    ...globalSelPositions,
                     porteriaObj.position,
                   ])
                 }
@@ -308,7 +304,7 @@ const Positions = ({ section }) => {
                 .split(" ")
                 .map((word) => word[0])
                 .join("");
-              if (selPositions?.includes(pos)) {
+              if (globalSelPositions?.includes(pos)) {
                 return (
                   <CircChecked
                     key={index}
@@ -316,7 +312,10 @@ const Positions = ({ section }) => {
                     position={item.position}
                     myTheme={myTheme}
                     onClick={() =>
-                      setSelPositions(selPositions.filter((i) => i !== pos))
+                      setGlobalState(
+                        "scoutPositions",
+                        globalSelPositions.filter((i) => i !== pos)
+                      )
                     }
                   >
                     <BiCheckCircle className="check" />
@@ -330,7 +329,10 @@ const Positions = ({ section }) => {
                     position={item.position}
                     myTheme={myTheme}
                     onClick={() =>
-                      setSelPositions((selPositions) => [...selPositions, pos])
+                      setGlobalState("scoutPositions", (globalSelPositions) => [
+                        ...globalSelPositions,
+                        pos,
+                      ])
                     }
                   >
                     <div className="circle">{pos}</div>
@@ -355,7 +357,7 @@ const Positions = ({ section }) => {
                 .split(" ")
                 .map((word) => word[0])
                 .join("");
-              if (selPositions?.includes(pos)) {
+              if (globalSelPositions?.includes(pos)) {
                 return (
                   <CircChecked
                     key={index}
@@ -363,7 +365,10 @@ const Positions = ({ section }) => {
                     position={item.position}
                     myTheme={myTheme}
                     onClick={() =>
-                      setSelPositions(selPositions.filter((i) => i !== pos))
+                      setGlobalState(
+                        "scoutPositions",
+                        globalSelPositions.filter((i) => i !== pos)
+                      )
                     }
                   >
                     <BiCheckCircle className="check" />
@@ -377,7 +382,10 @@ const Positions = ({ section }) => {
                     position={item.position}
                     myTheme={myTheme}
                     onClick={() =>
-                      setSelPositions((selPositions) => [...selPositions, pos])
+                      setGlobalState("scoutPositions", (globalSelPositions) => [
+                        ...globalSelPositions,
+                        pos,
+                      ])
                     }
                   >
                     <div className="circle">{pos}</div>
@@ -398,7 +406,7 @@ const Positions = ({ section }) => {
             animate={{ scale: 1, transition: { duration: 0.2 } }}
           >
             {ataqueObj.map((item, index) => {
-              if (selPositions?.includes(item.position)) {
+              if (globalSelPositions?.includes(item.position)) {
                 return (
                   <CircChecked
                     key={index}
@@ -406,8 +414,9 @@ const Positions = ({ section }) => {
                     position={item.position}
                     myTheme={myTheme}
                     onClick={() =>
-                      setSelPositions(
-                        selPositions.filter((i) => i !== item.position)
+                      setGlobalState(
+                        "scoutPositions",
+                        globalSelPositions.filter((i) => i !== item.position)
                       )
                     }
                   >
@@ -422,8 +431,8 @@ const Positions = ({ section }) => {
                     position={item.position}
                     myTheme={myTheme}
                     onClick={() =>
-                      setSelPositions((selPositions) => [
-                        ...selPositions,
+                      setGlobalState("scoutPositions", (globalSelPositions) => [
+                        ...globalSelPositions,
                         item.position,
                       ])
                     }

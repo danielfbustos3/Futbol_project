@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import AnimatingNumber from "./AnimatingNumber";
 import { useTheme } from "../../../utils/functions";
-import { setGlobalState } from "state";
+import { useGlobalState, setGlobalState } from "state";
 
 const Container = styled.div`
   display: flex;
@@ -63,13 +63,16 @@ const Container = styled.div`
 
 const ValueInput = () => {
   const myTheme = useTheme();
-  const [playerValueLabel, setPlayerValueLabel] = useState(false);
-  const [playerValue, setPlayerValue] = useState("");
+
+  const globalPlayerValue = useGlobalState("scoutValue")[0];
+
+  const [playerValueLabel, setPlayerValueLabel] = useState(
+    globalPlayerValue == "" ? false : true
+  );
 
   const handleParamUser = () => (e) => {
     if (e.target.value.length <= 10) {
       const handleValue = e.target.value;
-      setPlayerValue(handleValue);
       setGlobalState("scoutValue", handleValue);
     }
   };
@@ -81,15 +84,17 @@ const ValueInput = () => {
         </label>
         <input
           type="number"
-          value={playerValue}
+          value={globalPlayerValue}
           onFocus={() => setPlayerValueLabel(true)}
-          onBlur={() => (playerValue == "" ? setPlayerValueLabel(false) : "")}
+          onBlur={() =>
+            globalPlayerValue == "" ? setPlayerValueLabel(false) : ""
+          }
           onChange={handleParamUser()}
         />
       </div>
       <div className="labelContainer">
         <p className="label"> €</p>
-        <AnimatingNumber value={playerValue} />
+        <AnimatingNumber value={globalPlayerValue} />
       </div>
     </Container>
   );

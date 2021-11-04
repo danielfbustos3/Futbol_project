@@ -1,11 +1,11 @@
 import { createGlobalState } from "react-hooks-global-state";
 
 const { setGlobalState, useGlobalState } = createGlobalState({
-  scoutValue: 500000000,
-  scoutPositions: ["ST"],
+  scoutValue: "",
+  scoutPositions: [],
   scoutMinAge: 23,
   scoutMaxAge: 35,
-  scoutContract: 2024,
+  scoutContract: 2023,
 });
 
 export { useGlobalState, setGlobalState };

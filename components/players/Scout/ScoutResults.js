@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useQuery, QueryClient, QueryClientProvider } from "react-query";
-import { useGlobalState } from "state";
+import { setGlobalState, useGlobalState } from "state";
 import PlayerCard from "../PlayerCard";
 
 const ResultsContainer = styled.div``;

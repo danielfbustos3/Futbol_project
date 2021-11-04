@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { useTheme } from "../../../utils/functions";
-import { setGlobalState } from "../../../state";
+import { useGlobalState, setGlobalState } from "../../../state";
 
 const SliderContainer = styled.div`
   .values {
@@ -147,41 +147,38 @@ const ACSlider = ({ tip }) => {
   const contractMin = 2021;
   const contractMax = 2028;
 
-  const [playerMinAge, setPlayerMinAge] = useState(23);
+  const globalMinAge = useGlobalState("scoutMinAge")[0];
   const [percent1, setPercent1] = useState(
-    ((23 - minAge) / (maxAge - minAge)) * 100
+    ((globalMinAge - minAge) / (maxAge - minAge)) * 100
   );
   const handleParam1 = () => (e) => {
-    if (e.target.value <= playerMaxAge - minGap) {
+    if (e.target.value <= globalMaxAge - minGap) {
       const handleMin = parseInt(e.target.value);
-      setPlayerMinAge(handleMin);
-      setPercent1(((handleMin - minAge) / (maxAge - minAge)) * 100);
       setGlobalState("scoutMinAge", handleMin);
+      setPercent1(((handleMin - minAge) / (maxAge - minAge)) * 100);
     }
   };
 
-  const [playerMaxAge, setPlayerMaxAge] = useState(35);
+  const globalMaxAge = useGlobalState("scoutMaxAge")[0];
   const [percent2, setPercent2] = useState(
-    ((35 - minAge) / (maxAge - minAge)) * 100
+    ((globalMinAge - minAge) / (maxAge - minAge)) * 100
   );
   const handleParam2 = () => (e) => {
-    if (e.target.value >= playerMinAge + minGap) {
+    if (e.target.value >= globalMinAge + minGap) {
       const handleMax = parseInt(e.target.value);
-      setPlayerMaxAge(handleMax);
-      setPercent2(((handleMax - minAge) / (maxAge - minAge)) * 100);
       setGlobalState("scoutMaxAge", handleMax);
+      setPercent2(((handleMax - minAge) / (maxAge - minAge)) * 100);
     }
   };
 
-  const [contract, setContract] = useState(2023);
+  const globalContract = useGlobalState("scoutContract")[0];
   const [percent3, setPercent3] = useState(
-    ((2023 - contractMin) / (contractMax - contractMin)) * 100
+    ((globalContract - contractMin) / (contractMax - contractMin)) * 100
   );
   const handleParam3 = () => (e) => {
     const handle = parseInt(e.target.value);
-    setContract(handle);
-    setPercent3(((handle - contractMin) / (contractMax - contractMin)) * 100);
     setGlobalState("scoutContract", handle);
+    setPercent3(((handle - contractMin) / (contractMax - contractMin)) * 100);
   };
 
   switch (tip) {
@@ -195,9 +192,9 @@ const ACSlider = ({ tip }) => {
           tip={tip}
         >
           <div className="values">
-            <span className="range">{playerMinAge}</span>
+            <span className="range">{globalMinAge}</span>
             <span> - </span>
-            <span className="range">{playerMaxAge}</span>
+            <span className="range">{globalMaxAge}</span>
           </div>
           <div className="sliderContent">
             <div className="sliderTrack"></div>
@@ -206,7 +203,7 @@ const ACSlider = ({ tip }) => {
               type="range"
               min={minAge}
               max={maxAge}
-              value={playerMinAge}
+              value={globalMinAge}
               onChange={handleParam1()}
             ></input>
             <input
@@ -214,7 +211,7 @@ const ACSlider = ({ tip }) => {
               type="range"
               min={minAge}
               max={maxAge}
-              value={playerMaxAge}
+              value={globalMaxAge}
               onChange={handleParam2()}
             ></input>
           </div>
@@ -231,7 +228,7 @@ const ACSlider = ({ tip }) => {
           tip={tip}
         >
           <div className="values">
-            <span className="range">{contract}</span>
+            <span className="range">{globalContract}</span>
             <span> - </span>
           </div>
           <div className="sliderContent">
@@ -241,7 +238,7 @@ const ACSlider = ({ tip }) => {
               type="range"
               min={contractMin}
               max={contractMax}
-              value={contract}
+              value={globalContract}
               onChange={handleParam3()}
             ></input>
           </div>
