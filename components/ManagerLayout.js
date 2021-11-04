@@ -63,7 +63,7 @@ function ShowPage({ page, setPage, isOpen }) {
         return <Position data={data} status={status} />;
         break;
       case "scoutresults":
-        return <ScoutResults />;
+        return <ScoutResults setPage={setPage} />;
         break;
       default:
         "allplayers";

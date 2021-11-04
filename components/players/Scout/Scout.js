@@ -4,7 +4,8 @@ import PositionInput from "./PositionInput";
 import AttributesInput from "./AttributesInput";
 import AgeContractInput from "./AgeContractInput";
 import { useTheme } from "../../../utils/functions";
-import { setGlobalState } from "state";
+import { setGlobalState, useGlobalState } from "state";
+import { useEffect, useState } from "react";
 
 const ScoutContainer = styled.div`
   display: flex;
@@ -38,6 +39,21 @@ const ScoutContainer = styled.div`
 const Scout = ({ setPage }) => {
   const myTheme = useTheme();
 
+  const [alert, setAlert] = useState(false);
+  const [alertText, setAlertText] = useState("");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const value = useGlobalState("scoutValue")[0];
+  const positions = useGlobalState("scoutPositions")[0];
+
+  useEffect(() => {
+    setAlert(false);
+    setAlertText("");
+  }, [value, positions]);
+
   const refreshData = () => {
     setGlobalState("scoutValue", "");
     setGlobalState("scoutPositions", []);
@@ -47,6 +63,8 @@ const Scout = ({ setPage }) => {
     setPage("scout");
   };
 
+  console.log(positions.length);
+  console.log(typeof positions);
   return (
     <ScoutContainer myTheme={myTheme}>
       <button className="refreshBtn" onClick={() => refreshData()}>
@@ -71,9 +89,31 @@ const Scout = ({ setPage }) => {
       </p>
       <AgeContractInput />
       <div className="separator"></div>
-      <button className="submitBtn" onClick={() => setPage("scoutresults")}>
+      <button
+        className="submitBtn"
+        onClick={() => {
+          if (value === "") {
+            setAlert(true);
+            setAlertText(
+              "Por favor ingrese un presupuesto para buscar jugadores."
+            );
+          } else {
+            if (positions.length === 0) {
+              setAlert(true);
+              setAlertText(
+                "Por favor ingrese al menos una posición para buscar jugadores."
+              );
+            } else {
+              setPage("scoutresults");
+              setAlert(false);
+              setAlertText("");
+            }
+          }
+        }}
+      >
         Search!
       </button>
+      {alert == true && <div className="alertBox">{alertText}</div>}
     </ScoutContainer>
   );
 };
