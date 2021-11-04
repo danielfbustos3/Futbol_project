@@ -27,7 +27,10 @@ const PlayerCard = ({ player }) => {
       <p className="content">Positions - {player.Positions}</p>
       <p className="content">Age - {player.Age}</p>
       <p className="content">Contract Until - {player.ContractUntil}</p>
-      <p className="content">Value - {player.ValueEUR}</p>
+      <p className="content">
+        Value - €
+        {player.ValueEUR.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+      </p>
     </CardContent>
   );
 };
