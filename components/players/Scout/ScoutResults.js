@@ -17,7 +17,7 @@ const bounce = keyframes`
 const scale = keyframes`
   0%, 100% {transform:  scale(1);}
     25% {transform: scale(0.95);}
-    50% {transform:scale(1.1);}
+    50% {transform:scale(1.05);}
     75% {transform: scale(0.95);}
 `;
 
@@ -72,7 +72,7 @@ const ResultsContainer = styled.div`
     text-transform: uppercase;
     overflow: hidden;
     transition: 0.5s;
-    letter-spacing: 4px;
+    letter-spacing: 2px;
     background: ${({ myTheme }) => myTheme.boxColor};
     border-radius: 1rem;
     border: none;

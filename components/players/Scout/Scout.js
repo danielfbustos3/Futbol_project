@@ -21,6 +21,10 @@ const ScoutContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  .espacio {
+    width: 100%;
+    height: 2rem;
+  }
   .indicator {
     width: 100%;
     margin-left: 3rem;
@@ -36,7 +40,7 @@ const ScoutContainer = styled.div`
   }
   .refreshBtn {
     position: absolute;
-    top: 6rem;
+    top: 5rem;
     padding: 0.4rem 0.8rem;
     color: ${({ myTheme }) => myTheme.textColor};
     font-size: 0.7rem;
@@ -44,7 +48,7 @@ const ScoutContainer = styled.div`
     text-transform: uppercase;
     overflow: hidden;
     transition: 0.5s;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     background: ${({ myTheme }) => myTheme.boxColor};
     border-radius: 1rem;
     border: none;
@@ -67,7 +71,7 @@ const ScoutContainer = styled.div`
     text-transform: uppercase;
     overflow: hidden;
     transition: 0.5s;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     background: ${({ myTheme }) => myTheme.boxColor};
     border-radius: 1rem;
     border: none;
@@ -84,7 +88,8 @@ const ScoutContainer = styled.div`
     }
   }
   .alertBox {
-    position: relative;
+    position: absolute;
+    top: 3rem;
     display: flex;
     align-items: center;
     justify-content: left;
@@ -145,8 +150,8 @@ const Scout = ({ setPage }) => {
     } else {
       setRefresh(true);
     }
-    // setAlert(false);
-    // setAlertText("");
+    setAlert(false);
+    setAlertText("");
   }, [value, positions]);
 
   const refreshData = () => {
@@ -161,11 +166,12 @@ const Scout = ({ setPage }) => {
 
   return (
     <ScoutContainer myTheme={myTheme}>
-      {refresh == true && (
+      {refresh == true && alert == false && (
         <button className="refreshBtn" onClick={() => refreshData()}>
           Refrescar
         </button>
       )}
+      <div className="espacio" />
       <p className="indicator">
         Ingrese el presupuesto en EUR para el jugador que está buscando.
       </p>
@@ -191,12 +197,14 @@ const Scout = ({ setPage }) => {
         className="submitBtn"
         onClick={() => {
           if (value === "") {
+            window.scrollTo(0, 0);
             setAlert(true);
             setAlertText(
               "Por favor ingrese un presupuesto para buscar jugadores."
             );
           } else {
             if (positions.length === 0) {
+              window.scrollTo(0, 0);
               setAlert(true);
               setAlertText(
                 "Por favor ingrese al menos una posición para buscar jugadores."
@@ -213,9 +221,9 @@ const Scout = ({ setPage }) => {
       </button>
       {alert == true && (
         <div
+          title="Llene los campos requeridos."
           className="alertBox"
           onClick={() => {
-            window.scrollTo(0, 0);
             setAlert(false);
             setAlertText("");
           }}

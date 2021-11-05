@@ -16,6 +16,7 @@ const Zonas = styled.div`
     z-index: 30;
     color: ${({ myTheme }) => myTheme.textColor};
     &:hover {
+      cursor: pointer;
       transform: scale(1.2);
       color: ${({ myTheme }) => myTheme.hoverColor};
     }
