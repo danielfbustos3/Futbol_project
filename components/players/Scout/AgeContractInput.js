@@ -5,18 +5,18 @@ import ACSlider from "./ACSlider";
 const ACContainer = styled.div`
   margin-top: 1rem;
   display: flex;
-  gap: 1em;
+  gap: 2rem;
   justify-content: space-between;
-  width: 100%;
+  width: 90%;
   .ageCont {
-    height: 10rem;
+    height: 6rem;
     width: 40vw;
     min-width: 20rem;
     border-radius: 1rem;
     background: ${({ myTheme }) => myTheme.boxColor};
   }
   .contCont {
-    height: 10rem;
+    height: 6rem;
     width: 40vw;
     min-width: 20rem;
     border-radius: 1rem;

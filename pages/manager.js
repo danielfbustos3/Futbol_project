@@ -23,29 +23,29 @@ const PageLayout = styled.div`
 
 const ManagerPage = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [keepOpen, setKeepOpen] = useState(false);
   const [page, setPage] = useState("allplayers");
 
+  const toggleKeepOpen = () => {
+    setKeepOpen(!keepOpen);
+  };
   const toggle = () => {
     setIsOpen(!isOpen);
   };
 
   return (
     <ThemeProvider>
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Gemunu+Libre&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
-      <ManagerNavbar isOpen={isOpen} toggle={toggle} setPage={setPage} />
+      <ManagerNavbar
+        isOpen={isOpen}
+        toggleKeepOpen={toggleKeepOpen}
+        toggle={toggle}
+        setPage={setPage}
+      />
       <PageLayout isOpen={isOpen}>
         <ManagerSidebar
           isOpen={isOpen}
           setPage={setPage}
+          keepOpen={keepOpen}
           toggle={toggle}
           setIsOpen={setIsOpen}
         />

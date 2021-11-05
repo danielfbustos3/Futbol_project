@@ -7,7 +7,7 @@ const AttributesContainer = styled.div`
   margin-top: 1rem;
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 80%;
   .attrBox {
     height: 15rem;
     width: 12rem;

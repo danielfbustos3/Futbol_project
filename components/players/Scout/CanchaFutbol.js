@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useTheme } from "../utils/functions";
+import { useTheme } from "../../../utils/functions";
 import ZonasDeCancha from "./ZonasDeCancha";
 
 const Section = styled.div``;

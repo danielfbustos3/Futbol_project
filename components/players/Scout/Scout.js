@@ -6,6 +6,15 @@ import AgeContractInput from "./AgeContractInput";
 import { useTheme } from "../../../utils/functions";
 import { setGlobalState, useGlobalState } from "state";
 import { useEffect, useState } from "react";
+import { BiError } from "react-icons/bi";
+import { keyframes } from "@emotion/react";
+
+const rotate = keyframes`
+  0%, 20%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-0.5rem);}
+    50% {transform: translateY(0.3rem);}
+    60% {transform: translateY(-0.3rem);}
+`;
 
 const ScoutContainer = styled.div`
   display: flex;
@@ -26,13 +35,93 @@ const ScoutContainer = styled.div`
     margin-bottom: 2rem;
   }
   .refreshBtn {
-    width: 100px;
-    height: 30px;
+    position: absolute;
+    top: 6rem;
+    padding: 0.4rem 0.8rem;
+    color: ${({ myTheme }) => myTheme.textColor};
+    font-size: 0.7rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 0.5s;
+    letter-spacing: 4px;
+    background: ${({ myTheme }) => myTheme.boxColor};
+    border-radius: 1rem;
+    border: none;
+    &:hover {
+      cursor: pointer;
+      background: ${({ myTheme }) => myTheme.hoverColor};
+      color: ${({ myTheme }) => myTheme.hoverText};
+      border-radius: 1rem;
+      box-shadow: ${({
+        myTheme,
+      }) => `0 0 0.15rem ${myTheme.hoverColor}, 0 0 0.25rem ${myTheme.hoverColor}, 0 0 0.33rem ${myTheme.hoverColor},
+        0 0 0.5rem ${myTheme.hoverColor}`};
+    }
   }
   .submitBtn {
-    width: 100px;
-    height: 30px;
-    background: green;
+    padding: 0.5rem 1rem;
+    color: ${({ myTheme }) => myTheme.hoverColor};
+    font-size: 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 0.5s;
+    letter-spacing: 4px;
+    background: ${({ myTheme }) => myTheme.boxColor};
+    border-radius: 1rem;
+    border: none;
+    box-shadow: ${({ myTheme }) => `0 0 0.2rem ${myTheme.boxColor}`};
+    &:hover {
+      cursor: pointer;
+      background: ${({ myTheme }) => myTheme.hoverColor};
+      color: ${({ myTheme }) => myTheme.hoverText};
+      border-radius: 1rem;
+      box-shadow: ${({
+        myTheme,
+      }) => `0 0 0.15rem ${myTheme.hoverColor}, 0 0 0.25rem ${myTheme.hoverColor}, 0 0 0.33rem ${myTheme.hoverColor},
+        0 0 0.5rem ${myTheme.hoverColor}`};
+    }
+  }
+  .alertBox {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    width: 70%;
+    height: 2rem;
+    padding: 0 1rem;
+    margin-top: 2rem;
+    border: 1px solid rgba(241, 142, 6, 0.81);
+    background-color: rgba(220, 128, 1, 0.16);
+    box-shadow: 0px 0px 2px #ffb103;
+    color: #ffb103;
+    transition: 0.5s;
+    cursor: pointer;
+    &:before {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 70%;
+      border-left: 2px solid;
+      border-right: 3px solid;
+      border-radius: 0 3px 3px 0;
+      left: 0;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+    &:hover {
+      background-color: rgba(220, 128, 1, 0.33);
+      transition: 0.5s;
+    }
+    .alertIcon {
+      margin-right: 0.5rem;
+      margin-top: 0.2rem;
+      animation: ${rotate} 1s infinite;
+    }
+    .alertText {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -41,6 +130,7 @@ const Scout = ({ setPage }) => {
 
   const [alert, setAlert] = useState(false);
   const [alertText, setAlertText] = useState("");
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -50,42 +140,50 @@ const Scout = ({ setPage }) => {
   const positions = useGlobalState("scoutPositions")[0];
 
   useEffect(() => {
-    setAlert(false);
-    setAlertText("");
+    if (value == 0 && positions.length == 0) {
+      setRefresh(false);
+    } else {
+      setRefresh(true);
+    }
+    // setAlert(false);
+    // setAlertText("");
   }, [value, positions]);
 
   const refreshData = () => {
     setGlobalState("scoutValue", "");
     setGlobalState("scoutPositions", []);
+    setGlobalState("scoutAttributes", []);
     setGlobalState("scoutMinAge", 23);
     setGlobalState("scoutMaxAge", 35);
     setGlobalState("scoutContract", 2023);
     setPage("scout");
   };
 
-  console.log(positions.length);
-  console.log(typeof positions);
   return (
     <ScoutContainer myTheme={myTheme}>
-      <button className="refreshBtn" onClick={() => refreshData()}>
-        Refresh
-      </button>
-      <p className="indicator">Ingrese el valor del jugador</p>
+      {refresh == true && (
+        <button className="refreshBtn" onClick={() => refreshData()}>
+          Refrescar
+        </button>
+      )}
+      <p className="indicator">
+        Ingrese el presupuesto en EUR para el jugador que está buscando.
+      </p>
       <ValueInput />
       <div className="separator"></div>
       <p className="indicator">
-        Seleccione las posiciones donde requiere el jugador
+        Seleccione una o varias posiciones donde requiera el jugador.
       </p>
       <PositionInput />
       <div className="separator"></div>
       <p className="indicator">
-        Seleccione los atributos requeridos para el jugador
+        Seleccione los atributos requeridos para el jugador.
       </p>
       <AttributesInput />
       <div className="separator"></div>
       <p className="indicator">
-        Seleccione la edad y el término del contrato para el jugador por si
-        acaso:
+        Seleccione el rango de edad y el año de finalización del contrato para
+        el jugador que busca.
       </p>
       <AgeContractInput />
       <div className="separator"></div>
@@ -111,9 +209,23 @@ const Scout = ({ setPage }) => {
           }
         }}
       >
-        Search!
+        Buscar!
       </button>
-      {alert == true && <div className="alertBox">{alertText}</div>}
+      {alert == true && (
+        <div
+          className="alertBox"
+          onClick={() => {
+            window.scrollTo(0, 0);
+            setAlert(false);
+            setAlertText("");
+          }}
+        >
+          <div className="alertIcon">
+            <BiError />
+          </div>
+          <div className="alertText">{alertText}</div>
+        </div>
+      )}
     </ScoutContainer>
   );
 };

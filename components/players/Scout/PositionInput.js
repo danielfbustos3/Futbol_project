@@ -1,4 +1,4 @@
-import CanchaFutbol from "components/CanchaFutbol";
+import CanchaFutbol from "components/players/Scout/CanchaFutbol";
 import styled from "styled-components";
 import { useState } from "react";
 import { useTheme } from "../../../utils/functions";
@@ -8,7 +8,7 @@ const PositionContainer = styled.div`
   margin-top: 1rem;
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 90%;
   .contCancha {
     width: 600px;
   }

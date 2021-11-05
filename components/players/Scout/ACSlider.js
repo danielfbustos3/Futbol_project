@@ -5,22 +5,20 @@ import { useGlobalState, setGlobalState } from "../../../state";
 
 const SliderContainer = styled.div`
   .values {
-    background-color: #3264fe;
-    width: 32%;
+    background-color: ${({ myTheme }) => myTheme.highlightColor};
+    width: 35%;
     position: relative;
     margin: auto;
     padding: 10px 0;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     text-align: center;
-    font-weight: 500;
-    font-size: 25px;
-    color: #ffffff;
+    color: ${({ myTheme }) => myTheme.hoverText};
     &:before {
       content: "";
       position: absolute;
       height: 0;
       width: 0;
-      border-top: 15px solid #3264fe;
+      border-top: ${({ myTheme }) => `15px solid ${myTheme.hoverColor}`};
       border-left: 15px solid transparent;
       border-right: 15px solid transparent;
       margin: auto;
@@ -33,7 +31,6 @@ const SliderContainer = styled.div`
     position: relative;
     width: 100%;
     height: 100px;
-    margin-top: 30px;
 
     .sliderTrack {
       width: 100%;
@@ -43,10 +40,10 @@ const SliderContainer = styled.div`
       top: 0;
       bottom: 0;
       border-radius: 0.5rem;
-      background: ${({ tip, percent1, percent2, percent3 }) =>
+      background: ${({ myTheme, tip, percent1, percent2, percent3 }) =>
         tip == "age"
-          ? `linear-gradient(to right, #dadae5 ${percent1}% , #3264fe ${percent1}% , #3264fe ${percent2}%, #dadae5 ${percent2}%)`
-          : `linear-gradient(to right, #3264fe ${percent3}% , #dadae5 ${percent3}%)`};
+          ? `linear-gradient(to right, ${myTheme.textColor} ${percent1}% , ${myTheme.highlightColor} ${percent1}% , ${myTheme.highlightColor} ${percent2}%, ${myTheme.textColor} ${percent2}%)`
+          : `linear-gradient(to right, ${myTheme.highlightColor} ${percent3}% , ${myTheme.textColor} ${percent3}%)`};
     }
 
     .slider {
@@ -75,68 +72,44 @@ const SliderContainer = styled.div`
       }
       &::-webkit-slider-thumb {
         -webkit-appearance: none;
-        height: 1.7em;
-        width: 1.7em;
-        background-color: #3264fe;
-        cursor: pointer;
-        margin-top: -9px;
+        height: 0.8rem;
+        width: 1.5rem;
+        background-color: ${({ myTheme }) => myTheme.highlightColor};
+        cursor: grab;
+        margin-top: -0.3rem;
         pointer-events: auto;
-        border-radius: 50%;
+        border-radius: 0.5rem;
       }
       &::-moz-range-thumb {
-        -webkit-appearance: none;
-        height: 1.7em;
-        width: 1.7em;
-        cursor: pointer;
-        border-radius: 50%;
-        background-color: #3264fe;
+        -moz-appearance: none;
+        height: 0.8rem;
+        width: 1.5rem;
+        background-color: ${({ myTheme }) => myTheme.highlightColor};
+        cursor: grab;
+        margin-top: -0.3rem;
         pointer-events: auto;
+        border-radius: 0.5rem;
       }
       &::-ms-thumb {
         appearance: none;
-        height: 1.7em;
-        width: 1.7em;
-        cursor: pointer;
-        border-radius: 50%;
-        background-color: #3264fe;
+        height: 0.8rem;
+        width: 1.5rem;
+        background-color: ${({ myTheme }) => myTheme.highlightColor};
+        cursor: grab;
+        margin-top: -0.3rem;
         pointer-events: auto;
+        border-radius: 0.5rem;
       }
       &:active {
         &::-webkit-slider-thumb {
-          background-color: #ffffff;
-          border: 3px solid #3264fe;
+          cursor: grabbing;
+          background-color: ${({ myTheme }) => myTheme.boxColor};
+          border: ${({ myTheme }) => `3px solid ${myTheme.highlightColor}`};
         }
       }
     }
   }
 `;
-// let sliderOne = document.getElementById("slider1");
-// let sliderTwo = document.getElementById("slider2");
-// let displayValOne = document.getElementById("range1");
-// let displayValTwo = document.getElementById("range2");
-// let minGap = 3;
-// let sliderTrack = document.querySelector(".sliderTrack");
-// let sliderMaxAge = document.getElementById("slider1").max;
-
-// function slideOne() {
-//   if (parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap) {
-//     sliderOne.value = parseInt(sliderTwo.value) - minGap;
-//   }
-//   displayValOne.textContent = sliderOne.value;
-//   fillColor();
-// }
-// function slideTwo() {
-//   if (parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap) {
-//     sliderTwo.value = parseInt(sliderOne.value) + minGap;
-//   }
-//   displayValTwo.textContent = sliderTwo.value;
-//   fillColor();
-// }
-// function fillColor() {
-//   percent1 = (sliderOne.value / sliderMaxAge) * 100;
-//   percent2 = (sliderTwo.value / sliderMaxAge) * 100;
-//   sliderTrack.style.background = `linear-gradient(to right, #dadae5 ${percent1}% , #3264fe ${percent1}% , #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
-// }
 
 const ACSlider = ({ tip }) => {
   const myTheme = useTheme();
@@ -200,6 +173,7 @@ const ACSlider = ({ tip }) => {
           tip={tip}
         >
           <div className="values">
+            <span> Rango de edad: </span>
             <span className="range">{globalMinAge}</span>
             <span> - </span>
             <span className="range">{globalMaxAge}</span>
@@ -236,8 +210,7 @@ const ACSlider = ({ tip }) => {
           tip={tip}
         >
           <div className="values">
-            <span className="range">{globalContract}</span>
-            <span> - </span>
+            <span className="range">Contrato hasta: {globalContract}</span>
           </div>
           <div className="sliderContent">
             <div className="sliderTrack"></div>

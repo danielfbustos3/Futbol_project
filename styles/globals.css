@@ -14,10 +14,11 @@ a {
 
 ::-webkit-scrollbar {
   height: 0;
-  width: 0.2rem;
+  width: 0.4rem;
 }
 ::-webkit-scrollbar-track {
-  background: #010606;
+  background: #1d1d1d;
+  /* background: #010606; */
 }
 ::-webkit-scrollbar-thumb {
   background: #01bf71;

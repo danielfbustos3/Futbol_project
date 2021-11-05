@@ -38,7 +38,7 @@ const PosContent = styled.div`
     width: 95%;
     display: grid;
     gap: 0.5rem;
-    grid-template-areas: "LW . . . CAM . . . RW" ". LM . CM1 . CM2 . RM ." ". . . . CDM . . . .";
+    grid-template-areas: ". . . . CAM . . . ." ". LM . CM1 . CM2 . RM ." ". . . . CDM . . . .";
     grid-template-rows: repeat(3, 1.5rem);
     grid-template-columns: repeat(9, 1fr);
     align-items: center;
@@ -50,7 +50,7 @@ const PosContent = styled.div`
     width: 100%;
     display: grid;
     gap: 3rem;
-    grid-template-areas: "LF ST RF" "LF CF RF";
+    grid-template-areas: "LW . ST . RW" "LW . CF . RW";
     grid-template-rows: 1rem;
     align-items: center;
     justify-content: center;
@@ -71,15 +71,15 @@ const CircPosition = styled.div`
     box-shadow: 0 0 0.3rem 0.1rem white inset,
       -0.1rem 0.1rem 0.3rem 0.1rem black;
     margin-bottom: ${({ position }) =>
-      (position == "LB" || position == "RB") && "1rem"};
+      (position == "LB" ||
+        position == "RB" ||
+        position == "LW" ||
+        position == "RW" ||
+        position == "LM" ||
+        position == "RM") &&
+      "1rem"};
     margin-bottom: ${({ position }) =>
       (position == "LWB" || position == "RWB") && "3rem"};
-    margin-bottom: ${({ position }) =>
-      (position == "LW" || position == "RW") && "2.5rem"};
-    margin-bottom: ${({ position }) =>
-      (position == "LM" || position == "RM") && "1rem"};
-    margin-bottom: ${({ position }) =>
-      (position == "LF" || position == "RF") && "1rem"};
   }
   &:hover .circle {
     color: ${({ myTheme }) => myTheme.hoverText};
@@ -131,15 +131,15 @@ const CircChecked = styled.div`
     `0 0 0.3rem 0.1rem ${myTheme.hoverColor}, 0 0 0.2rem ${myTheme.hoverText} inset`};
   cursor: default;
   margin-bottom: ${({ position }) =>
-    (position == "LB" || position == "RB") && "1rem"};
+    (position == "LB" ||
+      position == "RB" ||
+      position == "LW" ||
+      position == "RW" ||
+      position == "LM" ||
+      position == "RM") &&
+    "1rem"};
   margin-bottom: ${({ position }) =>
     (position == "LWB" || position == "RWB") && "3rem"};
-  margin-bottom: ${({ position }) =>
-    (position == "LW" || position == "RW") && "2.5rem"};
-  margin-bottom: ${({ position }) =>
-    (position == "LM" || position == "RM") && "1rem"};
-  margin-bottom: ${({ position }) =>
-    (position == "LF" || position == "RF") && "1rem"};
   .check {
     font-size: 1.5rem;
   }
@@ -185,11 +185,6 @@ const defensaObj = [
 ];
 const medioCampoObj = [
   {
-    position: "LW",
-    descriptionEng: "Left Winger",
-    descriptionEsp: "Extremo Izquierdo",
-  },
-  {
     position: "LM",
     descriptionEng: "Left Midfielder",
     descriptionEsp: "Medio Izquierdo",
@@ -219,17 +214,12 @@ const medioCampoObj = [
     descriptionEng: "Right Midfielder",
     descriptionEsp: "Medio Derecho",
   },
-  {
-    position: "RW",
-    descriptionEng: "Right Winger",
-    descriptionEsp: "Extremo Derecho",
-  },
 ];
 const ataqueObj = [
   {
-    position: "LF",
-    descriptionEng: "Left Forward",
-    descriptionEsp: "Seg. Delantero Izquierdo",
+    position: "LW",
+    descriptionEng: "Left Winger",
+    descriptionEsp: "Extremo Izquierdo",
   },
   {
     position: "ST",
@@ -242,9 +232,9 @@ const ataqueObj = [
     descriptionEsp: "Media Punta",
   },
   {
-    position: "RF",
-    descriptionEng: "Right Forward",
-    descriptionEsp: "Seg. Delantero Derecho",
+    position: "RW",
+    descriptionEng: "Right Winger",
+    descriptionEsp: "Extremo Derecho",
   },
 ];
 

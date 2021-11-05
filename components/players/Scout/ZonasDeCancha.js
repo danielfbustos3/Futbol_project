@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
-import { useTheme } from "../utils/functions";
-import Positions from "./players/Scout/Positions";
+import { useTheme } from "../../../utils/functions";
+import Positions from "./Positions";
 import { BiXCircle } from "react-icons/bi";
 
 const Zonas = styled.div`

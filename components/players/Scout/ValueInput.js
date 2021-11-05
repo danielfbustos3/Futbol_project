@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AnimatingNumber from "./AnimatingNumber";
 import { useTheme } from "../../../utils/functions";
 import { useGlobalState, setGlobalState } from "state";
@@ -66,9 +66,15 @@ const ValueInput = () => {
 
   const globalPlayerValue = useGlobalState("scoutValue")[0];
 
-  const [playerValueLabel, setPlayerValueLabel] = useState(
-    globalPlayerValue == "" ? false : true
-  );
+  const [playerValueLabel, setPlayerValueLabel] = useState(false);
+
+  useEffect(() => {
+    if (globalPlayerValue === "") {
+      setPlayerValueLabel(false);
+    } else {
+      setPlayerValueLabel(true);
+    }
+  }, [globalPlayerValue]);
 
   const handleParamUser = () => (e) => {
     if (e.target.value.length <= 10) {

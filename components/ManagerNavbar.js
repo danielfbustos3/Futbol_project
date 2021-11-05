@@ -21,7 +21,7 @@ const Nav = styled.nav`
   font-size: 1rem;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 12;
   transition: 0.2s all ease;
   .nav-container {
     display: grid;
@@ -52,17 +52,16 @@ const Nav = styled.nav`
         }
       }
       .nav-logo {
+        margin-left: 3rem;
         font-family: "Bebas Neue", cursive;
-        letter-spacing: 0.1rem;
+        letter-spacing: 0.15rem;
         justify-self: flex-start;
         cursor: pointer;
         font-size: 1.7rem;
         display: flex;
         align-items: center;
-        margin-left: 0px;
         font-weight: bold;
         text-decoration: none;
-        padding: 10px;
         &:hover {
           transition: all 0.2s ease-in-out;
           color: ${({ myTheme }) => myTheme.hoverColor};
@@ -105,7 +104,7 @@ const Nav = styled.nav`
   }
 `;
 
-const ManagerNavbar = ({ toggle, setPage }) => {
+const ManagerNavbar = ({ toggleKeepOpen, setPage, toggle }) => {
   const [scrollNav, setScrollNav] = useState(false);
   const changeNav = () => {
     if (window.scrollY >= 80) {
@@ -130,10 +129,16 @@ const ManagerNavbar = ({ toggle, setPage }) => {
     <Nav scrollNav={scrollNav} myTheme={myTheme}>
       <div className="nav-container">
         <ul>
-          <div className="mobile-icon" onClick={toggle}>
+          <div
+            className="mobile-icon"
+            onClick={() => {
+              toggleKeepOpen();
+              toggle();
+            }}
+          >
             <FaBars />
           </div>
-          <LinkS className="nav-logo" to="/" onClick={toggleHome}>
+          <LinkS className="nav-logo" to="/" onClick={() => toggleHome()}>
             Fútbol
           </LinkS>
         </ul>

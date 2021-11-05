@@ -9,7 +9,7 @@ const SidebarContainer = styled.aside`
   /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); */
   height: calc(100vh - 3rem);
   position: fixed;
-  z-index: 100;
+  z-index: 10;
   .sidebar {
     top: 0;
     left: 0;
@@ -19,7 +19,7 @@ const SidebarContainer = styled.aside`
     background: ${({ myTheme }) => myTheme.backgroundColor};
     padding: 6px 0;
     .nav-list {
-      margin-top: 2rem;
+      margin-top: 0.5rem;
       li {
         position: relative;
         width: 100%;
@@ -147,12 +147,19 @@ const SidebarContainer = styled.aside`
   }
 `;
 
-const Sidebar = ({ isOpen, setPage, toggle, setIsOpen }) => {
+const Sidebar = ({ isOpen, setPage, toggle, setIsOpen, keepOpen }) => {
   const myTheme = useTheme();
 
   return (
     <SidebarContainer isOpen={isOpen} myTheme={myTheme}>
-      <div className="sidebar" onMouseLeave={() => setIsOpen(false)}>
+      <div
+        className="sidebar"
+        onMouseLeave={() => {
+          if (keepOpen == false) {
+            setIsOpen(false);
+          }
+        }}
+      >
         <ul className="nav-list">
           <li onClick={() => (isOpen ? "" : toggle())}>
             <input type="text" placeholder="Search..." />
