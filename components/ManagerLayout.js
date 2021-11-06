@@ -14,10 +14,11 @@ const queryClient = new QueryClient();
 const Container = styled.div`
   padding: 80px;
   min-height: 85vh;
-  width: 100%;
+  width: ${({ isOpen }) => (isOpen ? "95%" : "100%")};
   flex: wrap;
   background: ${({ myTheme }) => myTheme.backgroundColor};
   color: ${({ myTheme }) => myTheme.textColor};
+  transition: all 0.3s ease;
   /* background: linear-gradient(
     108deg,
     rgba(1, 147, 86, 1) 0%,
@@ -71,7 +72,9 @@ function ShowPage({ page, setPage, isOpen }) {
   };
   return (
     <>
-      <Container myTheme={myTheme}>{switchPage(page)}</Container>
+      <Container isOpen={isOpen} myTheme={myTheme}>
+        {switchPage(page)}
+      </Container>
     </>
   );
 }

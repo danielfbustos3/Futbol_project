@@ -18,6 +18,7 @@ const PageLayout = styled.div`
     width: 100%;
     display: grid;
     transition: all 0.3s ease;
+    overflow: hidden;
   }
 `;
 
