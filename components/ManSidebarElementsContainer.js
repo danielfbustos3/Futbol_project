@@ -51,6 +51,7 @@ const ElemContent = styled.li`
       }
       &:hover {
         color: ${({ myTheme }) => myTheme.hoverText};
+        cursor: pointer;
       }
     }
     &:hover {

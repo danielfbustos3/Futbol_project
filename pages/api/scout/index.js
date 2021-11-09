@@ -24,7 +24,7 @@ export default async (req, res) => {
           ],
         })
           .sort("-Overall")
-          .limit(30)
+          .limit()
           .skip(0);
 
         res.status(200).json({ success: true, data: players });

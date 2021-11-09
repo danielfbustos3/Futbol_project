@@ -1,18 +1,12 @@
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import { useQuery, QueryClient, QueryClientProvider } from "react-query";
-import { setGlobalState, useGlobalState } from "state";
+import { useGlobalState } from "state";
 import { useTheme } from "../../../utils/functions";
-import PlayerCard from "../PlayerCard";
-import { BiError } from "react-icons/bi";
-import { useEffect } from "react";
-
-const bounce = keyframes`
-  0%, 20%, 80%, 100% {transform: translateY(0);}
-    40% {transform: translateY(-0.5rem);}
-    50% {transform: translateY(0.3rem);}
-    60% {transform: translateY(-0.3rem);}
-`;
+import CustomLoader from "components/CustomLoader";
+import { useState, useEffect } from "react";
+import PlayerTable from "./PlayerTable";
+import Alert from "components/Alert";
 
 const scale = keyframes`
   0%, 100% {transform:  scale(1);}
@@ -22,46 +16,6 @@ const scale = keyframes`
 `;
 
 const ResultsContainer = styled.div`
-  .alertBox {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    width: 80%;
-    height: 2rem;
-    padding: 0 1rem;
-    margin-top: 2rem;
-    border: 1px solid rgba(241, 142, 6, 0.81);
-    background-color: rgba(220, 128, 1, 0.16);
-    box-shadow: 0px 0px 2px #ffb103;
-    color: #ffb103;
-    transition: 0.5s;
-    cursor: pointer;
-    &:before {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 70%;
-      border-left: 2px solid;
-      border-right: 3px solid;
-      border-radius: 0 3px 3px 0;
-      left: 0;
-      top: 50%;
-      transform: translate(0, -50%);
-    }
-    &:hover {
-      background-color: rgba(220, 128, 1, 0.33);
-      transition: 0.5s;
-    }
-    .alertIcon {
-      margin-right: 0.5rem;
-      margin-top: 0.2rem;
-      animation: ${bounce} 1s infinite;
-    }
-    .alertText {
-      font-size: 1rem;
-    }
-  }
   .scoutBtn {
     margin-top: 2rem;
     margin-left: 40%;
@@ -90,6 +44,7 @@ const ResultsContainer = styled.div`
     }
   }
   .backScoutBtn {
+    margin: 1rem;
     padding: 0.4rem 0.8rem;
     color: ${({ myTheme }) => myTheme.textColor};
     font-size: 0.7rem;
@@ -130,6 +85,7 @@ const ScoutResults = ({ setPage }) => {
 };
 
 function ShowResults({ setPage }) {
+  const [selectedPos, setSelectedPos] = useState("");
   const myTheme = useTheme();
 
   const value = useGlobalState("scoutValue")[0];
@@ -139,6 +95,10 @@ function ShowResults({ setPage }) {
   const contract = useGlobalState("scoutContract")[0];
   const minAge = useGlobalState("scoutMinAge")[0];
   const maxAge = useGlobalState("scoutMaxAge")[0];
+
+  const posiciones = useGlobalState("scoutPositions")[0];
+  console.log(posiciones);
+  console.log(typeof posiciones);
 
   const fetchPlayers = async () => {
     if ((value != 0) & (positions.length != 0)) {
@@ -154,15 +114,11 @@ function ShowResults({ setPage }) {
   if (value === "" || positions === "") {
     return (
       <ResultsContainer myTheme={myTheme}>
-        <div className="alertBox">
-          <div className="alertIcon">
-            <BiError />
-          </div>
-          <div className="alertText">
-            No hemos encontrado jugadores. Para encontrar un jugador, vaya a
-            SCOUT y llene los campos requeridos para la búsqueda.
-          </div>
-        </div>
+        <Alert
+          type="alert"
+          message="No hemos encontrado jugadores. Para encontrar un jugador, vaya a
+            SCOUT y llene los campos requeridos para la búsqueda."
+        />
         <button className="scoutBtn" onClick={() => setPage("scout")}>
           SCOUT
         </button>
@@ -171,36 +127,51 @@ function ShowResults({ setPage }) {
   } else {
     return (
       <ResultsContainer myTheme={myTheme}>
-        {status === "error" && <div>Error fetching data</div>}
-        {status === "loading" && <div>Loading data...</div>}
+        {status === "error" && (
+          <>
+            <Alert type="error" message="Error fetching data" />
+            <button className="scoutBtn" onClick={() => setPage("scout")}>
+              SCOUT
+            </button>
+          </>
+        )}
+        {status === "loading" && <CustomLoader />}
+        {status === "success" && data?.data.length === 0 && (
+          <div>
+            <Alert
+              type="alert"
+              message="No encontramos jugadores con las características seleccionadas.
+                Regrese a SCOUT y seleccione nuevas características para la
+                búsqueda."
+            />
+            <button className="scoutBtn" onClick={() => setPage("scout")}>
+              SCOUT
+            </button>
+          </div>
+        )}
         {status === "success" && data?.data.length > 0 && (
           <>
             <button className="backScoutBtn" onClick={() => setPage("scout")}>
               back to SCOUT
             </button>
             <div>
-              {data?.data.slice(0, 200).map((player, index) => (
-                <PlayerCard key={index} player={player} />
+              <p>Seleccione una opción para mostrar jugadores por posicion.</p>
+              {posiciones.map((item, index) => (
+                <button
+                  key={index}
+                  className="backScoutBtn"
+                  onClick={() => setSelectedPos(item)}
+                >
+                  {item}
+                </button>
               ))}
+              <PlayerTable
+                players={data?.data.filter((element) =>
+                  element.Positions.includes(selectedPos)
+                )}
+              />
             </div>
           </>
-        )}
-        {status === "success" && data?.data.length === 0 && (
-          <div>
-            <div className="alertBox">
-              <div className="alertIcon">
-                <BiError />
-              </div>
-              <div className="alertText">
-                No encontramos jugadores con las características seleccionadas.
-                Regrese a SCOUT y seleccione nuevas características para la
-                búsqueda.
-              </div>
-            </div>
-            <button className="scoutBtn" onClick={() => setPage("scout")}>
-              SCOUT
-            </button>
-          </div>
         )}
       </ResultsContainer>
     );

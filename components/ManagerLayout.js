@@ -14,7 +14,8 @@ const queryClient = new QueryClient();
 const Container = styled.div`
   padding: 80px;
   min-height: 85vh;
-  width: ${({ isOpen }) => (isOpen ? "95%" : "100%")};
+  /* width: ${({ isOpen }) => (isOpen ? "95%" : "100%")}; */
+  width: 100%;
   flex: wrap;
   background: ${({ myTheme }) => myTheme.backgroundColor};
   color: ${({ myTheme }) => myTheme.textColor};
