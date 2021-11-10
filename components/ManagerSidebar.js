@@ -32,7 +32,12 @@ const SidebarContainer = styled.aside`
         align-items: center;
         margin-bottom: 3px;
         display: block;
-
+        &:hover .tooltip {
+          transition: all 0.5s ease;
+          opacity: ${({ isOpen }) => (isOpen ? 0 : 1)};
+          top: 50%;
+          z-index: 100;
+        }
         .tooltip {
           position: absolute;
           left: 3.2rem;
@@ -48,12 +53,6 @@ const SidebarContainer = styled.aside`
           transition: 0s;
           opacity: 0;
           pointer-events: none;
-        }
-        &:hover .tooltip {
-          transition: all 0.5s ease;
-          opacity: ${({ isOpen }) => (isOpen ? 0 : 1)};
-          top: 50%;
-          z-index: 100;
         }
         .search {
           position: relative;
@@ -85,16 +84,19 @@ const SidebarContainer = styled.aside`
             cursor: text;
             opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
           }
-          &:hover {
-            background: ${({ isOpen }) =>
-              isOpen
-                ? ({ myTheme }) => myTheme.boxColor
-                : ({ myTheme }) => myTheme.hoverColor};
-          }
+        }
+        &:hover input {
+          background: ${({ isOpen }) =>
+            isOpen
+              ? ({ myTheme }) => myTheme.boxColor
+              : ({ myTheme }) => myTheme.hoverColor};
         }
         &:hover .search {
           color: ${({ isOpen, myTheme }) =>
             isOpen ? myTheme.textColor : myTheme.hoverText};
+        }
+        &:hover {
+          cursor: pointer;
         }
       }
     }

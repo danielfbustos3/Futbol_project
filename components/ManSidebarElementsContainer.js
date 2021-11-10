@@ -10,7 +10,7 @@ const ElemContent = styled.li`
   list-style: none;
   line-height: 50px;
   transition: all 0.5s ease;
-  padding: ${({ isOpen }) => (isOpen ? "0 30px 0 0" : "0 13px")};
+  /* padding: ${({ isOpen }) => (isOpen ? "0 30px 0 0" : "0 13px")}; */
   justify-content: center;
   align-items: center;
   display: block;
@@ -33,6 +33,7 @@ const ElemContent = styled.li`
     border-radius: ${({ isOpen }) => (isOpen ? "0 25px 25px 0" : "50%")};
     z-index: 10;
     background: ${({ myTheme }) => myTheme.backgroundColor};
+    overflow: hidden;
     .menuItem {
       display: flex;
       z-index: 12;
@@ -49,13 +50,17 @@ const ElemContent = styled.li`
         cursor: pointer;
         opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
       }
-      &:hover {
-        color: ${({ myTheme }) => myTheme.hoverText};
-        cursor: pointer;
-      }
     }
     &:hover {
       background: ${({ myTheme }) => myTheme.hoverColor};
+      color: ${({ myTheme }) => myTheme.hoverText};
+      cursor: pointer;
+    }
+    &:hover .tooltip {
+      transition: all 0.5s ease;
+      opacity: ${({ isOpen }) => (isOpen ? 0 : 1)};
+      top: 50%;
+      z-index: 100;
     }
   }
   .listSelected {

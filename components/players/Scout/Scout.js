@@ -8,6 +8,7 @@ import { setGlobalState, useGlobalState } from "state";
 import { useEffect, useState } from "react";
 import { BiError } from "react-icons/bi";
 import { keyframes } from "@emotion/react";
+import AnimatedButton from "components/AnimatedButton";
 
 const rotate = keyframes`
   0%, 20%, 80%, 100% {transform: translateY(0);}
@@ -23,7 +24,7 @@ const ScoutContainer = styled.div`
   justify-content: center;
   .espacio {
     width: 100%;
-    height: 2rem;
+    height: 3.5rem;
   }
   .indicator {
     width: 100%;
@@ -40,7 +41,7 @@ const ScoutContainer = styled.div`
   }
   .refreshBtn {
     position: absolute;
-    top: 5rem;
+    top: 4rem;
     padding: 0.4rem 0.8rem;
     color: ${({ myTheme }) => myTheme.textColor};
     font-size: 0.7rem;
@@ -63,33 +64,10 @@ const ScoutContainer = styled.div`
         0 0 0.5rem ${myTheme.hoverColor}`};
     }
   }
-  .submitBtn {
-    padding: 0.5rem 1rem;
-    color: ${({ myTheme }) => myTheme.hoverColor};
-    font-size: 1rem;
-    text-decoration: none;
-    text-transform: uppercase;
-    overflow: hidden;
-    transition: 0.5s;
-    letter-spacing: 3px;
-    background: ${({ myTheme }) => myTheme.boxColor};
-    border-radius: 1rem;
-    border: none;
-    box-shadow: ${({ myTheme }) => `0 0 0.2rem ${myTheme.boxColor}`};
-    &:hover {
-      cursor: pointer;
-      background: ${({ myTheme }) => myTheme.hoverColor};
-      color: ${({ myTheme }) => myTheme.hoverText};
-      border-radius: 1rem;
-      box-shadow: ${({
-        myTheme,
-      }) => `0 0 0.15rem ${myTheme.hoverColor}, 0 0 0.25rem ${myTheme.hoverColor}, 0 0 0.33rem ${myTheme.hoverColor},
-        0 0 0.5rem ${myTheme.hoverColor}`};
-    }
-  }
+
   .alertBox {
     position: absolute;
-    top: 3rem;
+    top: 2rem;
     display: flex;
     align-items: center;
     justify-content: left;
@@ -193,9 +171,9 @@ const Scout = ({ setPage }) => {
       </p>
       <AgeContractInput />
       <div className="separator"></div>
-      <button
-        className="submitBtn"
-        onClick={() => {
+      <AnimatedButton
+        text="Buscar!"
+        action={() => {
           if (value === "") {
             window.scrollTo(0, 0);
             setAlert(true);
@@ -216,9 +194,7 @@ const Scout = ({ setPage }) => {
             }
           }
         }}
-      >
-        Buscar!
-      </button>
+      />
       {alert == true && (
         <div
           title="Llene los campos requeridos."

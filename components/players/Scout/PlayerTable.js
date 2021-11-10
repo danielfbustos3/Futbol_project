@@ -10,6 +10,8 @@ const MyStyles = styled.div`
   }
   .rdt_TableWrapper {
     max-height: 200vh;
+    width: 100%;
+    min-width: 20%;
   }
   .rdt_TableColExpander {
   }
@@ -110,7 +112,8 @@ const columns = [
 ];
 
 const paginacionOpciones = {
-  noRowsPerPage: true,
+  rowsPerPageText: "Filas por página",
+  noRowsPerPage: false,
   rangeSeparatorText: "de",
 };
 
@@ -170,6 +173,7 @@ const PlayerTable = ({ players }) => {
         // dense={true}
         pagination
         paginationPerPage={30}
+        paginationRowsPerPageOptions={[30, 60, 90, 150, 200]}
         paginationComponentOptions={paginacionOpciones}
         fixedHeader
         fixedHeaderScrollHeight=""

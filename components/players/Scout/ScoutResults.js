@@ -7,6 +7,8 @@ import CustomLoader from "components/CustomLoader";
 import { useState, useEffect } from "react";
 import PlayerTable from "./PlayerTable";
 import Alert from "components/Alert";
+import NormalButton from "components/NormalButton";
+import AnimatedButton from "components/AnimatedButton";
 
 const scale = keyframes`
   0%, 100% {transform:  scale(1);}
@@ -43,30 +45,8 @@ const ResultsContainer = styled.div`
         0 0 0.5rem ${myTheme.hoverColor}`};
     }
   }
-  .backScoutBtn {
-    margin: 1rem 0.5rem;
-    padding: 0.4rem 0.8rem;
-    color: ${({ myTheme }) => myTheme.textColor};
-    font-size: 0.7rem;
-    text-decoration: none;
-    text-transform: uppercase;
-    overflow: hidden;
-    transition: 0.5s;
-    letter-spacing: 3px;
-    background: ${({ myTheme }) => myTheme.boxColor};
-    border-radius: 1rem;
-    border: none;
-
-    &:hover {
-      cursor: pointer;
-      background: ${({ myTheme }) => myTheme.hoverColor};
-      color: ${({ myTheme }) => myTheme.hoverText};
-      border-radius: 1rem;
-      box-shadow: ${({
-        myTheme,
-      }) => `0 0 0.15rem ${myTheme.hoverColor}, 0 0 0.25rem ${myTheme.hoverColor}, 0 0 0.33rem ${myTheme.hoverColor},
-        0 0 0.5rem ${myTheme.hoverColor}`};
-    }
+  .optionsContainer {
+    display: flex;
   }
 `;
 
@@ -117,9 +97,11 @@ function ShowResults({ setPage }) {
           message="No hemos encontrado jugadores. Para encontrar un jugador, vaya a
             SCOUT y llene los campos requeridos para la búsqueda."
         />
-        <button className="scoutBtn" onClick={() => setPage("scout")}>
-          SCOUT
-        </button>
+        <AnimatedButton
+          action={() => setPage("scout")}
+          text="SCOUT"
+          size="small"
+        />
       </ResultsContainer>
     );
   } else {
@@ -128,9 +110,11 @@ function ShowResults({ setPage }) {
         {status === "error" && (
           <>
             <Alert type="error" message="Error fetching data" />
-            <button className="scoutBtn" onClick={() => setPage("scout")}>
-              SCOUT
-            </button>
+            <AnimatedButton
+              action={() => setPage("scout")}
+              text="SCOUT"
+              size="small"
+            />
           </>
         )}
         {status === "loading" && <CustomLoader />}
@@ -142,37 +126,37 @@ function ShowResults({ setPage }) {
                 Regrese a SCOUT y seleccione nuevas características para la
                 búsqueda."
             />
-            <button className="scoutBtn" onClick={() => setPage("scout")}>
-              SCOUT
-            </button>
+            <AnimatedButton
+              action={() => setPage("scout")}
+              text="SCOUT"
+              size="small"
+            />
           </div>
         )}
         {status === "success" && data?.data.length > 0 && (
           <>
-            <button className="backScoutBtn" onClick={() => setPage("scout")}>
-              ← buscador
-            </button>
+            <NormalButton action={() => setPage("scout")} text="← buscador" />
             <div>
               {posiciones?.length > 1 && (
                 <>
                   <p>
                     Seleccione una opción para encontrar jugadores por posición.
                   </p>
-                  {posiciones?.map((item, index) => (
-                    <button
-                      key={index}
-                      className="backScoutBtn"
-                      onClick={() => setSelectedPos(item)}
-                    >
-                      {item}
-                    </button>
-                  ))}
-                  <button
-                    className="backScoutBtn"
-                    onClick={() => setSelectedPos("")}
-                  >
-                    Todos
-                  </button>
+                  <div className="optionsContainer">
+                    {posiciones?.map((item, index) => (
+                      <NormalButton
+                        key={index}
+                        action={() => setSelectedPos(item)}
+                        text={item}
+                        selected={selectedPos === item ? true : false}
+                      />
+                    ))}
+                    <NormalButton
+                      action={() => setSelectedPos("")}
+                      text="Todos"
+                      selected={selectedPos === "" ? true : false}
+                    />
+                  </div>
                 </>
               )}
               <PlayerTable

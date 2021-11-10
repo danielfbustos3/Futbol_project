@@ -12,11 +12,11 @@ import { useGlobalState } from "../state";
 const queryClient = new QueryClient();
 
 const Container = styled.div`
-  padding: 80px;
+  padding: ${({ isOpen }) => (isOpen ? "0.5rem" : "0.5rem 2rem")};
   min-height: 85vh;
-  /* width: ${({ isOpen }) => (isOpen ? "95%" : "100%")}; */
   width: 100%;
   flex: wrap;
+  overflow: scroll;
   background: ${({ myTheme }) => myTheme.backgroundColor};
   color: ${({ myTheme }) => myTheme.textColor};
   transition: all 0.3s ease;
