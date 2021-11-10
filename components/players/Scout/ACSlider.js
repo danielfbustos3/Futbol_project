@@ -18,7 +18,7 @@ const SliderContainer = styled.div`
       position: absolute;
       height: 0;
       width: 0;
-      border-top: ${({ myTheme }) => `15px solid ${myTheme.hoverColor}`};
+      border-top: ${({ myTheme }) => `15px solid ${myTheme.highlightColor}`};
       border-left: 15px solid transparent;
       border-right: 15px solid transparent;
       margin: auto;
@@ -118,7 +118,7 @@ const ACSlider = ({ tip }) => {
   const maxAge = 43;
   const minAge = 16;
   const contractMin = 2021;
-  const contractMax = 2028;
+  const contractMax = 2031;
 
   const globalMinAge = useGlobalState("scoutMinAge")[0];
   const [percent1, setPercent1] = useState(

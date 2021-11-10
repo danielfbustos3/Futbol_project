@@ -44,7 +44,7 @@ const ResultsContainer = styled.div`
     }
   }
   .backScoutBtn {
-    margin: 1rem;
+    margin: 1rem 0.5rem;
     padding: 0.4rem 0.8rem;
     color: ${({ myTheme }) => myTheme.textColor};
     font-size: 0.7rem;
@@ -97,8 +97,6 @@ function ShowResults({ setPage }) {
   const maxAge = useGlobalState("scoutMaxAge")[0];
 
   const posiciones = useGlobalState("scoutPositions")[0];
-  console.log(posiciones);
-  console.log(typeof posiciones);
 
   const fetchPlayers = async () => {
     if ((value != 0) & (positions.length != 0)) {
@@ -152,19 +150,31 @@ function ShowResults({ setPage }) {
         {status === "success" && data?.data.length > 0 && (
           <>
             <button className="backScoutBtn" onClick={() => setPage("scout")}>
-              back to SCOUT
+              ← buscador
             </button>
             <div>
-              <p>Seleccione una opción para mostrar jugadores por posicion.</p>
-              {posiciones.map((item, index) => (
-                <button
-                  key={index}
-                  className="backScoutBtn"
-                  onClick={() => setSelectedPos(item)}
-                >
-                  {item}
-                </button>
-              ))}
+              {posiciones.length > 1 && (
+                <>
+                  <p>
+                    Seleccione una opción para encontrar jugadores por posición.
+                  </p>
+                  {posiciones?.map((item, index) => (
+                    <button
+                      key={index}
+                      className="backScoutBtn"
+                      onClick={() => setSelectedPos(item)}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                  <button
+                    className="backScoutBtn"
+                    onClick={() => setSelectedPos("")}
+                  >
+                    Todos
+                  </button>
+                </>
+              )}
               <PlayerTable
                 players={data?.data.filter((element) =>
                   element.Positions.includes(selectedPos)
