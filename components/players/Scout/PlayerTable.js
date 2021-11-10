@@ -115,7 +115,7 @@ const paginacionOpciones = {
 };
 
 const PlayerTable = ({ players }) => {
-  const title = `${players.length} Jugadores Encontrados`;
+  const title = `${players?.length} Jugadores Encontrados`;
   const myTheme = useTheme();
 
   const [pending, setPending] = useState(true);
