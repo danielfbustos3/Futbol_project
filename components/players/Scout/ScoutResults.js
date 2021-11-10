@@ -153,7 +153,7 @@ function ShowResults({ setPage }) {
               ← buscador
             </button>
             <div>
-              {posiciones.length > 1 && (
+              {posiciones?.length > 1 && (
                 <>
                   <p>
                     Seleccione una opción para encontrar jugadores por posición.
