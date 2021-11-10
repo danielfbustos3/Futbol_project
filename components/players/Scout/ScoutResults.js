@@ -99,7 +99,7 @@ function ShowResults({ setPage }) {
   const posiciones = useGlobalState("scoutPositions")[0];
 
   const fetchPlayers = async () => {
-    if ((value != 0) & (positions.length != 0)) {
+    if ((value != 0) & (positions?.length != 0)) {
       const res = await fetch(
         `${window.location.origin}/api/scout?value=${value}&positions=${positions}&contract=${contract}&minage=${minAge}&maxage=${maxAge}`
       );
