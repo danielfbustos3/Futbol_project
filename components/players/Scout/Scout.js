@@ -123,7 +123,7 @@ const Scout = ({ setPage }) => {
   const positions = useGlobalState("scoutPositions")[0];
 
   useEffect(() => {
-    if (value == 0 && positions.length == 0) {
+    if (value == 0 && positions?.length == 0) {
       setRefresh(false);
     } else {
       setRefresh(true);
@@ -181,7 +181,7 @@ const Scout = ({ setPage }) => {
               "Por favor ingrese un presupuesto para buscar jugadores."
             );
           } else {
-            if (positions.length === 0) {
+            if (positions?.length === 0) {
               window.scrollTo(0, 0);
               setAlert(true);
               setAlertText(

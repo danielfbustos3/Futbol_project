@@ -127,7 +127,7 @@ const ElemContent = styled.li`
 const ElementsContainer = ({ item, setPage, myTheme, isOpen, toggle }) => {
   const [active, setActive] = useState(false);
   const toggleActive = () => setActive(!active);
-  const items = item.listItems.length;
+  const items = item?.listItems.length;
   return (
     <ElemContent
       myTheme={myTheme}

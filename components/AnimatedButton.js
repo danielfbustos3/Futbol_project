@@ -8,6 +8,7 @@ const scale = keyframes`
         50% {transform:scale(1.05);}
         75% {transform: scale(0.95);}
     `;
+
 const ButtonContainer = styled.div`
   .myBtn {
     padding: 0.5rem 1rem;

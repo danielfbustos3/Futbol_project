@@ -118,55 +118,60 @@ function ShowResults({ setPage }) {
           </>
         )}
         {status === "loading" && <CustomLoader />}
-        {status === "success" && data?.data.length === 0 && (
-          <div>
-            <Alert
-              type="alert"
-              message="No encontramos jugadores con las características seleccionadas.
+        {status === "success" &&
+          undefined !== data?.data &&
+          data?.data.length === 0 && (
+            <div>
+              <Alert
+                type="alert"
+                message="No encontramos jugadores con las características seleccionadas.
                 Regrese a SCOUT y seleccione nuevas características para la
                 búsqueda."
-            />
-            <AnimatedButton
-              action={() => setPage("scout")}
-              text="SCOUT"
-              size="small"
-            />
-          </div>
-        )}
-        {status === "success" && data?.data.length > 0 && (
-          <>
-            <NormalButton action={() => setPage("scout")} text="← buscador" />
-            <div>
-              {posiciones?.length > 1 && (
-                <>
-                  <p>
-                    Seleccione una opción para encontrar jugadores por posición.
-                  </p>
-                  <div className="optionsContainer">
-                    {posiciones?.map((item, index) => (
-                      <NormalButton
-                        key={index}
-                        action={() => setSelectedPos(item)}
-                        text={item}
-                        selected={selectedPos === item ? true : false}
-                      />
-                    ))}
-                    <NormalButton
-                      action={() => setSelectedPos("")}
-                      text="Todos"
-                      selected={selectedPos === "" ? true : false}
-                    />
-                  </div>
-                </>
-              )}
-              <PlayerTable
-                players={data?.data.filter((element) =>
-                  element.Positions.includes(selectedPos)
-                )}
+              />
+              <AnimatedButton
+                action={() => setPage("scout")}
+                text="SCOUT"
+                size="small"
               />
             </div>
-          </>
-        )}
+          )}
+        {status === "success" &&
+          undefined !== data?.data &&
+          data?.data.length > 0 && (
+            <>
+              <NormalButton action={() => setPage("scout")} text="← buscador" />
+              <div>
+                {posiciones?.length > 1 && (
+                  <>
+                    <p>
+                      Seleccione una opción para encontrar jugadores por
+                      posición.
+                    </p>
+                    <div className="optionsContainer">
+                      {posiciones?.map((item, index) => (
+                        <NormalButton
+                          key={index}
+                          action={() => setSelectedPos(item)}
+                          text={item}
+                          selected={selectedPos === item ? true : false}
+                        />
+                      ))}
+                      <NormalButton
+                        action={() => setSelectedPos("")}
+                        text="Todos"
+                        selected={selectedPos === "" ? true : false}
+                      />
+                    </div>
+                  </>
+                )}
+                <PlayerTable
+                  players={data?.data.filter((element) =>
+                    element.Positions.includes(selectedPos)
+                  )}
+                />
+              </div>
+            </>
+          )}
       </ResultsContainer>
     );
   }

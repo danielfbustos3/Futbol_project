@@ -3,6 +3,8 @@ import CustomLoader from "components/CustomLoader";
 import styled from "@emotion/styled";
 import { useTheme } from "utils/functions";
 import { useState, useEffect } from "react";
+import { BiChevronDown } from "react-icons/bi";
+import TableExpander from "./TableExpander";
 
 const MyStyles = styled.div`
   * {
@@ -20,10 +22,23 @@ const MyStyles = styled.div`
     &:not(:last-of-type) {
       border-bottom-color: ${({ myTheme }) => myTheme.boxColor};
     }
+    button {
+      height: 75%;
+      width: 75%;
+      background: ${({ myTheme }) => myTheme.backgroundColor};
+      border-radius: 50%;
+      &:hover {
+        background: ${({ myTheme }) => myTheme.hoverColor};
+      }
+    }
   }
   .rdt_TableCol {
   }
   .rdt_TableCol_Sortable {
+    .__rdt_custom_sort_icon__ svg {
+      height: 1.2rem;
+      width: 1.2rem;
+    }
   }
   .rdt_TableCell {
   }
@@ -39,16 +54,26 @@ const MyStyles = styled.div`
     border-bottom-color: ${({ myTheme }) => myTheme.hoverColor};
   }
   .rdt_TableBody {
+    background: ${({ myTheme }) => myTheme.backgroundColor};
   }
   .rdt_ExpanderRow {
+    height: 16rem;
+    padding: 0 1%;
+    overflow: hidden;
     background: ${({ myTheme }) => myTheme.backgroundColor};
   }
   .rdt_Pagination {
     background: ${({ myTheme }) => myTheme.backgroundColor};
-    color: white;
+    color: ${({ myTheme }) => myTheme.textColor};
     border-top-color: ${({ myTheme }) => myTheme.hoverColor};
+    select {
+      font-size: 0.8rem;
+      option {
+        font-size: 0.8rem;
+      }
+    }
     button {
-      fill: white;
+      fill: ${({ myTheme }) => myTheme.textColor};
       &:hover {
         background: ${({ myTheme }) => myTheme.boxColor};
       }
@@ -59,53 +84,54 @@ const MyStyles = styled.div`
 const columns = [
   {
     name: "Nombre Completo",
-    selector: "FullName",
+    selector: (row) => row.FullName,
     sortable: true,
     grow: 2,
   },
   {
     name: "Edad",
-    selector: "Age",
+    selector: (row) => row.Age,
     sortable: true,
     grow: 0.5,
   },
   {
     name: "Nacionalidad",
-    selector: "Nationality",
+    selector: (row) => row.Nationality,
     sortable: true,
   },
   {
     name: "Posiciones",
-    selector: "Positions",
+    selector: (row) => row.Positions,
     sortable: true,
   },
   {
     name: "Puntuación General",
-    selector: "Overall",
+    selector: (row) => row.Overall,
     sortable: true,
     grow: 0.5,
   },
   {
     name: "Potencial",
-    selector: "Potential",
+    selector: (row) => row.Potential,
     sortable: true,
     grow: 0.5,
   },
   {
     name: "Club",
-    selector: "Club",
+    selector: (row) => row.Club,
     sortable: true,
     grow: 1.5,
   },
   {
     name: "Terminación de contrato",
-    selector: "ContractUntil",
+    selector: (row) => row.ContractUntil,
     sortable: true,
     grow: 0.5,
   },
   {
-    name: "Valor en EUR",
-    selector: "ValueEUR",
+    name: "Valor",
+    selector: (row) =>
+      `€ ${row.ValueEUR.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
     sortable: true,
     right: true,
   },
@@ -130,42 +156,13 @@ const PlayerTable = ({ players }) => {
     return () => clearTimeout(timeout);
   }, []);
 
-  const [tableTheme, setTableTheme] = useState(myTheme);
-
-  useEffect(() => {
-    setTableTheme(myTheme);
-  }, [myTheme]);
-
-  createTheme(
-    "solarized",
-    {
-      text: {
-        primary: "#268bd2",
-        secondary: "#2aa198",
-      },
-      background: {
-        default: tableTheme.backgroundColor,
-      },
-      context: {
-        background: "#000000",
-        text: "#FFFFFF",
-      },
-      divider: {
-        default: "#073642",
-      },
-      action: {
-        button: "rgba(0,0,0,.54)",
-        hover: "rgba(0,0,0,.08)",
-        disabled: "rgba(0,0,0,.12)",
-      },
-    },
-    "dark"
-  );
-
   return (
     <MyStyles myTheme={myTheme}>
       <DataTable
         expandableRows
+        expandableRowsComponent={TableExpander}
+        expandOnRowClicked={true}
+        // expandableRowsHideExpander={true}
         columns={columns}
         data={players}
         title={title}
@@ -179,6 +176,7 @@ const PlayerTable = ({ players }) => {
         fixedHeaderScrollHeight=""
         progressPending={pending}
         progressComponent={<CustomLoader />}
+        sortIcon={<BiChevronDown />}
       />
     </MyStyles>
   );

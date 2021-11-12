@@ -14,7 +14,7 @@ function formatForDisplay(number = 0) {
 const AnimatingNumber = ({ value }) => {
   const numArray = formatForDisplay(value);
 
-  for (var i = 3; i < numArray.length; i += 4) {
+  for (var i = 3; i < numArray?.length; i += 4) {
     numArray.splice(i, 0, ",");
   }
 
