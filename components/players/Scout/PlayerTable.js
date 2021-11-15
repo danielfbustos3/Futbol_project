@@ -11,14 +11,18 @@ const MyStyles = styled.div`
     color: ${({ myTheme }) => myTheme.textColor};
   }
   .rdt_TableWrapper {
-    max-height: 200vh;
-    width: 100%;
-    min-width: 20%;
+    /* max-height: 50vh; */
+    /* width: 100%; */
+    /* min-width: 20%; */
   }
   .rdt_TableColExpander {
   }
   .rdt_TableRow {
+    cursor: pointer;
     background: ${({ myTheme }) => myTheme.backgroundColor};
+    &:hover {
+      background: ${({ myTheme }) => myTheme.boxColor};
+    }
     &:not(:last-of-type) {
       border-bottom-color: ${({ myTheme }) => myTheme.boxColor};
     }
@@ -43,6 +47,8 @@ const MyStyles = styled.div`
   .rdt_TableCell {
   }
   .rdt_TableHeader {
+    display: flex;
+    /* overflow: visible; */
     background: ${({ myTheme }) => myTheme.backgroundColor};
   }
   .rdt_TableFooter {
@@ -143,8 +149,13 @@ const paginacionOpciones = {
   rangeSeparatorText: "de",
 };
 
-const PlayerTable = ({ players }) => {
-  const title = `${players?.length} Jugadores Encontrados`;
+const PlayerTable = ({
+  players,
+  setSelectedPlayer,
+  compareMode,
+  setCompareMode,
+  comparePlayer,
+}) => {
   const myTheme = useTheme();
 
   const [pending, setPending] = useState(true);
@@ -159,13 +170,13 @@ const PlayerTable = ({ players }) => {
   return (
     <MyStyles myTheme={myTheme}>
       <DataTable
-        expandableRows
-        expandableRowsComponent={TableExpander}
-        expandOnRowClicked={true}
+        // expandableRows
+        // expandableRowsComponent={TableExpander}
+        // expandOnRowClicked={true}
         // expandableRowsHideExpander={true}
         columns={columns}
         data={players}
-        title={title}
+        // title={<Title posiciones={posiciones} />}
         responsive={true}
         // dense={true}
         pagination
@@ -173,7 +184,15 @@ const PlayerTable = ({ players }) => {
         paginationRowsPerPageOptions={[30, 60, 90, 150, 200]}
         paginationComponentOptions={paginacionOpciones}
         fixedHeader
-        fixedHeaderScrollHeight=""
+        onRowClicked={(row, event) => {
+          setSelectedPlayer(row);
+          if (comparePlayer != "") {
+            setCompareMode(2);
+          } else {
+            setCompareMode(1);
+          }
+        }}
+        fixedHeaderScrollHeight={compareMode === 0 ? "80vh" : "40vh"}
         progressPending={pending}
         progressComponent={<CustomLoader />}
         sortIcon={<BiChevronDown />}

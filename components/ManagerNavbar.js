@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { animateScroll as scroll } from "react-scroll";
 import { splitCamelCaseToString } from "utils/functions";
 import { useTheme } from "../utils/functions";
+import NormalButton from "./NormalButton";
 
 const Nav = styled.nav`
   background: ${({ myTheme }) => myTheme.backgroundColor};
@@ -24,8 +25,8 @@ const Nav = styled.nav`
   z-index: 12;
   transition: 0.2s all ease;
   .nav-container {
-    display: grid;
-    grid-template-columns: 1fr 65%;
+    display: flex;
+    align-items: center;
     width: 100%;
     height: 100%;
     padding: 0 1.4rem 0 1rem;
@@ -70,10 +71,11 @@ const Nav = styled.nav`
       }
     }
     .nav-menu {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
-      align-items: center;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-left: 2rem;
       list-style: none;
       text-align: center;
       .nav-btn-link {
@@ -104,7 +106,7 @@ const Nav = styled.nav`
   }
 `;
 
-const ManagerNavbar = ({ toggleKeepOpen, setPage, toggle }) => {
+const ManagerNavbar = ({ toggleKeepOpen, setPage, toggle, page }) => {
   const [scrollNav, setScrollNav] = useState(false);
   const changeNav = () => {
     if (window.scrollY >= 80) {
@@ -122,8 +124,6 @@ const ManagerNavbar = ({ toggleKeepOpen, setPage, toggle }) => {
     scroll.scrollToTop();
   };
   const myTheme = useTheme();
-
-  const linksObj = ["AllPlayers", "Clubs", "Nationality", "Position"];
 
   return (
     <Nav scrollNav={scrollNav} myTheme={myTheme}>
@@ -143,15 +143,9 @@ const ManagerNavbar = ({ toggleKeepOpen, setPage, toggle }) => {
           </LinkS>
         </ul>
         <ul className="nav-menu">
-          {linksObj.map((link, index) => (
-            <span
-              className="nav-btn-link"
-              key={index}
-              onClick={() => setPage(link.toLowerCase())}
-            >
-              {splitCamelCaseToString(link)}
-            </span>
-          ))}
+          {page === "scoutresults" && (
+            <NormalButton action={() => setPage("scout")} text="← buscador" />
+          )}
         </ul>
       </div>
     </Nav>

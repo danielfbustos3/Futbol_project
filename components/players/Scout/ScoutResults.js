@@ -6,6 +6,7 @@ import { useTheme } from "../../../utils/functions";
 import CustomLoader from "components/CustomLoader";
 import { useState, useEffect } from "react";
 import PlayerTable from "./PlayerTable";
+import PlayerComparer from "./PlayerComparer";
 import Alert from "components/Alert";
 import NormalButton from "components/NormalButton";
 import AnimatedButton from "components/AnimatedButton";
@@ -46,7 +47,10 @@ const ResultsContainer = styled.div`
     }
   }
   .optionsContainer {
+    height: 2.4rem;
     display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -65,7 +69,14 @@ const ScoutResults = ({ setPage }) => {
 };
 
 function ShowResults({ setPage }) {
+  //Compare Mode 0 = no player selected, 1 = 1 player selected, 2 = compare mode.
+  const [compareMode, setCompareMode] = useState(0);
+  const [selectedPlayer, setSelectedPlayer] = useState("");
+  const [comparePlayer, setComparePlayer] = useState("");
   const [selectedPos, setSelectedPos] = useState("");
+
+  console.log(compareMode);
+
   const myTheme = useTheme();
 
   const value = useGlobalState("scoutValue")[0];
@@ -88,6 +99,10 @@ function ShowResults({ setPage }) {
   };
 
   const { data, status } = useQuery("players", fetchPlayers);
+
+  const players = data?.data.filter((element) =>
+    element.Positions.includes(selectedPos)
+  );
 
   if (value === "" || positions === "") {
     return (
@@ -139,37 +154,47 @@ function ShowResults({ setPage }) {
           undefined !== data?.data &&
           data?.data.length > 0 && (
             <>
-              <NormalButton action={() => setPage("scout")} text="← buscador" />
-              <div>
-                {posiciones?.length > 1 && (
-                  <>
-                    <p>
-                      Seleccione una opción para encontrar jugadores por
-                      posición.
-                    </p>
-                    <div className="optionsContainer">
-                      {posiciones?.map((item, index) => (
-                        <NormalButton
-                          key={index}
-                          action={() => setSelectedPos(item)}
-                          text={item}
-                          selected={selectedPos === item ? true : false}
-                        />
-                      ))}
-                      <NormalButton
-                        action={() => setSelectedPos("")}
-                        text="Todos"
-                        selected={selectedPos === "" ? true : false}
-                      />
-                    </div>
-                  </>
-                )}
-                <PlayerTable
-                  players={data?.data.filter((element) =>
-                    element.Positions.includes(selectedPos)
-                  )}
-                />
-              </div>
+              {posiciones?.length > 1 ? (
+                <div className="optionsContainer">
+                  <p styles={"margin-right: 1rem;"}>
+                    {players?.length} Jugadores Encontrados{" "}
+                  </p>
+                  {posiciones?.map((item, index) => (
+                    <NormalButton
+                      key={index}
+                      action={() => setSelectedPos(item)}
+                      text={item}
+                      selected={selectedPos === item ? true : false}
+                    />
+                  ))}
+                  <NormalButton
+                    action={() => setSelectedPos("")}
+                    text="Todos"
+                    selected={selectedPos === "" ? true : false}
+                  />
+                </div>
+              ) : (
+                <div className="optionsContainer">
+                  <p styles={"margin-right: 1rem;"}>
+                    {players?.length} Jugadores Encontrados{" "}
+                  </p>
+                </div>
+              )}
+              <PlayerComparer
+                compareMode={compareMode}
+                setCompareMode={setCompareMode}
+                selectedPlayer={selectedPlayer}
+                setSelectedPlayer={setSelectedPlayer}
+                comparePlayer={comparePlayer}
+                setComparePlayer={setComparePlayer}
+              />
+              <PlayerTable
+                players={players}
+                setSelectedPlayer={setSelectedPlayer}
+                compareMode={compareMode}
+                setCompareMode={setCompareMode}
+                comparePlayer={comparePlayer}
+              />
             </>
           )}
       </ResultsContainer>

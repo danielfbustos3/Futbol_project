@@ -3,7 +3,7 @@ import { useTheme } from "utils/functions";
 
 const ButtonContainer = styled.div`
   .myBtn {
-    margin: 1rem 0.5rem;
+    margin: 0.5rem;
     padding: 0.4rem 0.8rem;
     color: ${({ myTheme }) => myTheme.textColor};
     font-size: 0.7rem;
@@ -28,7 +28,7 @@ const ButtonContainer = styled.div`
     }
   }
   .myBtnSelected {
-    margin: 1rem 0.5rem;
+    margin: 0 0.5rem;
     padding: 0.4rem 0.8rem;
     font-size: 0.7rem;
     text-decoration: none;

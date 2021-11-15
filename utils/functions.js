@@ -29,6 +29,8 @@ export const ThemeProvider = ({ children }) => {
     zonasCancha: "64, 172, 138",
     checkColor: "#fff",
     lightboxColor: "#2D2D2D",
+    radar1: "112, 156, 255",
+    radar2: "238, 145, 14",
   });
 
   function setColor(Color) {
@@ -45,6 +47,8 @@ export const ThemeProvider = ({ children }) => {
           zonasCancha: "64, 172, 138",
           checkColor: "#fff",
           lightboxColor: "#2D2D2D",
+          radar1: "112, 156, 255",
+          radar2: "238, 145, 14",
         });
         break;
       case "light":
@@ -59,6 +63,8 @@ export const ThemeProvider = ({ children }) => {
           zonasCancha: "64, 172, 138",
           checkColor: "#fff",
           lightboxColor: "#c8c8c8",
+          radar1: "112, 156, 255",
+          radar2: "238, 145, 14",
         });
         break;
       case "dark-green":
@@ -73,6 +79,8 @@ export const ThemeProvider = ({ children }) => {
           zonasCancha: "64, 172, 138",
           checkColor: "#01bf71",
           lightboxColor: "#0f2520",
+          radar1: "112, 156, 255",
+          radar2: "238, 145, 14",
         });
         break;
       case "green":
@@ -87,6 +95,8 @@ export const ThemeProvider = ({ children }) => {
           zonasCancha: "178, 218, 14",
           checkColor: "#01bf71",
           lightboxColor: "#007F4B",
+          radar1: "112, 156, 255",
+          radar2: "238, 145, 14",
         });
         break;
       default:

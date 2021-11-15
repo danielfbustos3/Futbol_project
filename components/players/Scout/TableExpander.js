@@ -12,39 +12,97 @@ const Expander = styled.div`
   border-radius: 0 0 0.5rem 0.5rem;
   box-shadow: 0em 0.2em 0.4em rgba(0, 0, 0, 0.3);
   overflow: hidden;
+  padding: 0.5rem;
   .leftWrapper {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     height: 100%;
-    width: 20%;
-    background: lightyellow;
-    .imageContainer {
-      /* position: absolute; */
-      /* bottom: 0 */
-      padding: 0.6rem 0 0 0.5rem;
-      margin: 0 2rem;
-      margin-top: -7rem;
-      aspect-ratio: 1;
-      height: 4.6rem;
-      width: 5rem;
-      /* background: #eee; */
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5) inset;
-      overflow: hidden;
-      border-radius: 1rem;
-      .playerImage {
-        margin-top: 5rem;
-        filter: drop-shadow(0em 0.3em 0.4em rgba(0, 0, 0, 0.9));
+    width: 30%;
+    /* background: lightyellow; */
+    .imageInfo {
+      /* background: red; */
+      /* overflow: hidden; */
+      display: flex;
+      align-items: center;
+      height: 50%;
+      width: 100%;
+      padding-bottom: 0.5rem;
+      .imageContainer {
+        padding: 0.6rem 0 0 0.5rem;
+        aspect-ratio: 1;
+        height: 4.6rem;
+        width: 25%;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5) inset;
+        overflow: hidden;
+        border-radius: 1rem;
+        .playerImage {
+          margin-top: 5rem;
+          filter: drop-shadow(0em 0.3em 0.4em rgba(0, 0, 0, 0.9));
+        }
+      }
+      .information {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        padding: 0.5rem;
+        height: 100%;
+        width: 75%;
+        margin-left: 0.5rem;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5) inset;
+        border-radius: 1rem;
+        p {
+          text-align: center;
+          font-size: 0.9rem;
+        }
       }
     }
+    .physical {
+      height: 50%;
+      width: 100%;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5) inset;
+      border-radius: 1rem;
+    }
+  }
+  .mind {
+    height: 100%;
+    width: 15%;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5) inset;
+    border-radius: 1rem;
   }
   .rightWrapper {
+    display: flex;
     height: 100%;
-    width: 80%;
-    background: lightblue;
+    width: 55%;
+    .controlShooting {
+      height: 100%;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      .control {
+        width: 100%;
+        height: 30%;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5) inset;
+        border-radius: 1rem;
+      }
+      .shooting {
+        width: 100%;
+        height: 70%;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5) inset;
+        border-radius: 1rem;
+      }
+    }
     .radarContainer {
-      margin-top: -1rem;
-      height: 17rem;
-      width: 17rem;
+      display: flex;
+      align-items: center;
+      margin-left: 0.5rem;
+      height: 100%;
+      width: 50%;
+      padding: 0.3rem;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5) inset;
+      border-radius: 1rem;
     }
   }
 `;
@@ -176,18 +234,37 @@ const TableExpander = (props) => {
   return (
     <Expander myTheme={myTheme}>
       <div className="leftWrapper">
-        <div className="imageContainer">
-          <Image
-            className="playerImage"
-            src={props.data.PhotoUrl}
-            alt={props.data.Name}
-            height={100}
-            width={100}
-            quality={100}
-          />
+        <div className="imageInfo">
+          <div className="imageContainer">
+            <Image
+              className="playerImage"
+              src={props.data.PhotoUrl}
+              alt={props.data.Name}
+              height={100}
+              width={100}
+              quality={100}
+            />
+          </div>
+          <div className="information">
+            <p>Altura: {props.data.Height} cm</p>
+            <p>Peso: {props.data.Weight} kg</p>
+            <p>Mejor posición: {props.data.BestPosition}</p>
+            <p>
+              pie:{" "}
+              {props.data.PreferredFoot === "left" ? "Izquierdo" : "Derecho"}
+            </p>
+            <p>Weak Foot: {props.data.WeakFoot}</p>
+            <p>Skills: {props.data.SkillMoves}</p>
+          </div>
         </div>
+        <div className="physical"></div>
       </div>
+      <div className="mind"></div>
       <div className="rightWrapper">
+        <div className="controlShooting">
+          <div className="control"></div>
+          <div className="shooting"></div>
+        </div>
         <div className="radarContainer">
           <Radar
             data={radarData(props)}

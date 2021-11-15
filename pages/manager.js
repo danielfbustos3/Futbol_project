@@ -41,6 +41,7 @@ const ManagerPage = () => {
         toggleKeepOpen={toggleKeepOpen}
         toggle={toggle}
         setPage={setPage}
+        page={page}
       />
       <PageLayout isOpen={isOpen}>
         <ManagerSidebar
