@@ -94,7 +94,7 @@ const PlayerBasicCard = ({ data, dataCompare, compareMode }) => {
           <p className="overall">{data?.Overall}</p>
           <div className="natAge">
             <p>{data?.Nationality}</p>
-            <p>{data?.Age} años</p>
+            <p>{data && `${data?.Age} años`}</p>
           </div>
         </div>
       </div>
