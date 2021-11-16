@@ -15,13 +15,8 @@ const ComparerContainer = styled.div`
   padding-bottom: 0.5rem;
   .selected {
     width: ${({ compareMode }) => (compareMode === 2 ? "50%" : "100%")};
-    transition: all 0.5s ease;
     height: 100%;
-    background: ${({ myTheme }) => myTheme.boxColor};
-    border-radius: 1rem;
-    border: ${({ myTheme }) => `3px solid rgba(${myTheme.radar1}, 1)`};
-    box-shadow: ${({ myTheme }) => `0 0 12px rgba(${myTheme.radar1}, 0.5)`};
-    overflow: hidden;
+    transition: all 0.5s ease;
   }
   .center {
     max-width: 15rem;
@@ -43,11 +38,6 @@ const ComparerContainer = styled.div`
     width: ${({ compareMode }) => (compareMode === 2 ? "50%" : "0")};
     opacity: ${({ compareMode }) => (compareMode === 2 ? "1" : "0")};
     height: 100%;
-    background: ${({ myTheme }) => myTheme.boxColor};
-    border-radius: 1rem;
-    border: ${({ myTheme }) => `3px solid rgba(${myTheme.radar2}, 1)`};
-    box-shadow: ${({ myTheme }) => `0 0 12px rgba(${myTheme.radar2}, 0.5)`};
-    overflow: hidden;
   }
 `;
 
@@ -68,6 +58,7 @@ const PlayerComparer = ({
           data={selectedPlayer}
           dataCompare={comparePlayer}
           compareMode={compareMode}
+          color={1}
         />
       </div>
       <div className="center">
@@ -110,6 +101,7 @@ const PlayerComparer = ({
           data={comparePlayer}
           dataCompare={selectedPlayer}
           compareMode={compareMode}
+          color={2}
         />
       </div>
     </ComparerContainer>
