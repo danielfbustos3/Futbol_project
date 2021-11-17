@@ -100,8 +100,8 @@ function ShowResults({ setPage }) {
 
   const { data, status } = useQuery("players", fetchPlayers);
 
-  const players = data?.data.filter((element) =>
-    element.Positions.includes(selectedPos)
+  const players = data?.data.filter(
+    async (element) => await element.Positions.includes(selectedPos)
   );
 
   if (value === "" || positions === "") {

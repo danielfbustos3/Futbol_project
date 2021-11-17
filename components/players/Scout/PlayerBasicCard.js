@@ -196,7 +196,18 @@ const CardWrapper = styled.div`
     grid-area: aat;
   }
   .club {
+    margin-left: 1rem;
     grid-area: clu;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    p {
+      margin-left: 0.3rem;
+      font-family: "Bebas Neue", cursive;
+      font-size: 0.9rem;
+      letter-spacing: 0.05rem;
+    }
     /* background: lightblue; */
   }
   .showMore {
@@ -264,74 +275,82 @@ const PlayerBasicCard = ({ data, dataCompare, compareMode, color }) => {
       </div>
       <div className="potPos">
         <div className="potencial">
-          Potencial:
+          {data && "Potencial:"}
           <p className="valorPot">{data?.Potential}</p>
         </div>
         <div className="mejPos">
-          Preferida:
+          {data && "Preferida:"}
           <p className="mejorPosicion">{data?.BestPosition}</p>
         </div>
       </div>
-      <div className="radAtr">
-        <div className="rlabels">
-          <p>RIT</p>
-          <p>REG</p>
-          <p>TIR</p>
-          <p>PAS</p>
-          <p>DEF</p>
-          <p>FIS</p>
+      {data && (
+        <div className="radAtr">
+          <div className="rlabels">
+            <p>RIT</p>
+            <p>REG</p>
+            <p>TIR</p>
+            <p>PAS</p>
+            <p>DEF</p>
+            <p>FIS</p>
+          </div>
+          <div className="separators">
+            <p className="separate">|</p>
+            <p className="separate">|</p>
+            <p className="separate">|</p>
+            <p className="separate">|</p>
+            <p className="separate">|</p>
+            <p className="separate">|</p>
+          </div>
+          <div className="rvalues">
+            <p className="pace">{data?.PaceTotal}</p>
+            <p className="dribbling">{data?.DribblingTotal}</p>
+            <p className="shooting">{data?.ShootingTotal}</p>
+            <p className="passing">{data?.PassingTotal}</p>
+            <p className="defending">{data?.DefendingTotal}</p>
+            <p className="physical">{data?.PhysicalityTotal}</p>
+          </div>
+          <div className="diffValues">
+            <p>
+              {data?.PaceTotal > dataCompare?.PaceTotal
+                ? `+${data?.PaceTotal - dataCompare?.PaceTotal}`
+                : "\u00A0"}
+            </p>
+            <p>
+              {data?.DribblingTotal > dataCompare?.DribblingTotal
+                ? `+${data?.DribblingTotal - dataCompare?.DribblingTotal}`
+                : "\u00A0"}
+            </p>
+            <p>
+              {data?.ShootingTotal > dataCompare?.ShootingTotal
+                ? `+${data?.ShootingTotal - dataCompare?.ShootingTotal}`
+                : "\u00A0"}
+            </p>
+            <p>
+              {data?.PassingTotal > dataCompare?.PassingTotal
+                ? `+${data?.PassingTotal - dataCompare?.PassingTotal}`
+                : "\u00A0"}
+            </p>
+            <p>
+              {data?.DefendingTotal > dataCompare?.DefendingTotal
+                ? `+${data?.DefendingTotal - dataCompare?.DefendingTotal}`
+                : "\u00A0"}
+            </p>
+            <p>
+              {data?.PhysicalityTotal > dataCompare?.PhysicalityTotal
+                ? `+${data?.PhysicalityTotal - dataCompare?.PhysicalityTotal}`
+                : "\u00A0"}
+            </p>
+          </div>
         </div>
-        <div className="separators">
-          <p className="separate">|</p>
-          <p className="separate">|</p>
-          <p className="separate">|</p>
-          <p className="separate">|</p>
-          <p className="separate">|</p>
-          <p className="separate">|</p>
-        </div>
-        <div className="rvalues">
-          <p className="pace">{data?.PaceTotal}</p>
-          <p className="dribbling">{data?.DribblingTotal}</p>
-          <p className="shooting">{data?.ShootingTotal}</p>
-          <p className="passing">{data?.PassingTotal}</p>
-          <p className="defending">{data?.DefendingTotal}</p>
-          <p className="physical">{data?.PhysicalityTotal}</p>
-        </div>
-        <div className="diffValues">
-          <p>
-            {data?.PaceTotal > dataCompare?.PaceTotal
-              ? `+${data?.PaceTotal - dataCompare?.PaceTotal}`
-              : "\u00A0"}
-          </p>
-          <p>
-            {data?.DribblingTotal > dataCompare?.DribblingTotal
-              ? `+${data?.DribblingTotal - dataCompare?.DribblingTotal}`
-              : "\u00A0"}
-          </p>
-          <p>
-            {data?.ShootingTotal > dataCompare?.ShootingTotal
-              ? `+${data?.ShootingTotal - dataCompare?.ShootingTotal}`
-              : "\u00A0"}
-          </p>
-          <p>
-            {data?.PassingTotal > dataCompare?.PassingTotal
-              ? `+${data?.PassingTotal - dataCompare?.PassingTotal}`
-              : "\u00A0"}
-          </p>
-          <p>
-            {data?.DefendingTotal > dataCompare?.DefendingTotal
-              ? `+${data?.DefendingTotal - dataCompare?.DefendingTotal}`
-              : "\u00A0"}
-          </p>
-          <p>
-            {data?.PhysicalityTotal > dataCompare?.PhysicalityTotal
-              ? `+${data?.PhysicalityTotal - dataCompare?.PhysicalityTotal}`
-              : "\u00A0"}
-          </p>
-        </div>
-      </div>
+      )}
       <div className="allAtr"></div>
-      <div className="club"></div>
+      <div className="club">
+        {data && (
+          <>
+            Club: <p>{data.Club}</p> hasta: <p>{data.ContractUntil}</p>
+          </>
+        )}
+      </div>
       <div className="showMore"></div>
       <p></p>
     </CardWrapper>
