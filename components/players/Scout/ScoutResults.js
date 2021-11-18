@@ -114,35 +114,12 @@ function ShowResults({ setPage }) {
       </ResultsContainer>
     );
   } else {
-    switch (status) {
-      case "error":
-        return (
-          <ResultsContainer myTheme={myTheme}>
-            <Alert type="error" message="Error fetching data" />
-            <AnimatedButton
-              action={() => setPage("scout")}
-              text="SCOUT"
-              size="small"
-            />
-          </ResultsContainer>
-        );
-
-      case "loading":
-        return (
-          <ResultsContainer myTheme={myTheme}>
-            <CustomLoader />
-          </ResultsContainer>
-        );
-      case "success":
-        if (undefined !== data?.data && data?.data.length === 0) {
+    if (status) {
+      switch (status) {
+        case "error":
           return (
             <ResultsContainer myTheme={myTheme}>
-              <Alert
-                type="alert"
-                message="No encontramos jugadores con las características seleccionadas.
-                Regrese a SCOUT y seleccione nuevas características para la
-                búsqueda."
-              />
+              <Alert type="error" message="Error fetching data" />
               <AnimatedButton
                 action={() => setPage("scout")}
                 text="SCOUT"
@@ -150,61 +127,97 @@ function ShowResults({ setPage }) {
               />
             </ResultsContainer>
           );
-        } else {
-          if (undefined !== data?.data && data?.data.length > 0) {
-            const players = data?.data.filter((element) =>
-              element.Positions.includes(selectedPos)
-            );
 
+        case "loading":
+          return (
+            <ResultsContainer myTheme={myTheme}>
+              <CustomLoader />
+            </ResultsContainer>
+          );
+        case "success":
+          if (undefined !== data?.data && data?.data.length === 0) {
             return (
               <ResultsContainer myTheme={myTheme}>
-                {posiciones?.length > 1 ? (
-                  <div className="optionsContainer">
-                    <p styles={"margin-right: 1rem;"}>
-                      {players?.length} Jugadores Encontrados{" "}
-                    </p>
-                    {posiciones?.map((item, index) => (
-                      <NormalButton
-                        key={index}
-                        action={() => setSelectedPos(item)}
-                        text={item}
-                        selected={selectedPos === item ? true : false}
-                      />
-                    ))}
-                    <NormalButton
-                      action={() => setSelectedPos("")}
-                      text="Todos"
-                      selected={selectedPos === "" ? true : false}
-                    />
-                  </div>
-                ) : (
-                  <div className="optionsContainer">
-                    <p styles={"margin-right: 1rem;"}>
-                      {players?.length} Jugadores Encontrados{" "}
-                    </p>
-                  </div>
-                )}
-                <PlayerComparer
-                  compareMode={compareMode}
-                  setCompareMode={setCompareMode}
-                  selectedPlayer={selectedPlayer}
-                  setSelectedPlayer={setSelectedPlayer}
-                  comparePlayer={comparePlayer}
-                  setComparePlayer={setComparePlayer}
+                <Alert
+                  type="alert"
+                  message="No encontramos jugadores con las características seleccionadas.
+                Regrese a SCOUT y seleccione nuevas características para la
+                búsqueda."
                 />
-                <PlayerTable
-                  players={players}
-                  setSelectedPlayer={setSelectedPlayer}
-                  compareMode={compareMode}
-                  setCompareMode={setCompareMode}
-                  comparePlayer={comparePlayer}
+                <AnimatedButton
+                  action={() => setPage("scout")}
+                  text="SCOUT"
+                  size="small"
                 />
               </ResultsContainer>
             );
+          } else {
+            if (undefined !== data?.data && data?.data.length > 0) {
+              const players = data?.data.filter((element) =>
+                element.Positions.includes(selectedPos)
+              );
+
+              return (
+                <ResultsContainer myTheme={myTheme}>
+                  {posiciones?.length > 1 ? (
+                    <div className="optionsContainer">
+                      <p styles={"margin-right: 1rem;"}>
+                        {players?.length} Jugadores Encontrados{" "}
+                      </p>
+                      {posiciones?.map((item, index) => (
+                        <NormalButton
+                          key={index}
+                          action={() => setSelectedPos(item)}
+                          text={item}
+                          selected={selectedPos === item ? true : false}
+                        />
+                      ))}
+                      <NormalButton
+                        action={() => setSelectedPos("")}
+                        text="Todos"
+                        selected={selectedPos === "" ? true : false}
+                      />
+                    </div>
+                  ) : (
+                    <div className="optionsContainer">
+                      <p styles={"margin-right: 1rem;"}>
+                        {players?.length} Jugadores Encontrados{" "}
+                      </p>
+                    </div>
+                  )}
+                  <PlayerComparer
+                    compareMode={compareMode}
+                    setCompareMode={setCompareMode}
+                    selectedPlayer={selectedPlayer}
+                    setSelectedPlayer={setSelectedPlayer}
+                    comparePlayer={comparePlayer}
+                    setComparePlayer={setComparePlayer}
+                  />
+                  <PlayerTable
+                    players={players}
+                    setSelectedPlayer={setSelectedPlayer}
+                    compareMode={compareMode}
+                    setCompareMode={setCompareMode}
+                    comparePlayer={comparePlayer}
+                  />
+                </ResultsContainer>
+              );
+            }
           }
-        }
-      default:
-        "error";
+        default:
+          "error";
+      }
+    } else {
+      return (
+        <ResultsContainer myTheme={myTheme}>
+          <Alert type="error" message="Error fetching data" />
+          <AnimatedButton
+            action={() => setPage("scout")}
+            text="SCOUT"
+            size="small"
+          />
+        </ResultsContainer>
+      );
     }
   }
 }
