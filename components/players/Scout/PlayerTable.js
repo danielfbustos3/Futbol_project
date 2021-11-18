@@ -107,7 +107,7 @@ const columns = [
   },
   {
     name: "Posiciones",
-    selector: (row) => row.Positions,
+    selector: (row) => row.Positions.replace(/,/g, ", "),
     sortable: true,
   },
   {

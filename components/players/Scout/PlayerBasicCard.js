@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
 import { useTheme } from "utils/functions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import AttributesBook from "./AttributesBook";
 
@@ -23,7 +23,7 @@ const CardWrapper = styled.div`
   display: grid;
   grid-gap: 0px;
   grid-template-rows: 1fr 1.25fr 0.5fr 2.75fr 0.5fr;
-  grid-template-columns: 0.5fr 0.75fr 0.5fr 2.5fr 0.5fr 1.25fr;
+  grid-template-columns: 0.5fr 0.75fr 0.6fr 2.4fr 0.5fr 1.25fr;
   grid-template-areas: "pho pho nva nva nva nva" "pho pho ovr otr otr rat" "pot pot pot pot pot rat" "aat aat aat aat aat rat" "clu clu clu clu sho sho";
   .imageContainer {
     margin-left: auto;
@@ -31,7 +31,7 @@ const CardWrapper = styled.div`
     grid-area: pho;
     display: grid;
     aspect-ratio: 1;
-    padding: 0.5rem 0.25rem 0 0.25rem;
+    padding: 0.8rem 0.4rem 0 0.4rem;
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5) inset;
     overflow: hidden;
     border-radius: 1rem;
@@ -46,6 +46,7 @@ const CardWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-left: 0.5rem;
     .name {
       font-family: "Bebas Neue", cursive;
       letter-spacing: 0.1rem;
@@ -66,6 +67,7 @@ const CardWrapper = styled.div`
     display: flex;
     align-items: center;
     font-family: "Bebas Neue", cursive;
+    margin-left: 0.3rem;
     font-size: 2.5rem;
     line-height: 2.5rem;
     color: ${({ data, dataCompare, myTheme }) =>
@@ -128,70 +130,9 @@ const CardWrapper = styled.div`
   .radAtr {
     grid-area: rat;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* padding: 0 1rem; */
-    p {
-      font-family: "Bebas Neue", cursive;
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.1rem;
-    }
-    .rlabels {
-    }
-    .separators {
-      .separate {
-        filter: drop-shadow(0em 0.05em 0.04em rgba(0, 0, 0, 0.5));
-        color: ${({ myTheme }) => myTheme.lightboxColor};
-      }
-    }
-    .rvalues {
-      filter: drop-shadow(0em 0.05em 0.04em rgba(0, 0, 0, 0.3));
-      .pace {
-        color: ${({ data, dataCompare, myTheme }) =>
-          data.PaceTotal > dataCompare.PaceTotal
-            ? "#01bf71"
-            : myTheme.textColor};
-      }
-      .dribbling {
-        color: ${({ data, dataCompare, myTheme }) =>
-          data.DribblingTotal > dataCompare.DribblingTotal
-            ? "#01bf71"
-            : myTheme.textColor};
-      }
-      .shooting {
-        color: ${({ data, dataCompare, myTheme }) =>
-          data.ShootingTotal > dataCompare.ShootingTotal
-            ? "#01bf71"
-            : myTheme.textColor};
-      }
-      .passing {
-        color: ${({ data, dataCompare, myTheme }) =>
-          data.PassingTotal > dataCompare.PassingTotal
-            ? "#01bf71"
-            : myTheme.textColor};
-      }
-      .defending {
-        color: ${({ data, dataCompare, myTheme }) =>
-          data.DefendingTotal > dataCompare.DefendingTotal
-            ? "#01bf71"
-            : myTheme.textColor};
-      }
-      .physical {
-        color: ${({ data, dataCompare, myTheme }) =>
-          data.PhysicalityTotal > dataCompare.PhysicalityTotal
-            ? "#01bf71"
-            : myTheme.textColor};
-      }
-    }
-    .diffValues {
-      margin-left: 0.2rem;
-      p {
-        font-size: 0.9rem;
-        letter-spacing: 0.1rem;
-        line-height: 1.4rem;
-      }
-    }
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.2rem;
   }
   .allAtr {
     grid-area: aat;
@@ -239,10 +180,87 @@ const CardWrapper = styled.div`
   }
 `;
 
+const RadarRows = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 0.1fr 0.8fr 1fr;
+  p {
+    font-family: "Bebas Neue", cursive;
+    font-size: 1.1rem;
+    letter-spacing: 0.1rem;
+  }
+  .rlabel {
+    margin: auto;
+  }
+  .separate {
+    filter: drop-shadow(0em 0.05em 0.04em rgba(0, 0, 0, 0.5));
+    color: ${({ myTheme }) => myTheme.lightboxColor};
+  }
+  .rvalue {
+    filter: drop-shadow(0em 0.05em 0.04em rgba(0, 0, 0, 0.3));
+    color: ${({ data, compare, myTheme }) =>
+      compare
+        ? data === compare
+          ? myTheme.textColor
+          : data > compare
+          ? "#01bf71"
+          : "#FF6C5C"
+        : myTheme.textColor};
+  }
+  .diffValue {
+    /* margin-left: 0.2rem; */
+    font-size: 0.9rem;
+    letter-spacing: 0.1rem;
+    line-height: 1.4rem;
+  }
+`;
+
 const PlayerBasicCard = ({ data, dataCompare, compareMode, color }) => {
+  const radarAtrObj = [
+    {
+      title: "Ritmo",
+      label: "RIT",
+      value: data?.PaceTotal,
+      compare: dataCompare?.PaceTotal,
+    },
+    {
+      title: "Regate",
+      label: "REG",
+      value: data?.DribblingTotal,
+      compare: dataCompare?.DribblingTotal,
+    },
+    {
+      title: "Tiro",
+      label: "TIR",
+      value: data?.ShootingTotal,
+      compare: dataCompare?.ShootingTotal,
+    },
+    {
+      title: "Pases",
+      label: "PAS",
+      value: data?.PassingTotal,
+      compare: dataCompare?.PassingTotal,
+    },
+    {
+      title: "Defensa",
+      label: "DEF",
+      value: data?.DefendingTotal,
+      compare: dataCompare?.DefendingTotal,
+    },
+    {
+      title: "Físico",
+      label: "FIS",
+      value: data?.PhysicalityTotal,
+      compare: dataCompare?.PhysicalityTotal,
+    },
+  ];
+
   const myTheme = useTheme();
 
   const [attrPage, setAttrPage] = useState(0);
+
+  useEffect(() => {
+    setAttrPage(0);
+  }, [data]);
 
   return (
     <CardWrapper
@@ -283,7 +301,7 @@ const PlayerBasicCard = ({ data, dataCompare, compareMode, color }) => {
               <p>{data?.Nationality}</p>
               <p>{`${data?.Age} años`}</p>
             </div>
-            <p className="positions">{data?.Positions}</p>
+            <p className="positions">{data?.Positions.replace(/,/g, ", ")}</p>
           </div>
           <div className="potPos">
             <div className="potencial">
@@ -296,62 +314,27 @@ const PlayerBasicCard = ({ data, dataCompare, compareMode, color }) => {
             </div>
           </div>
           <div className="radAtr">
-            <div className="rlabels">
-              <p>RIT</p>
-              <p>REG</p>
-              <p>TIR</p>
-              <p>PAS</p>
-              <p>DEF</p>
-              <p>FIS</p>
-            </div>
-            <div className="separators">
-              <p className="separate">|</p>
-              <p className="separate">|</p>
-              <p className="separate">|</p>
-              <p className="separate">|</p>
-              <p className="separate">|</p>
-              <p className="separate">|</p>
-            </div>
-            <div className="rvalues">
-              <p className="pace">{data?.PaceTotal}</p>
-              <p className="dribbling">{data?.DribblingTotal}</p>
-              <p className="shooting">{data?.ShootingTotal}</p>
-              <p className="passing">{data?.PassingTotal}</p>
-              <p className="defending">{data?.DefendingTotal}</p>
-              <p className="physical">{data?.PhysicalityTotal}</p>
-            </div>
-            <div className="diffValues">
-              <p>
-                {data?.PaceTotal > dataCompare?.PaceTotal
-                  ? `+${data?.PaceTotal - dataCompare?.PaceTotal}`
-                  : "\u00A0"}
-              </p>
-              <p>
-                {data?.DribblingTotal > dataCompare?.DribblingTotal
-                  ? `+${data?.DribblingTotal - dataCompare?.DribblingTotal}`
-                  : "\u00A0"}
-              </p>
-              <p>
-                {data?.ShootingTotal > dataCompare?.ShootingTotal
-                  ? `+${data?.ShootingTotal - dataCompare?.ShootingTotal}`
-                  : "\u00A0"}
-              </p>
-              <p>
-                {data?.PassingTotal > dataCompare?.PassingTotal
-                  ? `+${data?.PassingTotal - dataCompare?.PassingTotal}`
-                  : "\u00A0"}
-              </p>
-              <p>
-                {data?.DefendingTotal > dataCompare?.DefendingTotal
-                  ? `+${data?.DefendingTotal - dataCompare?.DefendingTotal}`
-                  : "\u00A0"}
-              </p>
-              <p>
-                {data?.PhysicalityTotal > dataCompare?.PhysicalityTotal
-                  ? `+${data?.PhysicalityTotal - dataCompare?.PhysicalityTotal}`
-                  : "\u00A0"}
-              </p>
-            </div>
+            {radarAtrObj.map((item, index) => (
+              <RadarRows
+                key={index}
+                data={item.value}
+                compare={item.compare}
+                myTheme={myTheme}
+              >
+                <p className="rlabel">{item.label}</p>
+                <p className="separate">|</p>
+                <p className="rvalue">{item.value}</p>
+                {item.compare && (
+                  <p className="diffValue">
+                    {item.value === item.compare
+                      ? "\u00A0"
+                      : item.value > item.compare
+                      ? `+${item.value - item.compare}`
+                      : `-${item.compare - item.value}`}
+                  </p>
+                )}
+              </RadarRows>
+            ))}
           </div>
           <div className="allAtr">
             <button

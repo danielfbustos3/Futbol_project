@@ -7,14 +7,14 @@ import PlayerBasicCard from "./PlayerBasicCard";
 
 const ComparerContainer = styled.div`
   margin-top: 0.3rem;
-  height: ${({ compareMode }) => (compareMode === 0 ? "0px" : "40vh")};
+  height: ${({ compareMode }) => (compareMode === 0 ? "0px" : "15rem")};
   opacity: ${({ compareMode }) => (compareMode === 0 ? "0" : "1")};
   width: 100%;
   display: flex;
   transition: all 0.5s ease;
   padding-bottom: 0.5rem;
   .selected {
-    width: ${({ compareMode }) => (compareMode === 2 ? "50%" : "100%")};
+    width: ${({ compareMode }) => (compareMode === 2 ? "50%" : "45%")};
     height: 100%;
     transition: all 0.5s ease;
   }

@@ -37,7 +37,8 @@ const BookContainer = styled.div`
 `;
 
 const Number = styled.div`
-  margin-left: 0.2rem;
+  margin-left: 0.3rem;
+  margin-bottom: -0.3rem;
   font-family: "Bebas Neue", cursive;
   font-size: 1.1rem;
   color: ${({ data, compare, myTheme }) =>
@@ -231,16 +232,10 @@ const AttributesBook = ({ data, data2, color, attrPage }) => {
   const [position, setPosition] = useState(0);
   const widthContainer = useRef();
 
-  const setPage = (attrPage) => {
-    setPosition(widthContainer.current.clientWidth * parseInt(attrPage));
-  };
-
   useEffect(() => {
-    setPage(attrPage);
-    // console.log(data.Acceleration);
+    setPosition(widthContainer.current.clientWidth * parseInt(attrPage));
   }, [attrPage]);
 
-  console.log(data2);
   return (
     <BookContainer ref={widthContainer} myTheme={myTheme} color={color}>
       <motion.div
