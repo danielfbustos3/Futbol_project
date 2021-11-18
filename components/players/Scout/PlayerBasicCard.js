@@ -138,16 +138,18 @@ const CardWrapper = styled.div`
     grid-area: aat;
     padding: 0.2rem 0.5rem 0.3rem 0;
     display: grid;
-    grid-template-columns: 0.1fr 2fr 0.1fr;
+    grid-template-columns: 0.15fr 2fr 0.15fr;
     align-items: center;
-    button {
+    .paging {
       background: ${({ myTheme }) => myTheme.boxColor};
       color: ${({ myTheme }) => myTheme.lightboxColor};
       cursor: pointer;
+      font-size: 5rem;
       border: none;
       aspect-ratio: 1;
       display: flex;
       align-items: center;
+      justify-content: center;
       border-radius: 50%;
       &:hover {
         color: ${({ myTheme }) => myTheme.textColor};
@@ -337,24 +339,24 @@ const PlayerBasicCard = ({ data, dataCompare, compareMode, color }) => {
             ))}
           </div>
           <div className="allAtr">
-            <button
-              className="pageLeft"
+            <div
+              className="paging"
               onClick={() => attrPage > 0 && setAttrPage(attrPage - 1)}
             >
               <BiChevronLeft />
-            </button>
+            </div>
             <AttributesBook
               data2={dataCompare}
               data={data}
               attrPage={attrPage}
               color={color}
             />
-            <button
-              className="pageRight"
+            <div
+              className="paging"
               onClick={() => attrPage < 4 && setAttrPage(attrPage + 1)}
             >
               <BiChevronRight />
-            </button>
+            </div>
           </div>
           <div className="club">
             <div>

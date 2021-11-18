@@ -15,7 +15,6 @@ const Container = styled.div`
   padding: ${({ isOpen }) => (isOpen ? "0.5rem" : "0.5rem 2rem")};
   min-height: 85vh;
   width: 100%;
-  flex: wrap;
   overflow: scroll;
   background: ${({ myTheme }) => myTheme.backgroundColor};
   color: ${({ myTheme }) => myTheme.textColor};
@@ -29,15 +28,21 @@ const Container = styled.div`
   }
 `;
 
-const ManagerLayout = ({ page, setPage, isOpen }) => {
+const ManagerLayout = ({ page, setPage, isOpen, showmap, setShowmap }) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <ShowPage page={page} setPage={setPage} isOpen={isOpen} />
+      <ShowPage
+        page={page}
+        setPage={setPage}
+        isOpen={isOpen}
+        showmap={showmap}
+        setShowmap={setShowmap}
+      />
     </QueryClientProvider>
   );
 };
 
-function ShowPage({ page, setPage, isOpen }) {
+function ShowPage({ page, setPage, isOpen, showmap, setShowmap }) {
   const myTheme = useTheme();
 
   const fetchPlayers = async () => {
@@ -65,7 +70,13 @@ function ShowPage({ page, setPage, isOpen }) {
         return <Position data={data} status={status} />;
         break;
       case "scoutresults":
-        return <ScoutResults setPage={setPage} />;
+        return (
+          <ScoutResults
+            setPage={setPage}
+            showmap={showmap}
+            setShowmap={setShowmap}
+          />
+        );
         break;
       default:
         "allplayers";

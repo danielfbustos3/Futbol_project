@@ -7,14 +7,16 @@ import PlayerBasicCard from "./PlayerBasicCard";
 
 const ComparerContainer = styled.div`
   margin-top: 0.3rem;
-  height: ${({ compareMode }) => (compareMode === 0 ? "0px" : "15rem")};
+  height: ${({ compareMode }) => (compareMode === 0 ? "0px" : "380px")};
   opacity: ${({ compareMode }) => (compareMode === 0 ? "0" : "1")};
-  width: 100%;
+  /* width: 100vw; */
+  /* overflow: scroll; */
   display: flex;
   transition: all 0.5s ease;
   padding-bottom: 0.5rem;
   .selected {
-    width: ${({ compareMode }) => (compareMode === 2 ? "50%" : "45%")};
+    width: 50%;
+    min-width: ${({ compareMode }) => (compareMode === 2 ? "640px" : "780px")};
     height: 100%;
     transition: all 0.5s ease;
   }
@@ -35,7 +37,8 @@ const ComparerContainer = styled.div`
     }
   }
   .compare {
-    width: ${({ compareMode }) => (compareMode === 2 ? "50%" : "0")};
+    width: 50%;
+    min-width: ${({ compareMode }) => (compareMode === 2 ? "640px" : "0")};
     opacity: ${({ compareMode }) => (compareMode === 2 ? "1" : "0")};
     height: 100%;
   }

@@ -5,11 +5,11 @@ import { useGlobalState } from "state";
 import { useTheme } from "../../../utils/functions";
 import CustomLoader from "components/CustomLoader";
 import { useState, useEffect } from "react";
-import PlayerTable from "./PlayerTable";
-import PlayerComparer from "./PlayerComparer";
 import Alert from "components/Alert";
-import NormalButton from "components/NormalButton";
 import AnimatedButton from "components/AnimatedButton";
+import ScoutPlayersList from "./ScoutPlayersList";
+import ReactTooltip from "react-tooltip";
+import ScoutMap from "./ScoutMap";
 
 const scale = keyframes`
   0%, 100% {transform:  scale(1);}
@@ -56,26 +56,26 @@ const ResultsContainer = styled.div`
 
 const queryClient = new QueryClient();
 
-const ScoutResults = ({ setPage }) => {
+const ScoutResults = ({ setPage, showmap, setShowmap }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ShowResults setPage={setPage} />
+      <ShowResults
+        setPage={setPage}
+        showmap={showmap}
+        setShowmap={setShowmap}
+      />
     </QueryClientProvider>
   );
 };
 
-function ShowResults({ setPage }) {
-  //Compare Mode 0 = no player selected, 1 = 1 player selected, 2 = compare mode.
-  const [compareMode, setCompareMode] = useState(0);
-  const [selectedPlayer, setSelectedPlayer] = useState("");
-  const [comparePlayer, setComparePlayer] = useState("");
-  const [selectedPos, setSelectedPos] = useState("");
-
+function ShowResults({ setPage, showmap, setShowmap }) {
   const myTheme = useTheme();
+
+  const [selNations, setSelNations] = useState([]);
 
   const value = useGlobalState("scoutValue")[0];
   const positions = useGlobalState("scoutPositions")[0]
@@ -114,111 +114,54 @@ function ShowResults({ setPage }) {
       </ResultsContainer>
     );
   } else {
-    if (status) {
+    const setStatus = (status) => {
       switch (status) {
         case "error":
           return (
-            <ResultsContainer myTheme={myTheme}>
+            <>
               <Alert type="error" message="Error fetching data" />
               <AnimatedButton
                 action={() => setPage("scout")}
                 text="SCOUT"
                 size="small"
               />
-            </ResultsContainer>
+            </>
           );
 
         case "loading":
-          return (
-            <ResultsContainer myTheme={myTheme}>
-              <CustomLoader />
-            </ResultsContainer>
-          );
+          return <CustomLoader />;
         case "success":
-          if (undefined !== data?.data && data?.data.length === 0) {
+          if (showmap === 0) {
             return (
-              <ResultsContainer myTheme={myTheme}>
-                <Alert
-                  type="alert"
-                  message="No encontramos jugadores con las características seleccionadas.
-                Regrese a SCOUT y seleccione nuevas características para la
-                búsqueda."
-                />
-                <AnimatedButton
-                  action={() => setPage("scout")}
-                  text="SCOUT"
-                  size="small"
-                />
-              </ResultsContainer>
+              <ScoutPlayersList
+                data={data}
+                setPage={setPage}
+                posiciones={posiciones}
+                selNations={selNations}
+              />
             );
           } else {
-            if (undefined !== data?.data && data?.data.length > 0) {
-              const players = data?.data.filter((element) =>
-                element.Positions.includes(selectedPos)
-              );
-
+            if (showmap === 1) {
               return (
-                <ResultsContainer myTheme={myTheme}>
-                  {posiciones?.length > 1 ? (
-                    <div className="optionsContainer">
-                      <p styles={"margin-right: 1rem;"}>
-                        {players?.length} Jugadores Encontrados{" "}
-                      </p>
-                      {posiciones?.map((item, index) => (
-                        <NormalButton
-                          key={index}
-                          action={() => setSelectedPos(item)}
-                          text={item}
-                          selected={selectedPos === item ? true : false}
-                        />
-                      ))}
-                      <NormalButton
-                        action={() => setSelectedPos("")}
-                        text="Todos"
-                        selected={selectedPos === "" ? true : false}
-                      />
-                    </div>
-                  ) : (
-                    <div className="optionsContainer">
-                      <p styles={"margin-right: 1rem;"}>
-                        {players?.length} Jugadores Encontrados{" "}
-                      </p>
-                    </div>
-                  )}
-                  <PlayerComparer
-                    compareMode={compareMode}
-                    setCompareMode={setCompareMode}
-                    selectedPlayer={selectedPlayer}
-                    setSelectedPlayer={setSelectedPlayer}
-                    comparePlayer={comparePlayer}
-                    setComparePlayer={setComparePlayer}
-                  />
-                  <PlayerTable
-                    players={players}
-                    setSelectedPlayer={setSelectedPlayer}
-                    compareMode={compareMode}
-                    setCompareMode={setCompareMode}
-                    comparePlayer={comparePlayer}
-                  />
-                </ResultsContainer>
+                <ScoutMap
+                  data={data}
+                  setShowmap={setShowmap}
+                  selNations={selNations}
+                  setSelNations={setSelNations}
+                />
               );
             }
           }
+
+          break;
         default:
-          "error";
+          "loading";
       }
-    } else {
-      return (
-        <ResultsContainer myTheme={myTheme}>
-          <Alert type="error" message="Error fetching data" />
-          <AnimatedButton
-            action={() => setPage("scout")}
-            text="SCOUT"
-            size="small"
-          />
-        </ResultsContainer>
-      );
-    }
+    };
+
+    return (
+      <ResultsContainer myTheme={myTheme}>{setStatus(status)}</ResultsContainer>
+    );
   }
 }
 

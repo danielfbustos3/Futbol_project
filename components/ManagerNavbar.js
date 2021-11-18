@@ -106,7 +106,14 @@ const Nav = styled.nav`
   }
 `;
 
-const ManagerNavbar = ({ toggleKeepOpen, setPage, toggle, page }) => {
+const ManagerNavbar = ({
+  toggleKeepOpen,
+  setPage,
+  toggle,
+  page,
+  showmap,
+  setShowmap,
+}) => {
   const [scrollNav, setScrollNav] = useState(false);
   const changeNav = () => {
     if (window.scrollY >= 80) {
@@ -144,7 +151,15 @@ const ManagerNavbar = ({ toggleKeepOpen, setPage, toggle, page }) => {
         </ul>
         <ul className="nav-menu">
           {page === "scoutresults" && (
-            <NormalButton action={() => setPage("scout")} text="← buscador" />
+            <>
+              <NormalButton action={() => setPage("scout")} text="← buscador" />
+              {showmap === 1 && (
+                <NormalButton action={() => setShowmap(0)} text="Resultados" />
+              )}
+              {showmap === 0 && (
+                <NormalButton action={() => setShowmap(1)} text="ver Mapa" />
+              )}
+            </>
           )}
         </ul>
       </div>

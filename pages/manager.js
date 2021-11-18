@@ -26,6 +26,7 @@ const ManagerPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [keepOpen, setKeepOpen] = useState(false);
   const [page, setPage] = useState("allplayers");
+  const [showmap, setShowmap] = useState(1);
 
   const toggleKeepOpen = () => {
     setKeepOpen(!keepOpen);
@@ -41,6 +42,8 @@ const ManagerPage = () => {
         toggleKeepOpen={toggleKeepOpen}
         toggle={toggle}
         setPage={setPage}
+        showmap={showmap}
+        setShowmap={setShowmap}
         page={page}
       />
       <PageLayout isOpen={isOpen}>
@@ -52,7 +55,13 @@ const ManagerPage = () => {
           setIsOpen={setIsOpen}
         />
         <main className="main-content">
-          <ManagerLayout page={page} setPage={setPage} isOpen={isOpen} />
+          <ManagerLayout
+            page={page}
+            setPage={setPage}
+            isOpen={isOpen}
+            showmap={showmap}
+            setShowmap={setShowmap}
+          />
           <ManagerFooter />
         </main>
       </PageLayout>
