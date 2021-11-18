@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
 import { useTheme } from "utils/functions";
-import { useEffect } from "react";
-import { useTransition, animated, useSpringRef } from "react-spring";
+import { useState } from "react";
+import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import AttributesBook from "./AttributesBook";
 
 const CardWrapper = styled.div`
   height: 100%;
@@ -18,7 +19,7 @@ const CardWrapper = styled.div`
       ? `0 0 12px rgba(${myTheme.radar1}, 0.5)`
       : `0 0 12px rgba(${myTheme.radar2}, 0.5)`};
   overflow: hidden;
-  padding: 0.5rem;
+  padding: 0.5rem 0.5rem 0.2rem 0.5rem;
   display: grid;
   grid-gap: 0px;
   grid-template-rows: 1fr 1.25fr 0.5fr 2.75fr 0.5fr;
@@ -194,6 +195,24 @@ const CardWrapper = styled.div`
   }
   .allAtr {
     grid-area: aat;
+    padding: 0.2rem 0.5rem 0.3rem 0;
+    display: grid;
+    grid-template-columns: 0.1fr 2fr 0.1fr;
+    align-items: center;
+    button {
+      background: ${({ myTheme }) => myTheme.boxColor};
+      color: ${({ myTheme }) => myTheme.lightboxColor};
+      cursor: pointer;
+      border: none;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      border-radius: 50%;
+      &:hover {
+        color: ${({ myTheme }) => myTheme.textColor};
+        background: ${({ myTheme }) => myTheme.lightboxColor};
+      }
+    }
   }
   .club {
     margin-left: 1rem;
@@ -202,11 +221,15 @@ const CardWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     font-size: 0.8rem;
-    p {
-      margin-left: 0.3rem;
-      font-family: "Bebas Neue", cursive;
-      font-size: 0.9rem;
-      letter-spacing: 0.05rem;
+    div {
+      display: flex;
+      align-items: center;
+      p {
+        margin: 0 0.3rem;
+        font-family: "Bebas Neue", cursive;
+        font-size: 0.9rem;
+        letter-spacing: 0.05rem;
+      }
     }
     /* background: lightblue; */
   }
@@ -219,19 +242,7 @@ const CardWrapper = styled.div`
 const PlayerBasicCard = ({ data, dataCompare, compareMode, color }) => {
   const myTheme = useTheme();
 
-  const transRef = useSpringRef();
-
-  const transition = useTransition(data, {
-    ref: transRef,
-    keys: null,
-    from: {},
-    enter: {},
-    leave: {},
-  });
-
-  useEffect(() => {
-    transRef.start();
-  }, [data]);
+  const [attrPage, setAttrPage] = useState(0);
 
   return (
     <CardWrapper
@@ -253,106 +264,126 @@ const PlayerBasicCard = ({ data, dataCompare, compareMode, color }) => {
           quality={100}
         />
       </div>
-      <div className="nameValue">
-        <p className="name">
-          {compareMode === 2 ? data?.Name : data?.FullName}
-        </p>
-        <p className="value">
-          {data &&
-            `€${data.ValueEUR.toString().replace(
-              /\B(?=(\d{3})+(?!\d))/g,
-              ","
-            )}`}
-        </p>
-      </div>
-      <p className="overall">{data?.Overall}</p>
-      <div className="otherInfo">
-        <div className="natAge">
-          <p>{data?.Nationality}</p>
-          <p>{data && `${data?.Age} años`}</p>
-        </div>
-        <p className="positions">{data?.Positions}</p>
-      </div>
-      <div className="potPos">
-        <div className="potencial">
-          {data && "Potencial:"}
-          <p className="valorPot">{data?.Potential}</p>
-        </div>
-        <div className="mejPos">
-          {data && "Preferida:"}
-          <p className="mejorPosicion">{data?.BestPosition}</p>
-        </div>
-      </div>
       {data && (
-        <div className="radAtr">
-          <div className="rlabels">
-            <p>RIT</p>
-            <p>REG</p>
-            <p>TIR</p>
-            <p>PAS</p>
-            <p>DEF</p>
-            <p>FIS</p>
-          </div>
-          <div className="separators">
-            <p className="separate">|</p>
-            <p className="separate">|</p>
-            <p className="separate">|</p>
-            <p className="separate">|</p>
-            <p className="separate">|</p>
-            <p className="separate">|</p>
-          </div>
-          <div className="rvalues">
-            <p className="pace">{data?.PaceTotal}</p>
-            <p className="dribbling">{data?.DribblingTotal}</p>
-            <p className="shooting">{data?.ShootingTotal}</p>
-            <p className="passing">{data?.PassingTotal}</p>
-            <p className="defending">{data?.DefendingTotal}</p>
-            <p className="physical">{data?.PhysicalityTotal}</p>
-          </div>
-          <div className="diffValues">
-            <p>
-              {data?.PaceTotal > dataCompare?.PaceTotal
-                ? `+${data?.PaceTotal - dataCompare?.PaceTotal}`
-                : "\u00A0"}
+        <>
+          <div className="nameValue">
+            <p className="name">
+              {compareMode === 2 ? data?.Name : data?.FullName}
             </p>
-            <p>
-              {data?.DribblingTotal > dataCompare?.DribblingTotal
-                ? `+${data?.DribblingTotal - dataCompare?.DribblingTotal}`
-                : "\u00A0"}
-            </p>
-            <p>
-              {data?.ShootingTotal > dataCompare?.ShootingTotal
-                ? `+${data?.ShootingTotal - dataCompare?.ShootingTotal}`
-                : "\u00A0"}
-            </p>
-            <p>
-              {data?.PassingTotal > dataCompare?.PassingTotal
-                ? `+${data?.PassingTotal - dataCompare?.PassingTotal}`
-                : "\u00A0"}
-            </p>
-            <p>
-              {data?.DefendingTotal > dataCompare?.DefendingTotal
-                ? `+${data?.DefendingTotal - dataCompare?.DefendingTotal}`
-                : "\u00A0"}
-            </p>
-            <p>
-              {data?.PhysicalityTotal > dataCompare?.PhysicalityTotal
-                ? `+${data?.PhysicalityTotal - dataCompare?.PhysicalityTotal}`
-                : "\u00A0"}
+            <p className="value">
+              {`€${data.ValueEUR.toString().replace(
+                /\B(?=(\d{3})+(?!\d))/g,
+                ","
+              )}`}
             </p>
           </div>
-        </div>
+          <p className="overall">{data?.Overall}</p>
+          <div className="otherInfo">
+            <div className="natAge">
+              <p>{data?.Nationality}</p>
+              <p>{`${data?.Age} años`}</p>
+            </div>
+            <p className="positions">{data?.Positions}</p>
+          </div>
+          <div className="potPos">
+            <div className="potencial">
+              Potencial:
+              <p className="valorPot">{data?.Potential}</p>
+            </div>
+            <div className="mejPos">
+              Preferida:
+              <p className="mejorPosicion">{data?.BestPosition}</p>
+            </div>
+          </div>
+          <div className="radAtr">
+            <div className="rlabels">
+              <p>RIT</p>
+              <p>REG</p>
+              <p>TIR</p>
+              <p>PAS</p>
+              <p>DEF</p>
+              <p>FIS</p>
+            </div>
+            <div className="separators">
+              <p className="separate">|</p>
+              <p className="separate">|</p>
+              <p className="separate">|</p>
+              <p className="separate">|</p>
+              <p className="separate">|</p>
+              <p className="separate">|</p>
+            </div>
+            <div className="rvalues">
+              <p className="pace">{data?.PaceTotal}</p>
+              <p className="dribbling">{data?.DribblingTotal}</p>
+              <p className="shooting">{data?.ShootingTotal}</p>
+              <p className="passing">{data?.PassingTotal}</p>
+              <p className="defending">{data?.DefendingTotal}</p>
+              <p className="physical">{data?.PhysicalityTotal}</p>
+            </div>
+            <div className="diffValues">
+              <p>
+                {data?.PaceTotal > dataCompare?.PaceTotal
+                  ? `+${data?.PaceTotal - dataCompare?.PaceTotal}`
+                  : "\u00A0"}
+              </p>
+              <p>
+                {data?.DribblingTotal > dataCompare?.DribblingTotal
+                  ? `+${data?.DribblingTotal - dataCompare?.DribblingTotal}`
+                  : "\u00A0"}
+              </p>
+              <p>
+                {data?.ShootingTotal > dataCompare?.ShootingTotal
+                  ? `+${data?.ShootingTotal - dataCompare?.ShootingTotal}`
+                  : "\u00A0"}
+              </p>
+              <p>
+                {data?.PassingTotal > dataCompare?.PassingTotal
+                  ? `+${data?.PassingTotal - dataCompare?.PassingTotal}`
+                  : "\u00A0"}
+              </p>
+              <p>
+                {data?.DefendingTotal > dataCompare?.DefendingTotal
+                  ? `+${data?.DefendingTotal - dataCompare?.DefendingTotal}`
+                  : "\u00A0"}
+              </p>
+              <p>
+                {data?.PhysicalityTotal > dataCompare?.PhysicalityTotal
+                  ? `+${data?.PhysicalityTotal - dataCompare?.PhysicalityTotal}`
+                  : "\u00A0"}
+              </p>
+            </div>
+          </div>
+          <div className="allAtr">
+            <button
+              className="pageLeft"
+              onClick={() => attrPage > 0 && setAttrPage(attrPage - 1)}
+            >
+              <BiChevronLeft />
+            </button>
+            <AttributesBook
+              data2={dataCompare}
+              data={data}
+              attrPage={attrPage}
+              color={color}
+            />
+            <button
+              className="pageRight"
+              onClick={() => attrPage < 4 && setAttrPage(attrPage + 1)}
+            >
+              <BiChevronRight />
+            </button>
+          </div>
+          <div className="club">
+            <div>
+              Club: <p>{data.Club}</p>
+            </div>
+            <div>
+              hasta: <p>{data.ContractUntil}</p>
+            </div>
+          </div>
+          <div className="showMore"></div>
+        </>
       )}
-      <div className="allAtr"></div>
-      <div className="club">
-        {data && (
-          <>
-            Club: <p>{data.Club}</p> hasta: <p>{data.ContractUntil}</p>
-          </>
-        )}
-      </div>
-      <div className="showMore"></div>
-      <p></p>
     </CardWrapper>
   );
 };
