@@ -42,9 +42,12 @@ const ScoutMap = ({ data, setShowmap, selNations, setSelNations }) => {
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map((geo) => {
-              const playersincountry = data?.data.filter((element) =>
-                element.Nationality.includes(geo.properties.NAME)
-              );
+              const playersincountry =
+                data &&
+                data?.data.filter((element) =>
+                  element.Nationality.includes(geo.properties.NAME)
+                );
+
               const fillcolor = () => {
                 if (selNations?.includes(geo.properties.NAME)) {
                   return "#F4FF74";
