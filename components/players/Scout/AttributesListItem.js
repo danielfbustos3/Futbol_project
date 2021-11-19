@@ -124,7 +124,10 @@ const AttributesListItem = ({
           <li
             className="listSelected"
             onClick={() =>
-              setSelAttributes(selAttributes.filter((i) => i !== item.atributo))
+              setSelAttributes(
+                selAttributes &&
+                  selAttributes?.filter((i) => i !== item.atributo)
+              )
             }
           >
             {item.atributo}
