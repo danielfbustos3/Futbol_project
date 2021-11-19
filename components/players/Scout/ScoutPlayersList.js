@@ -44,13 +44,13 @@ const ScoutPlayersList = ({
       </ResultsWrapper>
     );
   } else {
-    if (data?.data.length > 0) {
+    if (data && data?.data.length > 0) {
       const players =
         data &&
         data?.data.filter((element) => element.Positions.includes(selectedPos));
 
       const playerData =
-        selNations?.length > 0
+        selNations && selNations?.length > 0
           ? players &&
             players?.filter((element) =>
               selNations.includes(element.Nationality)
@@ -59,7 +59,7 @@ const ScoutPlayersList = ({
 
       return (
         <ResultsWrapper>
-          {posiciones?.length > 1 ? (
+          {posiciones && posiciones?.length > 1 ? (
             <div className="optionsContainer">
               <p styles={"margin-right: 1rem;"}>
                 {playerData && `${playerData?.length} Jugadores Encontrados`}
