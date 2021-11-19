@@ -31,6 +31,7 @@ export const ThemeProvider = ({ children }) => {
     lightboxColor: "#2D2D2D",
     radar1: "112, 156, 255",
     radar2: "238, 145, 14",
+    mapCountries: "#2d2d2d",
   });
 
   function setColor(Color) {
@@ -49,6 +50,7 @@ export const ThemeProvider = ({ children }) => {
           lightboxColor: "#2D2D2D",
           radar1: "112, 156, 255",
           radar2: "238, 145, 14",
+          mapCountries: "#2d2d2d",
         });
         break;
       case "light":
@@ -65,6 +67,7 @@ export const ThemeProvider = ({ children }) => {
           lightboxColor: "#c8c8c8",
           radar1: "112, 156, 255",
           radar2: "238, 145, 14",
+          mapCountries: "#c8c8c8",
         });
         break;
       case "dark-green":
@@ -81,6 +84,7 @@ export const ThemeProvider = ({ children }) => {
           lightboxColor: "#0f2520",
           radar1: "112, 156, 255",
           radar2: "238, 145, 14",
+          mapCountries: "#292F21",
         });
         break;
       case "green":
@@ -97,6 +101,7 @@ export const ThemeProvider = ({ children }) => {
           lightboxColor: "#007F4B",
           radar1: "112, 156, 255",
           radar2: "238, 145, 14",
+          mapCountries: "#292F21",
         });
         break;
       default:

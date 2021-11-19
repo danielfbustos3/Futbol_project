@@ -36,6 +36,11 @@ const MyStyles = styled.div`
       }
     }
   }
+  .rdt_Table {
+    div {
+      background-color: ${({ myTheme }) => myTheme.backgroundColor};
+    }
+  }
   .rdt_TableCol {
   }
   .rdt_TableCol_Sortable {
@@ -150,7 +155,7 @@ const paginacionOpciones = {
 };
 
 const PlayerTable = ({
-  players,
+  playerData,
   setSelectedPlayer,
   compareMode,
   setCompareMode,
@@ -163,7 +168,7 @@ const PlayerTable = ({
   useEffect(() => {
     const timeout = setTimeout(() => {
       setPending(false);
-    }, 2000);
+    }, 500);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -175,7 +180,7 @@ const PlayerTable = ({
         // expandOnRowClicked={true}
         // expandableRowsHideExpander={true}
         columns={columns}
-        data={players}
+        data={playerData}
         // title={<Title posiciones={posiciones} />}
         responsive={true}
         // dense={true}

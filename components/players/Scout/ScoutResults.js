@@ -76,6 +76,7 @@ function ShowResults({ setPage, showmap, setShowmap }) {
   const myTheme = useTheme();
 
   const [selNations, setSelNations] = useState([]);
+  const [selectedPos, setSelectedPos] = useState("");
 
   const value = useGlobalState("scoutValue")[0];
   const positions = useGlobalState("scoutPositions")[0]
@@ -138,6 +139,8 @@ function ShowResults({ setPage, showmap, setShowmap }) {
                 setPage={setPage}
                 posiciones={posiciones}
                 selNations={selNations}
+                selectedPos={selectedPos}
+                setSelectedPos={setSelectedPos}
               />
             );
           } else {
@@ -148,6 +151,9 @@ function ShowResults({ setPage, showmap, setShowmap }) {
                   setShowmap={setShowmap}
                   selNations={selNations}
                   setSelNations={setSelNations}
+                  posiciones={posiciones}
+                  selectedPos={selectedPos}
+                  setSelectedPos={setSelectedPos}
                 />
               );
             }

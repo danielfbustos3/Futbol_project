@@ -27,6 +27,8 @@ const ComparerContainer = styled.div`
     flex-direction: column;
     align-items: center;
     .buttonWrapper {
+      overflow: ${({ compareMode }) =>
+        compareMode === 0 ? "hidden" : "visible"};
       height: 12%;
       transition: all 0.5s ease;
       width: 100%;

@@ -4,19 +4,27 @@ import PlayerComparer from "./PlayerComparer";
 import NormalButton from "components/NormalButton";
 import Alert from "components/Alert";
 import AnimatedButton from "components/AnimatedButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ResultsWrapper = styled.div`
   height: 100%;
   width: 100%;
+  .optionsContainer {
+  }
 `;
 
-const ScoutPlayersList = ({ data, setPage, posiciones }) => {
+const ScoutPlayersList = ({
+  data,
+  setPage,
+  posiciones,
+  selNations,
+  selectedPos,
+  setSelectedPos,
+}) => {
   //Compare Mode 0 = no player selected, 1 = 1 player selected, 2 = compare mode.
   const [compareMode, setCompareMode] = useState(0);
   const [selectedPlayer, setSelectedPlayer] = useState("");
   const [comparePlayer, setComparePlayer] = useState("");
-  const [selectedPos, setSelectedPos] = useState("");
 
   console.log("holis estoy muestreado");
   if (data?.data.length === 0) {
@@ -41,12 +49,20 @@ const ScoutPlayersList = ({ data, setPage, posiciones }) => {
         data &&
         data?.data.filter((element) => element.Positions.includes(selectedPos));
 
+      const playerData =
+        selNations?.length > 0
+          ? players &&
+            players?.filter((element) =>
+              selNations.includes(element.Nationality)
+            )
+          : players;
+
       return (
         <ResultsWrapper>
           {posiciones?.length > 1 ? (
             <div className="optionsContainer">
               <p styles={"margin-right: 1rem;"}>
-                {players?.length} Jugadores Encontrados{" "}
+                {playerData && `${playerData?.length} Jugadores Encontrados`}
               </p>
               {posiciones?.map((item, index) => (
                 <NormalButton
@@ -65,7 +81,7 @@ const ScoutPlayersList = ({ data, setPage, posiciones }) => {
           ) : (
             <div className="optionsContainer">
               <p styles={"margin-right: 1rem;"}>
-                {players?.length} Jugadores Encontrados{" "}
+                {playerData && `${playerData?.length} Jugadores Encontrados`}
               </p>
             </div>
           )}
@@ -78,7 +94,7 @@ const ScoutPlayersList = ({ data, setPage, posiciones }) => {
             setComparePlayer={setComparePlayer}
           />
           <PlayerTable
-            players={players}
+            playerData={playerData}
             setSelectedPlayer={setSelectedPlayer}
             compareMode={compareMode}
             setCompareMode={setCompareMode}
