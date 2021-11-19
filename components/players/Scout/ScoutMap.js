@@ -74,7 +74,7 @@ const ScoutMap = ({
 
   return (
     <MapContainer myTheme={myTheme} maptooltip={maptooltip}>
-      {posiciones?.length > 1 ? (
+      {posiciones && posiciones?.length > 1 ? (
         <div className="optionsContainer">
           <p styles={"margin-right: 1rem;"}>
             {players && `${players?.length} Jugadores Encontrados`}
@@ -111,7 +111,7 @@ const ScoutMap = ({
       </p>
       <div className="searchButton">
         <AnimatedButton
-          text={selNations?.length === 0 ? "ver todos" : "Buscar"}
+          text={selNations && selNations?.length === 0 ? "ver todos" : "Buscar"}
           action={() => setShowmap(0)}
         />
       </div>
@@ -138,7 +138,7 @@ const ScoutMap = ({
                 if (selNations?.includes(geo.properties.NAME)) {
                   return "#01BF71";
                 } else {
-                  if (playersincountry?.length > 0) {
+                  if (playersincountry && playersincountry?.length > 0) {
                     return "#467E5C";
                   } else {
                     return myTheme.mapCountries;
@@ -153,7 +153,9 @@ const ScoutMap = ({
                     fill={fillcolor()}
                     onMouseEnter={() => {
                       setMaptooltip(
-                        `${geo.properties.NAME}: ${playersincountry?.length} jugadores`
+                        `${geo.properties.NAME}: ${
+                          playersincountry && playersincountry?.length
+                        } jugadores`
                       );
                     }}
                     onMouseLeave={() => {
@@ -167,7 +169,8 @@ const ScoutMap = ({
                                 (i) => i != geo.properties.NAME
                               )
                           )
-                        : playersincountry?.length > 0 &&
+                        : playersincountry &&
+                          playersincountry?.length > 0 &&
                           setSelNations(() => [
                             ...selNations,
                             geo.properties.NAME,
