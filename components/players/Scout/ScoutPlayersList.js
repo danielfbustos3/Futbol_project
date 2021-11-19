@@ -37,9 +37,9 @@ const ScoutPlayersList = ({ data, setPage, posiciones }) => {
     );
   } else {
     if (data?.data.length > 0) {
-      const players = data?.data.filter((element) =>
-        element.Positions.includes(selectedPos)
-      );
+      const players =
+        data &&
+        data?.data.filter((element) => element.Positions.includes(selectedPos));
 
       return (
         <ResultsWrapper>

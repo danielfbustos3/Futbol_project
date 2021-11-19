@@ -76,7 +76,10 @@ const ScoutMap = ({ data, setShowmap, selNations, setSelNations }) => {
                     onClick={() =>
                       selNations?.includes(geo.properties.NAME)
                         ? setSelNations(
-                            selNations.filter((i) => i != geo.properties.NAME)
+                            selNations &&
+                              selNations?.filter(
+                                (i) => i != geo.properties.NAME
+                              )
                           )
                         : playersincountry?.length > 0 &&
                           setSelNations(() => [
