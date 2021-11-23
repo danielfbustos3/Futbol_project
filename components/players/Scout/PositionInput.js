@@ -1,5 +1,5 @@
 import CanchaFutbol from "components/players/Scout/CanchaFutbol";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { useState } from "react";
 import { useTheme } from "../../../utils/functions";
 import { useGlobalState } from "../../../state";

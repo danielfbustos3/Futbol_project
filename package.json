@@ -10,35 +10,28 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.4.1",
-    "@emotion/styled": "^11.3.0",
-    "axios": "^0.22.0",
+    "@emotion/react": "^11.6.0",
+    "@emotion/styled": "^11.6.0",
+    "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
-    "chart.js": "^3.6.0",
     "cors": "^2.8.5",
     "del-cli": "^4.0.1",
     "express": "^4.17.1",
-    "framer-motion": "^4.1.17",
+    "framer-motion": "^5.3.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.9",
+    "mongoose": "^6.0.13",
     "mongoose-unique-validator": "^3.0.0",
     "morgan": "^1.10.0",
-    "next": "11.1.2",
+    "next": "12.0.4",
     "react": "17.0.2",
-    "react-chartjs-2": "^3.3.0",
+    "react-chartjs-2": "^4.0.0",
     "react-data-table-component": "^7.4.5",
-    "react-dom": "17.0.2",
     "react-hooks-global-state": "^1.0.2",
-    "react-icons": "^4.2.0",
-    "react-query": "^3.25.1",
-    "react-redux": "^7.2.6",
-    "react-router-dom": "^5.3.0",
+    "react-icons": "^4.3.1",
+    "react-query": "^3.33.4",
     "react-scroll": "^1.8.4",
     "react-simple-maps": "^2.3.0",
-    "react-spring": "^9.3.0",
-    "react-tooltip": "^4.2.21",
-    "redux": "^4.1.2",
-    "styled-components": "^5.3.1"
+    "sass": "^1.43.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
@@ -48,7 +41,6 @@
     "babel-plugin-component": "^1.1.1",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
-    "node-sass": "^5.0.0",
     "sass-loader": "^10.1.1"
   }
 }
