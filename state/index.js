@@ -7,6 +7,8 @@ const { setGlobalState, useGlobalState } = createGlobalState({
   scoutMinAge: 23,
   scoutMaxAge: 35,
   scoutContract: 2023,
+  auth: null,
+  setTheme: "",
 });
 
 export { useGlobalState, setGlobalState };

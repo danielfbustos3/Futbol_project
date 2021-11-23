@@ -1,10 +1,12 @@
 import "../styles/globals.css";
 import Head from "next/head";
+import { Provider } from "react-redux";
+import store from "redux/configureStore";
 
 function MyApp({ Component, pageProps }) {
   const title = " Fútbol © | Manager";
   return (
-    <>
+    <Provider store={store}>
       <Head>
         <title>{title}</title>
         <link
@@ -38,7 +40,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="theme-color" content="#ffffff"></meta>
       </Head>
       <Component {...pageProps} />
-    </>
+    </Provider>
   );
 }
 

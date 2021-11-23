@@ -3,9 +3,10 @@ import styled from "@emotion/styled";
 import ManagerLayout from "components/ManagerLayout";
 import ManagerSidebar from "components/ManagerSidebar";
 import ManagerNavbar from "components/ManagerNavbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ManagerFooter from "components/ManagerFooter";
 import { ThemeProvider } from "utils/functions";
+import { notAuthenticated } from "utils/functions";
 
 const PageLayout = styled.div`
   display: flex;
@@ -23,6 +24,8 @@ const PageLayout = styled.div`
 `;
 
 const ManagerPage = () => {
+  useEffect(() => Authenticated(), []);
+
   const [isOpen, setIsOpen] = useState(false);
   const [keepOpen, setKeepOpen] = useState(false);
   const [page, setPage] = useState("allplayers");

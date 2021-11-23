@@ -1,10 +1,8 @@
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useState } from "react";
 import axios from "axios";
-import { setGlobalState } from "state";
-import { notAuthenticated } from "utils/functions";
+import { useRouter } from "next/router";
 
 const rotate = keyframes`
   0% {
@@ -49,7 +47,7 @@ const btnanim4 = keyframes`
 `;
 
 const Container = styled.div`
-  min-height: 692px;
+  min-height: 800px;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -87,10 +85,10 @@ const FormWrap = styled.div`
 
   .cardBorder {
     width: 80vw;
-    max-width: 15rem;
+    max-width: 17rem;
     height: 80vh;
     min-height: 19rem;
-    max-height: 22rem;
+    max-height: 25rem;
     position: relative;
     border-radius: 10px;
     background: black;
@@ -145,12 +143,18 @@ const FormWrap = styled.div`
         transform: scale(1.08);
       }
     }
-    p {
+    .title {
       margin: 4rem 0 30px;
       padding: 0;
       color: #fff;
       font-size: 1rem;
       cursor: default;
+    }
+    .aviso {
+      margin-top: -1rem;
+      margin-bottom: 1rem;
+      color: white;
+      font-size: 0.5rem;
     }
     .user-box {
       position: relative;
@@ -242,9 +246,10 @@ const FormWrap = styled.div`
         animation-delay: 0.75s;
       }
     }
-    .signup {
+    .signin {
       color: #01bf71;
       font-size: 0.7rem;
+      margin-top: -1rem;
     }
   }
 `;
@@ -261,15 +266,19 @@ const FormButton = styled.button`
 `;
 
 const Signins = () => {
-  useEffect(() => notAuthenticated(), []);
-
+  const [nameLabel, setNameLabel] = useState(false);
+  const [nameValue, setNameValue] = useState("");
   const [userLabel, setUserLabel] = useState(false);
   const [userValue, setUserValue] = useState("");
   const [passLabel, setPassLabel] = useState(false);
   const [passValue, setPassValue] = useState("");
+  const [confpassLabel, setConfPassLabel] = useState(false);
+  const [confpassValue, setConfPassValue] = useState("");
 
-  const router = useRouter();
-
+  const handleParamName = () => (e) => {
+    const nameValue = e.target.value;
+    setNameValue(nameValue);
+  };
   const handleParamUser = () => (e) => {
     const userValue = e.target.value;
     setUserValue(userValue);
@@ -278,38 +287,48 @@ const Signins = () => {
     const passValue = e.target.value;
     setPassValue(passValue);
   };
+  const handleParamConfPass = () => (e) => {
+    const confpassValue = e.target.value;
+    setConfPassValue(confpassValue);
+  };
 
   const submit = async (event) => {
     event.preventDefault();
 
-    axios
-      .post(`${window.location.origin}/api/signin`, {
-        email: userValue,
-        password: passValue,
-      })
-      .then(async (res) => {
-        if (res.data.status == "success") {
-          console.log("ingresado. Bienvenido!");
+    if (passValue === confpassValue) {
+      axios
+        .post(`${window.location.origin}/api/signup`, {
+          name: nameValue,
+          email: userValue,
+          password: passValue,
+        })
+        .then(async (res) => {
+          if (res.data.status == "success") {
+            setNameValue("");
+            setUserValue("");
+            setPassValue("");
+            setConfPassValue("");
 
-          console.log(res.data);
+            localStorage.setItem("auth", JSON.stringify(auth));
 
-          const auth = {
-            token: res.data.token,
-            userData: res.data.userData,
-          };
+            await router.push("/signin");
 
-          setGlobalState("auth", auth);
-
-          localStorage.setItem("auth", JSON.stringify(auth));
-
-          await router.push("/manager");
-
-          return;
-        }
-      })
-      .catch((e) => {
-        console.log(e.response.data);
-      });
+            return;
+          }
+        })
+        .catch((e) => {
+          console.log(e.response.data);
+          if (e.response.data.error.errors.email.kind == "unique") {
+            console.log("email already exists");
+            return;
+          } else {
+            console.log("error creating user");
+            return;
+          }
+        });
+    } else {
+      console.log("passwords dont match");
+    }
   };
 
   return (
@@ -323,11 +342,24 @@ const Signins = () => {
               <a className="icon" href="#">
                 FÚTBOL
               </a>
-              <p>Iniciar sesión</p>
+              <p className="title">Crear un usuario</p>
               <form onSubmit={submit}>
                 <div className="user-box">
+                  <label className={nameLabel ? "inlabel" : "offlabel"}>
+                    Nombre Completo
+                  </label>
+                  <input
+                    type="name"
+                    required
+                    value={nameValue}
+                    onFocus={() => setNameLabel(true)}
+                    onBlur={() => (nameValue == "" ? setNameLabel(false) : "")}
+                    onChange={handleParamName()}
+                  />
+                </div>
+                <div className="user-box">
                   <label className={userLabel ? "inlabel" : "offlabel"}>
-                    Username
+                    Correo electrónico
                   </label>
                   <input
                     type="email"
@@ -340,7 +372,7 @@ const Signins = () => {
                 </div>
                 <div className="user-box">
                   <label className={passLabel ? "inlabel" : "offlabel"}>
-                    Password
+                    Ingrese una contraseña
                   </label>
                   <input
                     type="password"
@@ -349,6 +381,22 @@ const Signins = () => {
                     onFocus={() => setPassLabel(true)}
                     onBlur={() => (passValue == "" ? setPassLabel(false) : "")}
                     onChange={handleParamPass()}
+                  />
+                </div>
+                <p className="aviso">*Mínimo 6 caracteres</p>
+                <div className="user-box">
+                  <label className={confpassLabel ? "inlabel" : "offlabel"}>
+                    Confirme su contraseña
+                  </label>
+                  <input
+                    type="password"
+                    required
+                    value={confpassValue}
+                    onFocus={() => setConfPassLabel(true)}
+                    onBlur={() =>
+                      confpassValue == "" ? setConfPassLabel(false) : ""
+                    }
+                    onChange={handleParamConfPass()}
                   />
                 </div>
                 <a className="submitBtn">
@@ -360,8 +408,9 @@ const Signins = () => {
                   <FormButton type="submit" />
                 </a>
               </form>
-              <a className="signup" href="signup">
-                ¿No tienes una cuenta? ¡Regístrate!
+              <a href="signup">Sign Up!</a>
+              <a className="signin" href="signin">
+                ¿Ya tienes una cuenta? ¡Inicia Sesión!
               </a>
             </div>
           </div>

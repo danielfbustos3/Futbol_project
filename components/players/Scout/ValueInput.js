@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
 import AnimatingNumber from "./AnimatingNumber";
-import { useTheme } from "../../../utils/functions";
+import { useTheme } from "utils/functions";
 import { useGlobalState, setGlobalState } from "state";
 
 const Container = styled.div`
