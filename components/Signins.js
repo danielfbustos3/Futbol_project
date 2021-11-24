@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuth, readToken } from "redux/ducks/authenticator";
+import Alert from "components/Alert";
 
 const rotate = keyframes`
   0% {
@@ -61,19 +62,34 @@ const Container = styled.div`
 const CardShadow = styled.div`
   position: absolute;
   content: "";
-  top: 7rem;
+  top: 9rem;
   left: 50%;
-  margin-left: -6rem;
-  height: 16rem;
-  width: 12rem;
+  margin-left: -4rem;
+  height: 12rem;
+  width: 8rem;
   transform: scale(0.8);
-  filter: blur(10vh);
-  background-image: linear-gradient(120deg, #faffe4, #01bf71 50%, #340096);
+  filter: blur(3rem);
+  background-image: linear-gradient(
+    to right top,
+    #00818f,
+    #008e93,
+    #009a93,
+    #00a68e,
+    #00b185,
+    #20bb80,
+    #38c479,
+    #4ecd71,
+    #6cd872,
+    #87e273,
+    #a1ec74,
+    #baf677
+  );
   opacity: 1;
   transition: opacity 0.5s;
   animation: ${rotate} 5s linear infinite;
   z-index: 1;
 `;
+//#F9E282 #00818F
 
 const FormWrap = styled.div`
   min-height: 100vh;
@@ -107,10 +123,19 @@ const FormWrap = styled.div`
       height: 150%;
       min-height: 26rem;
       background-image: linear-gradient(
-        135deg,
-        #faffe4 15%,
-        #01bf71 50%,
-        #340096
+        to right top,
+        #00818f,
+        #008e93,
+        #009a93,
+        #00a68e,
+        #00b185,
+        #20bb80,
+        #38c479,
+        #4ecd71,
+        #6cd872,
+        #87e273,
+        #a1ec74,
+        #baf677
       );
       border-radius: 50%;
       position: absolute;
@@ -183,6 +208,12 @@ const FormWrap = styled.div`
         pointer-events: none;
         transition: 0.5s;
       }
+    }
+    .mensaje {
+      margin-top: -1.3rem;
+      color: red;
+      font-size: 0.7rem;
+      margin-bottom: 0.7rem;
     }
     .submitBtn {
       position: relative;
@@ -275,6 +306,12 @@ const Signins = () => {
     }
   }, [auth]);
 
+  useEffect(() => {
+    setAlert(false);
+  }, [userValue]);
+
+  const [alert, setAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const [userLabel, setUserLabel] = useState(false);
   const [userValue, setUserValue] = useState("");
   const [passLabel, setPassLabel] = useState(false);
@@ -297,11 +334,9 @@ const Signins = () => {
         email: userValue,
         password: passValue,
       })
-      .then(async (res) => {
+      .then((res) => {
         if (res.data.status == "success") {
           console.log("ingresado. Bienvenido!");
-
-          console.log(res.data);
 
           const localauth = {
             token: res.data.token,
@@ -312,14 +347,21 @@ const Signins = () => {
 
           localStorage.setItem("auth", JSON.stringify(localauth));
 
-          await router.push("/manager");
+          router.push("/manager");
 
           return;
         }
       })
       .catch((e) => {
-        console.log("not working bro");
         console.log(e.response.data);
+        setUserLabel(false);
+        setUserValue("");
+        setPassLabel(false);
+        setPassValue("");
+        setAlert(true);
+        setAlertMessage("Credenciales inválidas");
+
+        return;
       });
   };
 
@@ -362,6 +404,7 @@ const Signins = () => {
                     onChange={handleParamPass()}
                   />
                 </div>
+                <p className="mensaje">{alert ? alertMessage : "\u00A0"}</p>
                 <a className="submitBtn">
                   Submit
                   <span></span>

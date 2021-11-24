@@ -1,6 +1,6 @@
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
@@ -47,7 +47,6 @@ const btnanim4 = keyframes`
 `;
 
 const Container = styled.div`
-  min-height: 800px;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -56,25 +55,7 @@ const Container = styled.div`
   background: #000;
 `;
 
-const CardShadow = styled.div`
-  position: absolute;
-  content: "";
-  top: 7rem;
-  left: 50%;
-  margin-left: -6rem;
-  height: 16rem;
-  width: 12rem;
-  transform: scale(0.8);
-  filter: blur(10vh);
-  background-image: linear-gradient(120deg, #faffe4, #01bf71 50%, #340096);
-  opacity: 1;
-  transition: opacity 0.5s;
-  animation: ${rotate} 5s linear infinite;
-  z-index: 1;
-`;
-
 const FormWrap = styled.div`
-  min-height: 100vh;
   /* background: #0f2520; */
   display: flex;
   align-items: center;
@@ -84,11 +65,8 @@ const FormWrap = styled.div`
   box-sizing: border-box;
 
   .cardBorder {
-    width: 80vw;
-    max-width: 17rem;
-    height: 80vh;
-    min-height: 19rem;
-    max-height: 25rem;
+    width: 20rem;
+    height: 88vh;
     position: relative;
     border-radius: 10px;
     background: black;
@@ -102,36 +80,44 @@ const FormWrap = styled.div`
     &:before {
       content: "";
       width: 220%;
-      height: 150%;
-      min-height: 26rem;
+      height: 220%;
       background-image: linear-gradient(
-        135deg,
-        #faffe4 15%,
-        #01bf71 50%,
-        #340096
+        to right top,
+        #00818f,
+        #008e93,
+        #009a93,
+        #00a68e,
+        #00b185,
+        #20bb80,
+        #38c479,
+        #4ecd71,
+        #6cd872,
+        #87e273,
+        #a1ec74,
+        #baf677
       );
-      border-radius: 50%;
       position: absolute;
-      top: -5.5rem;
-      left: -9rem;
+      top: -50%;
+      left: -60%;
       animation: ${rotate} 1.5s linear infinite;
     }
   }
   .cardContent {
     position: relative;
+    display: flex;
+    flex-direction: column;
     border-radius: 8px;
+    justify-content: center;
+    align-items: center;
     left: 0;
     top: -27px;
     width: 100%;
     height: 100%;
     background: linear-gradient(#0d0d0d 65%, #051f14);
-    padding: 40px;
+    overflow: scroll;
     .icon {
-      position: absolute;
-      width: 100%;
-      left: 0;
       top: 0;
-      padding: 2rem;
+      width: 5rem;
       text-align: center;
       text-decoration: none;
       color: #fff;
@@ -144,7 +130,7 @@ const FormWrap = styled.div`
       }
     }
     .title {
-      margin: 4rem 0 30px;
+      margin: 2rem 0 1rem 0;
       padding: 0;
       color: #fff;
       font-size: 1rem;
@@ -159,7 +145,7 @@ const FormWrap = styled.div`
     .user-box {
       position: relative;
       input {
-        width: 100%;
+        width: 14rem;
         padding: 10px 0;
         font-size: 0.8rem;
         color: #fff;
@@ -187,6 +173,12 @@ const FormWrap = styled.div`
         pointer-events: none;
         transition: 0.5s;
       }
+    }
+    .mensaje {
+      margin-top: -1.3rem;
+      color: red;
+      font-size: 0.7rem;
+      margin-bottom: 0.7rem;
     }
     .submitBtn {
       position: relative;
@@ -266,6 +258,8 @@ const FormButton = styled.button`
 `;
 
 const Signins = () => {
+  const [alert, setAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const [nameLabel, setNameLabel] = useState(false);
   const [nameValue, setNameValue] = useState("");
   const [userLabel, setUserLabel] = useState(false);
@@ -274,6 +268,10 @@ const Signins = () => {
   const [passValue, setPassValue] = useState("");
   const [confpassLabel, setConfPassLabel] = useState(false);
   const [confpassValue, setConfPassValue] = useState("");
+
+  useEffect(() => {
+    setAlert(false);
+  }, [nameValue, userValue, passValue]);
 
   const router = useRouter();
 
@@ -319,15 +317,22 @@ const Signins = () => {
         .catch((error) => {
           console.log(error.response.data);
           if (error.response.data.error.errors.email.kind == "unique") {
-            console.log("email already exists");
+            setAlert(true);
+            setAlertMessage(
+              "El correo electrónico ya se encuentra registrado."
+            );
             return;
           } else {
-            console.log("error creating user");
+            setAlert(true);
+            setAlertMessage("Error al crear usuario.");
           }
           return;
         });
     } else {
-      console.log("passwords dont match");
+      setConfPassValue("");
+      setConfPassLabel(false);
+      setAlert(true);
+      setAlertMessage("Las contraseñas no coinciden.");
     }
   };
 
@@ -335,7 +340,6 @@ const Signins = () => {
     <>
       <Container>
         <FormWrap>
-          <CardShadow />
           <div className="cardBorder">
             {"\u00A0"}
             <div className="cardContent">
@@ -399,6 +403,7 @@ const Signins = () => {
                     onChange={handleParamConfPass()}
                   />
                 </div>
+                <p className="mensaje">{alert ? alertMessage : "\u00A0"}</p>
                 <a className="submitBtn">
                   Submit
                   <span></span>
