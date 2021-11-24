@@ -296,6 +296,13 @@ const Signins = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.authorized.auth);
 
+  const [alert, setAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [userLabel, setUserLabel] = useState(false);
+  const [userValue, setUserValue] = useState("");
+  const [passLabel, setPassLabel] = useState(false);
+  const [passValue, setPassValue] = useState("");
+
   useEffect(() => {
     dispatch(readToken());
   }, []);
@@ -309,13 +316,6 @@ const Signins = () => {
   useEffect(() => {
     setAlert(false);
   }, [userValue]);
-
-  const [alert, setAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [userLabel, setUserLabel] = useState(false);
-  const [userValue, setUserValue] = useState("");
-  const [passLabel, setPassLabel] = useState(false);
-  const [passValue, setPassValue] = useState("");
 
   const handleParamUser = () => (e) => {
     const userValue = e.target.value;
