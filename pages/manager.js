@@ -6,7 +6,9 @@ import ManagerNavbar from "components/ManagerNavbar";
 import { useState, useEffect } from "react";
 import ManagerFooter from "components/ManagerFooter";
 import { ThemeProvider } from "utils/functions";
-import { notAuthenticated } from "utils/functions";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuth, readToken } from "redux/ducks/authenticator";
 
 const PageLayout = styled.div`
   display: flex;
@@ -24,7 +26,19 @@ const PageLayout = styled.div`
 `;
 
 const ManagerPage = () => {
-  useEffect(() => Authenticated(), []);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.authorized.auth);
+
+  useEffect(() => {
+    dispatch(readToken());
+  }, []);
+
+  useEffect(() => {
+    if (!auth) {
+      router.push("/signin");
+    }
+  }, [auth]);
 
   const [isOpen, setIsOpen] = useState(false);
   const [keepOpen, setKeepOpen] = useState(false);

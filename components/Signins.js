@@ -3,8 +3,8 @@ import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { setGlobalState } from "state";
-import { notAuthenticated } from "utils/functions";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuth, readToken } from "redux/ducks/authenticator";
 
 const rotate = keyframes`
   0% {
@@ -261,14 +261,24 @@ const FormButton = styled.button`
 `;
 
 const Signins = () => {
-  useEffect(() => notAuthenticated(), []);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.authorized.auth);
+
+  useEffect(() => {
+    dispatch(readToken());
+  }, []);
+
+  useEffect(() => {
+    if (auth) {
+      router.push("/manager");
+    }
+  }, [auth]);
 
   const [userLabel, setUserLabel] = useState(false);
   const [userValue, setUserValue] = useState("");
   const [passLabel, setPassLabel] = useState(false);
   const [passValue, setPassValue] = useState("");
-
-  const router = useRouter();
 
   const handleParamUser = () => (e) => {
     const userValue = e.target.value;
@@ -281,7 +291,7 @@ const Signins = () => {
 
   const submit = async (event) => {
     event.preventDefault();
-
+    console.log("posting");
     axios
       .post(`${window.location.origin}/api/signin`, {
         email: userValue,
@@ -293,14 +303,14 @@ const Signins = () => {
 
           console.log(res.data);
 
-          const auth = {
+          const localauth = {
             token: res.data.token,
             userData: res.data.userData,
           };
 
-          setGlobalState("auth", auth);
+          dispatch(setAuth(localauth));
 
-          localStorage.setItem("auth", JSON.stringify(auth));
+          localStorage.setItem("auth", JSON.stringify(localauth));
 
           await router.push("/manager");
 
@@ -308,6 +318,7 @@ const Signins = () => {
         }
       })
       .catch((e) => {
+        console.log("not working bro");
         console.log(e.response.data);
       });
   };

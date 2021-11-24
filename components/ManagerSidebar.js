@@ -2,6 +2,9 @@ import styled from "@emotion/styled";
 import { useTheme } from "../utils/functions";
 import ManSidebarElements from "./ManSidebarElements";
 import { BiLogOut, BiSearchAlt } from "react-icons/bi";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { setAuth } from "redux/ducks/authenticator";
 
 const SidebarContainer = styled.aside`
   width: ${({ isOpen }) => (isOpen ? "10rem" : "3rem")};
@@ -152,6 +155,9 @@ const SidebarContainer = styled.aside`
 const Sidebar = ({ isOpen, setPage, toggle, setIsOpen, keepOpen }) => {
   const myTheme = useTheme();
 
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   return (
     <SidebarContainer isOpen={isOpen} myTheme={myTheme}>
       <div
@@ -187,7 +193,7 @@ const Sidebar = ({ isOpen, setPage, toggle, setIsOpen, keepOpen }) => {
             </div>
             <BiLogOut
               className="log-out"
-              onClick={() => console.log("logout clicked")}
+              onClick={() => dispatch(setAuth(null)) && localStorage.clear()}
             />
           </div>
         </div>

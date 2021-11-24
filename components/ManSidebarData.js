@@ -38,7 +38,7 @@ export const linksObj = [
     title: "Analytics",
     icon: <IoAnalytics />,
     listItems: [
-      { title: "Fetch3", link: "allplayers" },
+      { title: "dispatch try", link: "clubs" },
       { title: "browse3", link: "allplayers" },
     ],
   },

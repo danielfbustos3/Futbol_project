@@ -1,8 +1,8 @@
 import { combineReducers, createStore } from "redux";
-import counterReducer from "./ducks/counter";
+import authorizedReducer from "./ducks/authenticator";
 
 const reducer = combineReducers({
-  counter: counterReducer,
+  authorized: authorizedReducer,
 });
 
 const store = createStore(reducer);

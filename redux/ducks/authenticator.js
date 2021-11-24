@@ -1,8 +1,9 @@
 const SET_AUTH = "setAuth";
 const READ_TOKEN = "readToken";
 
-export const setAuth = () => ({
+export const setAuth = (value) => ({
   type: SET_AUTH,
+  payload: value,
 });
 
 export const readToken = () => ({
@@ -16,9 +17,16 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_AUTH:
-      return { ...state, auth: state.auth };
+      return { ...state, auth: action.payload };
     case READ_TOKEN:
-      return;
+      let auth1 = null;
+
+      try {
+        auth1 = JSON.parse(localStorage.getItem("auth"));
+      } catch (err) {
+        console.log(err);
+      }
+      return { ...state, auth: auth1 };
 
     default:
       return state;

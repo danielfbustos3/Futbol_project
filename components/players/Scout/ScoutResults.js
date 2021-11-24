@@ -8,7 +8,6 @@ import { useState, useEffect } from "react";
 import Alert from "components/Alert";
 import AnimatedButton from "components/AnimatedButton";
 import ScoutPlayersList from "./ScoutPlayersList";
-import ReactTooltip from "react-tooltip";
 import ScoutMap from "./ScoutMap";
 
 const scale = keyframes`

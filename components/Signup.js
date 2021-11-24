@@ -275,6 +275,8 @@ const Signins = () => {
   const [confpassLabel, setConfPassLabel] = useState(false);
   const [confpassValue, setConfPassValue] = useState("");
 
+  const router = useRouter();
+
   const handleParamName = () => (e) => {
     const nameValue = e.target.value;
     setNameValue(nameValue);
@@ -302,29 +304,27 @@ const Signins = () => {
           email: userValue,
           password: passValue,
         })
-        .then(async (res) => {
+        .then((res) => {
           if (res.data.status == "success") {
             setNameValue("");
             setUserValue("");
             setPassValue("");
             setConfPassValue("");
 
-            localStorage.setItem("auth", JSON.stringify(auth));
-
-            await router.push("/signin");
+            router.push("/signin");
 
             return;
           }
         })
-        .catch((e) => {
-          console.log(e.response.data);
-          if (e.response.data.error.errors.email.kind == "unique") {
+        .catch((error) => {
+          console.log(error.response.data);
+          if (error.response.data.error.errors.email.kind == "unique") {
             console.log("email already exists");
             return;
           } else {
             console.log("error creating user");
-            return;
           }
+          return;
         });
     } else {
       console.log("passwords dont match");
