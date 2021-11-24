@@ -30,7 +30,8 @@ export default async (req, res) => {
         user.set("password", undefined, { strict: false });
 
         const token = jwt.sign({ userData: user }, "securePasswordHere", {
-          expiresIn: 60 * 60 * 24 * 30,
+          //expiresIn: 60 * 60 * 24 * 30,
+          expiresIn: 30,
         });
 
         const toSend = {

@@ -146,52 +146,48 @@ const ScoutMap = ({
                 }
               };
               return (
-                <>
-                  <Geography
-                    geography={geo}
-                    key={geo.rsmKey}
-                    fill={fillcolor()}
-                    onMouseEnter={() => {
-                      setMaptooltip(
-                        `${geo.properties.NAME}: ${
-                          playersincountry && playersincountry?.length
-                        } jugadores`
-                      );
-                    }}
-                    onMouseLeave={() => {
-                      setMaptooltip("");
-                    }}
-                    onClick={() =>
-                      selNations?.includes(geo.properties.NAME)
-                        ? setSelNations(
-                            selNations &&
-                              selNations?.filter(
-                                (i) => i != geo.properties.NAME
-                              )
-                          )
-                        : playersincountry &&
-                          playersincountry?.length > 0 &&
-                          setSelNations(() => [
-                            ...selNations,
-                            geo.properties.NAME,
-                          ])
-                    }
-                    style={{
-                      default: {
-                        outline: "none",
-                        stroke: `${myTheme.backgroundColor}`,
-                        strokeWidth: "0.1",
-                      },
-                      hover: {
-                        outline: "none",
-                        fill: "#01BF71",
-                      },
-                      pressed: {
-                        outline: "none",
-                      },
-                    }}
-                  />
-                </>
+                <Geography
+                  geography={geo}
+                  key={geo.rsmKey}
+                  fill={fillcolor()}
+                  onMouseEnter={() => {
+                    setMaptooltip(
+                      `${geo.properties.NAME}: ${
+                        playersincountry && playersincountry?.length
+                      } jugadores`
+                    );
+                  }}
+                  onMouseLeave={() => {
+                    setMaptooltip("");
+                  }}
+                  onClick={() =>
+                    selNations?.includes(geo.properties.NAME)
+                      ? setSelNations(
+                          selNations &&
+                            selNations?.filter((i) => i != geo.properties.NAME)
+                        )
+                      : playersincountry &&
+                        playersincountry?.length > 0 &&
+                        setSelNations(() => [
+                          ...selNations,
+                          geo.properties.NAME,
+                        ])
+                  }
+                  style={{
+                    default: {
+                      outline: "none",
+                      stroke: `${myTheme.backgroundColor}`,
+                      strokeWidth: "0.1",
+                    },
+                    hover: {
+                      outline: "none",
+                      fill: "#01BF71",
+                    },
+                    pressed: {
+                      outline: "none",
+                    },
+                  }}
+                />
               );
             })
           }

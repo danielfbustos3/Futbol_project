@@ -1,42 +1,4 @@
 import React, { useContext, useState } from "react";
-import { useGlobalState, setGlobalState } from "state";
-import { useRouter } from "next/router";
-
-// const readToken = () => {
-//   let auth = null;
-
-//   try {
-//     auth = JSON.parse(localStorage.getItem("auth"));
-//   } catch (error) {
-//     console.log(error);
-//   }
-
-//   setGlobalState("auth", auth);
-// };
-
-// export function notAuthenticated() {
-//   const router = useRouter();
-
-//   readToken();
-
-//   const auth = useGlobalState("auth")[0];
-
-//   if (auth) {
-//     await router.push("/manager");
-//   }
-// }
-
-// export function Authenticated() {
-//   const router = useRouter();
-
-//   readToken();
-
-//   const auth = useGlobalState("auth")[0];
-
-//   if (!auth) {
-//     await router.push("/signin");
-//   }
-// }
 
 export const splitCamelCaseToString = (s) => {
   return s
