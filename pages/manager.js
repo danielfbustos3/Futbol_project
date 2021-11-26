@@ -30,8 +30,6 @@ const ManagerPage = () => {
   const dispatch = useDispatch();
   const authorized = useSelector((state) => state.authorized.authenticated);
 
-  console.log(authorized);
-
   useEffect(() => {
     dispatch(readToken());
     dispatch(checkAuth());

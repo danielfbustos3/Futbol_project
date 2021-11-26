@@ -99,7 +99,7 @@ function ShowResults({ setPage, showmap, setShowmap }) {
           data: res,
         };
 
-        return res.status(200);
+        return res.json();
       }
     } catch (error) {
       console.log("error getting players");
@@ -110,7 +110,7 @@ function ShowResults({ setPage, showmap, setShowmap }) {
         error: error,
       };
 
-      return res.status(500);
+      return res.json();
     }
   };
 
