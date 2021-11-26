@@ -94,7 +94,7 @@ function ShowResults({ setPage, showmap, setShowmap }) {
           `${window.location.origin}/api/scout?value=${value}&positions=${positions}&contract=${contract}&minage=${minAge}&maxage=${maxAge}`
         );
 
-        devices = JSON.parse(JSON.stringify(devices));
+        res = JSON.parse(JSON.stringify(devices));
         const toSend = {
           status: "success",
           data: res,
