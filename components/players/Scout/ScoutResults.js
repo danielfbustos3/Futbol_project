@@ -99,16 +99,12 @@ function ShowResults({ setPage, showmap, setShowmap }) {
           data: res,
         };
 
+        console.log(res.json());
         return res.json();
       }
     } catch (error) {
       console.log("error getting players");
       console.log(error);
-
-      const toSend = {
-        status: "error",
-        error: error,
-      };
 
       return res.json();
     }
