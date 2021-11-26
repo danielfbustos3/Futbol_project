@@ -4,7 +4,12 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setAuth, readToken } from "redux/ducks/authenticator";
+import {
+  setAuth,
+  readToken,
+  checkAuth,
+  Authorize,
+} from "redux/ducks/authenticator";
 import Alert from "components/Alert";
 
 const rotate = keyframes`
@@ -294,7 +299,9 @@ const FormButton = styled.button`
 const Signins = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.authorized.auth);
+  const authorized = useSelector((state) => state.authorized.authenticated);
+
+  console.log(authorized);
 
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -305,13 +312,14 @@ const Signins = () => {
 
   useEffect(() => {
     dispatch(readToken());
+    dispatch(checkAuth());
   }, []);
 
   useEffect(() => {
-    if (auth) {
+    if (authorized === true) {
       router.push("/manager");
     }
-  }, [auth]);
+  }, [authorized]);
 
   useEffect(() => {
     setAlert(false);
@@ -328,7 +336,6 @@ const Signins = () => {
 
   const submit = async (event) => {
     event.preventDefault();
-    console.log("posting");
     axios
       .post(`${window.location.origin}/api/signin`, {
         email: userValue,

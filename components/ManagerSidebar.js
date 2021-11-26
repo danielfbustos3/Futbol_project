@@ -4,7 +4,7 @@ import ManSidebarElements from "./ManSidebarElements";
 import { BiLogOut, BiSearchAlt } from "react-icons/bi";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { setAuth } from "redux/ducks/authenticator";
+import { setAuth, checkAuth } from "redux/ducks/authenticator";
 
 const SidebarContainer = styled.aside`
   width: ${({ isOpen }) => (isOpen ? "10rem" : "3rem")};
@@ -193,7 +193,11 @@ const Sidebar = ({ isOpen, setPage, toggle, setIsOpen, keepOpen }) => {
             </div>
             <BiLogOut
               className="log-out"
-              onClick={() => dispatch(setAuth(null)) && localStorage.clear()}
+              onClick={() =>
+                dispatch(setAuth(null)) &&
+                dispatch(checkAuth()) &&
+                localStorage.clear()
+              }
             />
           </div>
         </div>

@@ -88,11 +88,29 @@ function ShowResults({ setPage, showmap, setShowmap }) {
   const posiciones = useGlobalState("scoutPositions")[0];
 
   const fetchPlayers = async () => {
-    if ((value != 0) & (positions?.length != 0)) {
-      const res = await fetch(
-        `${window.location.origin}/api/scout?value=${value}&positions=${positions}&contract=${contract}&minage=${minAge}&maxage=${maxAge}`
-      );
-      return res.json();
+    try {
+      if ((value != 0) & (positions?.length != 0)) {
+        const res = await fetch(
+          `${window.location.origin}/api/scout?value=${value}&positions=${positions}&contract=${contract}&minage=${minAge}&maxage=${maxAge}`
+        );
+
+        const toSend = {
+          status: "success",
+          data: res,
+        };
+
+        return res.status(200).json(toSend);
+      }
+    } catch (error) {
+      console.log("error getting players");
+      console.log(error);
+
+      const toSend = {
+        status: "error",
+        error: error,
+      };
+
+      return res.status(500).json(toSend);
     }
   };
 
@@ -119,7 +137,10 @@ function ShowResults({ setPage, showmap, setShowmap }) {
         case "error":
           return (
             <>
-              <Alert type="error" message="Error fetching data" />
+              <Alert
+                type="error"
+                message="Error obteniendo los datos. Por favor inténtelo nuevamente."
+              />
               <AnimatedButton
                 action={() => setPage("scout")}
                 text="SCOUT"

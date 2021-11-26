@@ -8,7 +8,7 @@ import ManagerFooter from "components/ManagerFooter";
 import { ThemeProvider } from "utils/functions";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { setAuth, readToken } from "redux/ducks/authenticator";
+import { checkAuth, readToken } from "redux/ducks/authenticator";
 
 const PageLayout = styled.div`
   display: flex;
@@ -28,17 +28,20 @@ const PageLayout = styled.div`
 const ManagerPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.authorized.auth);
+  const authorized = useSelector((state) => state.authorized.authenticated);
+
+  console.log(authorized);
 
   useEffect(() => {
     dispatch(readToken());
+    dispatch(checkAuth());
   }, []);
 
   useEffect(() => {
-    if (!auth) {
+    if (authorized === false) {
       router.push("/signin");
     }
-  }, [auth]);
+  }, [authorized]);
 
   const [isOpen, setIsOpen] = useState(false);
   const [keepOpen, setKeepOpen] = useState(false);
