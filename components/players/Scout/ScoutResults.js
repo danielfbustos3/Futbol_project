@@ -100,8 +100,8 @@ function ShowResults({ setPage, showmap, setShowmap }) {
           data: res,
         };
 
-        console.log(res.json());
-        return res.json();
+        console.log(res);
+        return res;
       }
     } catch (error) {
       console.log("error getting players");
