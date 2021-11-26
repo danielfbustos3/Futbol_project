@@ -92,8 +92,9 @@ function ShowResults({ setPage, showmap, setShowmap }) {
       if ((value != 0) & (positions?.length != 0)) {
         const res = await fetch(
           `${window.location.origin}/api/scout?value=${value}&positions=${positions}&contract=${contract}&minage=${minAge}&maxage=${maxAge}`
-        ).then((response) => response.json());
+        );
 
+        devices = JSON.parse(JSON.stringify(devices));
         const toSend = {
           status: "success",
           data: res,
