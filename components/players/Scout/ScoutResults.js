@@ -147,27 +147,35 @@ function ShowResults({ setPage, showmap, setShowmap }) {
         case "success":
           if (showmap === 0) {
             return (
-              <ScoutPlayersList
-                data={data}
-                setPage={setPage}
-                posiciones={posiciones}
-                selNations={selNations}
-                selectedPos={selectedPos}
-                setSelectedPos={setSelectedPos}
-              />
+              <>
+                {data.data.length > 0 && (
+                  <ScoutPlayersList
+                    data={data}
+                    setPage={setPage}
+                    posiciones={posiciones}
+                    selNations={selNations}
+                    selectedPos={selectedPos}
+                    setSelectedPos={setSelectedPos}
+                  />
+                )}
+              </>
             );
           } else {
             if (showmap === 1) {
               return (
-                <ScoutMap
-                  data={data}
-                  setShowmap={setShowmap}
-                  selNations={selNations}
-                  setSelNations={setSelNations}
-                  posiciones={posiciones}
-                  selectedPos={selectedPos}
-                  setSelectedPos={setSelectedPos}
-                />
+                <>
+                  {data.data.length > 0 && (
+                    <ScoutMap
+                      data={data}
+                      setShowmap={setShowmap}
+                      selNations={selNations}
+                      setSelNations={setSelNations}
+                      posiciones={posiciones}
+                      selectedPos={selectedPos}
+                      setSelectedPos={setSelectedPos}
+                    />
+                  )}
+                </>
               );
             }
           }
