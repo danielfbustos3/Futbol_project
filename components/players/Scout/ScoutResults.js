@@ -103,14 +103,13 @@ function ShowResults({ setPage, showmap, setShowmap }) {
     }
   };
 
-  useEffect(() => {
-    const { data, status } = useQuery("players", fetchPlayers);
-  }, []);
+  const { data, status, success } = useQuery("players", fetchPlayers);
 
   console.log({ data });
 
-  console.log({ status });
+  console.log({ success });
 
+  console.log({ status });
   if (value === "" || positions === "") {
     return (
       <ResultsContainer myTheme={myTheme}>
