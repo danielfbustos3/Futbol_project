@@ -103,12 +103,12 @@ function ShowResults({ setPage, showmap, setShowmap }) {
     }
   };
 
-  const { data, status, success } = useQuery("players", fetchPlayers);
+  useEffect(() => {
+    console.log("holis 1 vez");
+  }, []);
+  const { data, status } = useQuery("players", fetchPlayers);
 
   console.log({ data });
-
-  console.log({ success });
-
   console.log({ status });
   if (value === "" || positions === "") {
     return (
