@@ -9,6 +9,7 @@ const { setGlobalState, useGlobalState } = createGlobalState({
   scoutContract: 2023,
   auth: null,
   setTheme: "",
+  scoutResults: [],
 });
 
 export { useGlobalState, setGlobalState };

@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
-import { useTheme } from "../../../utils/functions";
+import { useTheme } from "utils/functions";
 import { motion } from "framer-motion";
 import { BiCheckCircle } from "react-icons/bi";
-import { useGlobalState, setGlobalState } from "../../../state";
+import { useGlobalState, setGlobalState } from "state";
 
 const PosContent = styled.div`
   display: flex;

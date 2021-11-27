@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import { useQuery, QueryClient, QueryClientProvider } from "react-query";
-import { useGlobalState, setGlobalState } from "state";
+import { useGlobalState } from "state";
 import { useTheme } from "../../../utils/functions";
 import CustomLoader from "components/CustomLoader";
 import { useState, useEffect } from "react";
@@ -9,8 +9,6 @@ import Alert from "components/Alert";
 import AnimatedButton from "components/AnimatedButton";
 import ScoutPlayersList from "./ScoutPlayersList";
 import ScoutMap from "./ScoutMap";
-import { useDispatch, useSelector } from "react-redux";
-import { getResults } from "redux/ducks/scoutapi";
 
 const scale = keyframes`
   0%, 100% {transform:  scale(1);}
@@ -55,135 +53,21 @@ const ResultsContainer = styled.div`
   }
 `;
 
-const ScoutResults = ({ setPage, showmap, setShowmap }) => {
-  const dispatch = useDispatch();
+const queryClient = new QueryClient();
 
+const ScoutResults = ({ setPage, showmap, setShowmap }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    dispatch(getResults());
-    console.log("dispatched");
   }, []);
 
-  const results = useSelector((state) => state.scouted.data);
-  const status = useSelector((state) => state.scouted.status);
-  const myTheme = useTheme();
-
-  console.log(results);
-  console.log(status);
-
-  const [selNations, setSelNations] = useState([]);
-  const [selectedPos, setSelectedPos] = useState("");
-
-  const value = useGlobalState("scoutValue")[0];
-  const positions = useGlobalState("scoutPositions")[0]
-    .toString()
-    .replace(/,/g, "|");
-  const contract = useGlobalState("scoutContract")[0];
-  const minAge = useGlobalState("scoutMinAge")[0];
-  const maxAge = useGlobalState("scoutMaxAge")[0];
-
-  const posiciones = useGlobalState("scoutPositions")[0];
-
-  //const getResults = async () => {
-  //
-
-  // if (value === "" || positions === "") {
-  //   return (
-  //     <ResultsContainer myTheme={myTheme}>
-  //       <Alert
-  //         type="alert"
-  //         message="No hemos encontrado jugadores. Para encontrar un jugador, vaya a
-  //           SCOUT y llene los campos requeridos para la búsqueda."
-  //       />
-  //       <AnimatedButton
-  //         action={() => setPage("scout")}
-  //         text="SCOUT"
-  //         size="small"
-  //       />
-  //     </ResultsContainer>
-  //   );
-  // } else {
-  //   const setStatus = (status) => {
-  //     switch (status) {
-  //       case "error":
-  //         return (
-  //           <>
-  //             <Alert
-  //               type="error"
-  //               message="Error obteniendo los datos. Por favor inténtelo nuevamente."
-  //             />
-  //             <AnimatedButton
-  //               action={() => setPage("scout")}
-  //               text="SCOUT"
-  //               size="small"
-  //             />
-  //           </>
-  //         );
-
-  //       case "loading":
-  //         return <CustomLoader />;
-  //       case "success":
-  //         if (data.success === false) {
-  //           return (
-  //             <>
-  //               <Alert
-  //                 type="error"
-  //                 message="Error obteniendo los datos. Por favor inténtelo nuevamente."
-  //               />
-  //               <AnimatedButton
-  //                 action={() => setPage("scout")}
-  //                 text="SCOUT"
-  //                 size="small"
-  //               />
-  //             </>
-  //           );
-  //         } else {
-  //           if (showmap === 0) {
-  //             return (
-  //               <>
-  //                 {data.data && data.data.length > 0 && (
-  //                   <ScoutPlayersList
-  //                     data={data}
-  //                     setPage={setPage}
-  //                     posiciones={posiciones}
-  //                     selNations={selNations}
-  //                     selectedPos={selectedPos}
-  //                     setSelectedPos={setSelectedPos}
-  //                   />
-  //                 )}
-  //               </>
-  //             );
-  //           } else {
-  //             if (showmap === 1) {
-  //               return (
-  //                 <>
-  //                   {data.data && data.data.length > 0 && (
-  //                     <ScoutMap
-  //                       data={data}
-  //                       setShowmap={setShowmap}
-  //                       selNations={selNations}
-  //                       setSelNations={setSelNations}
-  //                       posiciones={posiciones}
-  //                       selectedPos={selectedPos}
-  //                       setSelectedPos={setSelectedPos}
-  //                     />
-  //                   )}
-  //                 </>
-  //               );
-  //             }
-  //           }
-  //         }
-
-  //         break;
-  //       default:
-  //         "loading";
-  //     }
-  //   };
-
   return (
-    <ResultsContainer myTheme={myTheme}>
-      holis los nuevos resultados son los del console.log status:{" "}
-    </ResultsContainer>
+    <QueryClientProvider client={queryClient}>
+      <ShowResults
+        setPage={setPage}
+        showmap={showmap}
+        setShowmap={setShowmap}
+      />
+    </QueryClientProvider>
   );
 };
 
@@ -221,8 +105,9 @@ function ShowResults({ setPage, showmap, setShowmap }) {
 
   useEffect(() => {
     console.log("holis 1 vez");
-    const { data, status } = useQuery("players", fetchPlayers);
   }, []);
+
+  const { data, status } = useQuery("players", fetchPlayers);
 
   if (value === "" || positions === "") {
     return (

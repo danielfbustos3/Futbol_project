@@ -15,7 +15,7 @@ const AlertComponent = styled.div`
   display: flex;
   align-items: center;
   justify-content: left;
-  width: ${({ type }) => (type === "alert" ? "80%" : "12rem")};
+  width: ${({ type }) => (type === "alert" ? "80%" : "25rem")};
   /* height: 2rem; */
   padding: 0.5rem 1rem;
   margin-top: 2rem;
