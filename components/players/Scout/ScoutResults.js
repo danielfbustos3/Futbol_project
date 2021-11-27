@@ -103,7 +103,9 @@ function ShowResults({ setPage, showmap, setShowmap }) {
     }
   };
 
-  const { data, status } = useQuery("players", fetchPlayers);
+  useEffect(() => {
+    const { data, status } = useQuery("players", fetchPlayers);
+  }, []);
 
   console.log({ data });
 
@@ -145,38 +147,54 @@ function ShowResults({ setPage, showmap, setShowmap }) {
         case "loading":
           return <CustomLoader />;
         case "success":
-          if (showmap === 0) {
+          if (data.success === false) {
             return (
               <>
-                {data.data && data.data.length > 0 && (
-                  <ScoutPlayersList
-                    data={data}
-                    setPage={setPage}
-                    posiciones={posiciones}
-                    selNations={selNations}
-                    selectedPos={selectedPos}
-                    setSelectedPos={setSelectedPos}
-                  />
-                )}
+                <Alert
+                  type="error"
+                  message="Error obteniendo los datos. Por favor inténtelo nuevamente."
+                />
+                <AnimatedButton
+                  action={() => setPage("scout")}
+                  text="SCOUT"
+                  size="small"
+                />
               </>
             );
           } else {
-            if (showmap === 1) {
+            if (showmap === 0) {
               return (
                 <>
                   {data.data && data.data.length > 0 && (
-                    <ScoutMap
+                    <ScoutPlayersList
                       data={data}
-                      setShowmap={setShowmap}
-                      selNations={selNations}
-                      setSelNations={setSelNations}
+                      setPage={setPage}
                       posiciones={posiciones}
+                      selNations={selNations}
                       selectedPos={selectedPos}
                       setSelectedPos={setSelectedPos}
                     />
                   )}
                 </>
               );
+            } else {
+              if (showmap === 1) {
+                return (
+                  <>
+                    {data.data && data.data.length > 0 && (
+                      <ScoutMap
+                        data={data}
+                        setShowmap={setShowmap}
+                        selNations={selNations}
+                        setSelNations={setSelNations}
+                        posiciones={posiciones}
+                        selectedPos={selectedPos}
+                        setSelectedPos={setSelectedPos}
+                      />
+                    )}
+                  </>
+                );
+              }
             }
           }
 
