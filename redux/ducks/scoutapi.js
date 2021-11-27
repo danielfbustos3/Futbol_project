@@ -48,5 +48,7 @@ export default async (state = initialState, action) => {
         ...state,
         data: [result],
       };
+    default:
+      return state;
   }
 };
