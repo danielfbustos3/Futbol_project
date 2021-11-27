@@ -148,7 +148,7 @@ function ShowResults({ setPage, showmap, setShowmap }) {
           if (showmap === 0) {
             return (
               <>
-                {data.data.length > 0 && (
+                {data.length > 0 && (
                   <ScoutPlayersList
                     data={data}
                     setPage={setPage}
@@ -164,7 +164,7 @@ function ShowResults({ setPage, showmap, setShowmap }) {
             if (showmap === 1) {
               return (
                 <>
-                  {data.data.length > 0 && (
+                  {data.length > 0 && (
                     <ScoutMap
                       data={data}
                       setShowmap={setShowmap}
