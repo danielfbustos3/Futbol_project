@@ -3,8 +3,8 @@ import authorizedReducer from "./ducks/authenticator";
 import scoutReducer from "./ducks/scoutapi";
 
 const reducer = combineReducers({
-  authorized: authorizedReducer,
   scouted: scoutReducer,
+  authorized: authorizedReducer,
 });
 
 const store = createStore(reducer);

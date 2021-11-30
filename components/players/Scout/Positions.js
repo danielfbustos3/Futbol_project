@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import { useState, useEffect } from "react";
 import { useTheme } from "utils/functions";
 import { motion } from "framer-motion";
 import { BiCheckCircle } from "react-icons/bi";
-import { useGlobalState, setGlobalState } from "state";
+import { useDispatch, useSelector } from "react-redux";
+import { setPositions } from "redux/ducks/scoutapi";
 
 const PosContent = styled.div`
   display: flex;
@@ -240,7 +240,9 @@ const ataqueObj = [
 
 const Positions = ({ section }) => {
   const myTheme = useTheme();
-  const globalSelPositions = useGlobalState("scoutPositions")[0];
+  const dispatch = useDispatch();
+
+  const myPositions = useSelector((state) => state.scouted.positions);
 
   switch (section) {
     case "porteria":
@@ -251,13 +253,14 @@ const Positions = ({ section }) => {
             initial={{ scale: 0 }}
             animate={{ scale: 1, transition: { duration: 0.2 } }}
           >
-            {globalSelPositions?.includes(porteriaObj.position) ? (
+            {myPositions?.includes(porteriaObj.position) ? (
               <CircChecked
                 myTheme={myTheme}
                 onClick={() =>
-                  setGlobalState(
-                    "scoutPositions",
-                    globalSelPositions.filter((i) => i !== porteriaObj.position)
+                  dispatch(
+                    setPositions(
+                      myPositions.filter((i) => i !== porteriaObj.position)
+                    )
                   )
                 }
               >
@@ -267,10 +270,7 @@ const Positions = ({ section }) => {
               <CircPosition
                 myTheme={myTheme}
                 onClick={() =>
-                  setGlobalState("scoutPositions", (globalSelPositions) => [
-                    ...globalSelPositions,
-                    porteriaObj.position,
-                  ])
+                  dispatch(setPositions([...myPositions, porteriaObj.position]))
                 }
               >
                 <div className="circle">{porteriaObj.position}</div>
@@ -294,7 +294,7 @@ const Positions = ({ section }) => {
                 .split(" ")
                 .map((word) => word[0])
                 .join("");
-              if (globalSelPositions?.includes(pos)) {
+              if (myPositions?.includes(pos)) {
                 return (
                   <CircChecked
                     key={index}
@@ -302,9 +302,8 @@ const Positions = ({ section }) => {
                     position={item.position}
                     myTheme={myTheme}
                     onClick={() =>
-                      setGlobalState(
-                        "scoutPositions",
-                        globalSelPositions.filter((i) => i !== pos)
+                      dispatch(
+                        setPositions(myPositions.filter((i) => i !== pos))
                       )
                     }
                   >
@@ -319,10 +318,7 @@ const Positions = ({ section }) => {
                     position={item.position}
                     myTheme={myTheme}
                     onClick={() =>
-                      setGlobalState("scoutPositions", (globalSelPositions) => [
-                        ...globalSelPositions,
-                        pos,
-                      ])
+                      dispatch(setPositions([...myPositions, pos]))
                     }
                   >
                     <div className="circle">{pos}</div>
@@ -347,7 +343,7 @@ const Positions = ({ section }) => {
                 .split(" ")
                 .map((word) => word[0])
                 .join("");
-              if (globalSelPositions?.includes(pos)) {
+              if (myPositions?.includes(pos)) {
                 return (
                   <CircChecked
                     key={index}
@@ -355,9 +351,8 @@ const Positions = ({ section }) => {
                     position={item.position}
                     myTheme={myTheme}
                     onClick={() =>
-                      setGlobalState(
-                        "scoutPositions",
-                        globalSelPositions.filter((i) => i !== pos)
+                      dispatch(
+                        setPositions(myPositions.filter((i) => i !== pos))
                       )
                     }
                   >
@@ -372,10 +367,7 @@ const Positions = ({ section }) => {
                     position={item.position}
                     myTheme={myTheme}
                     onClick={() =>
-                      setGlobalState("scoutPositions", (globalSelPositions) => [
-                        ...globalSelPositions,
-                        pos,
-                      ])
+                      dispatch(setPositions([...myPositions, pos]))
                     }
                   >
                     <div className="circle">{pos}</div>
@@ -396,7 +388,7 @@ const Positions = ({ section }) => {
             animate={{ scale: 1, transition: { duration: 0.2 } }}
           >
             {ataqueObj.map((item, index) => {
-              if (globalSelPositions?.includes(item.position)) {
+              if (myPositions?.includes(item.position)) {
                 return (
                   <CircChecked
                     key={index}
@@ -404,9 +396,10 @@ const Positions = ({ section }) => {
                     position={item.position}
                     myTheme={myTheme}
                     onClick={() =>
-                      setGlobalState(
-                        "scoutPositions",
-                        globalSelPositions.filter((i) => i !== item.position)
+                      dispatch(
+                        setPositions(
+                          myPositions.filter((i) => i !== item.position)
+                        )
                       )
                     }
                   >
@@ -421,10 +414,7 @@ const Positions = ({ section }) => {
                     position={item.position}
                     myTheme={myTheme}
                     onClick={() =>
-                      setGlobalState("scoutPositions", (globalSelPositions) => [
-                        ...globalSelPositions,
-                        item.position,
-                      ])
+                      dispatch(setPositions([...myPositions, item.position]))
                     }
                   >
                     <div className="circle">{item.position}</div>

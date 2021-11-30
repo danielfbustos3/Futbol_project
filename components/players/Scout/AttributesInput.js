@@ -49,9 +49,9 @@ const AttributesContainer = styled.div`
 
 const atributosObj = [
   {
-    atributo: "Aerial Threat",
+    atributo: "Rápido",
     descripcion:
-      "Cualquier pinche puta descripcion que sea bien larga y culera para que la gente idiota trate de entender de lo que se trata un buen mame de jugadores de futbol porque ni siquiera saben lo que quieren entonces nos toca escogerles hasta la ropa interior a los pinches putos directores tecnicos.",
+      "Jugador con cualidades que lo hacen tener una aceleración y velocidad superior a los demás.",
   },
   {
     atributo: "Attack Minded",

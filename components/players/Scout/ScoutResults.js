@@ -1,7 +1,5 @@
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
-import { useQuery, QueryClient, QueryClientProvider } from "react-query";
-import { useGlobalState, setGlobalState } from "state";
 import { useTheme } from "../../../utils/functions";
 import CustomLoader from "components/CustomLoader";
 import { useState, useEffect } from "react";
@@ -10,7 +8,8 @@ import AnimatedButton from "components/AnimatedButton";
 import ScoutPlayersList from "./ScoutPlayersList";
 import ScoutMap from "./ScoutMap";
 import { useDispatch, useSelector } from "react-redux";
-import { getResults } from "redux/ducks/scoutapi";
+import { setResults, setStatus } from "redux/ducks/scoutapi";
+import axios from "axios";
 
 const scale = keyframes`
   0%, 100% {transform:  scale(1);}
@@ -56,175 +55,31 @@ const ResultsContainer = styled.div`
 `;
 
 const ScoutResults = ({ setPage, showmap, setShowmap }) => {
+  const myTheme = useTheme();
   const dispatch = useDispatch();
+  const state = useSelector((state) => state.scouted);
 
-  useEffect(() => {
+  const [selNations, setSelNations] = useState([]);
+  const [selectedPos, setSelectedPos] = useState("");
+
+  useEffect(async () => {
     window.scrollTo(0, 0);
-    dispatch(getResults());
-    console.log("dispatched");
-  }, []);
-
-  const results = useSelector((state) => state.scouted.data);
-  const status = useSelector((state) => state.scouted.status);
-  const myTheme = useTheme();
-
-  console.log(results);
-  console.log(status);
-
-  const [selNations, setSelNations] = useState([]);
-  const [selectedPos, setSelectedPos] = useState("");
-
-  const value = useGlobalState("scoutValue")[0];
-  const positions = useGlobalState("scoutPositions")[0]
-    .toString()
-    .replace(/,/g, "|");
-  const contract = useGlobalState("scoutContract")[0];
-  const minAge = useGlobalState("scoutMinAge")[0];
-  const maxAge = useGlobalState("scoutMaxAge")[0];
-
-  const posiciones = useGlobalState("scoutPositions")[0];
-
-  //const getResults = async () => {
-  //
-
-  // if (value === "" || positions === "") {
-  //   return (
-  //     <ResultsContainer myTheme={myTheme}>
-  //       <Alert
-  //         type="alert"
-  //         message="No hemos encontrado jugadores. Para encontrar un jugador, vaya a
-  //           SCOUT y llene los campos requeridos para la búsqueda."
-  //       />
-  //       <AnimatedButton
-  //         action={() => setPage("scout")}
-  //         text="SCOUT"
-  //         size="small"
-  //       />
-  //     </ResultsContainer>
-  //   );
-  // } else {
-  //   const setStatus = (status) => {
-  //     switch (status) {
-  //       case "error":
-  //         return (
-  //           <>
-  //             <Alert
-  //               type="error"
-  //               message="Error obteniendo los datos. Por favor inténtelo nuevamente."
-  //             />
-  //             <AnimatedButton
-  //               action={() => setPage("scout")}
-  //               text="SCOUT"
-  //               size="small"
-  //             />
-  //           </>
-  //         );
-
-  //       case "loading":
-  //         return <CustomLoader />;
-  //       case "success":
-  //         if (data.success === false) {
-  //           return (
-  //             <>
-  //               <Alert
-  //                 type="error"
-  //                 message="Error obteniendo los datos. Por favor inténtelo nuevamente."
-  //               />
-  //               <AnimatedButton
-  //                 action={() => setPage("scout")}
-  //                 text="SCOUT"
-  //                 size="small"
-  //               />
-  //             </>
-  //           );
-  //         } else {
-  //           if (showmap === 0) {
-  //             return (
-  //               <>
-  //                 {data.data && data.data.length > 0 && (
-  //                   <ScoutPlayersList
-  //                     data={data}
-  //                     setPage={setPage}
-  //                     posiciones={posiciones}
-  //                     selNations={selNations}
-  //                     selectedPos={selectedPos}
-  //                     setSelectedPos={setSelectedPos}
-  //                   />
-  //                 )}
-  //               </>
-  //             );
-  //           } else {
-  //             if (showmap === 1) {
-  //               return (
-  //                 <>
-  //                   {data.data && data.data.length > 0 && (
-  //                     <ScoutMap
-  //                       data={data}
-  //                       setShowmap={setShowmap}
-  //                       selNations={selNations}
-  //                       setSelNations={setSelNations}
-  //                       posiciones={posiciones}
-  //                       selectedPos={selectedPos}
-  //                       setSelectedPos={setSelectedPos}
-  //                     />
-  //                   )}
-  //                 </>
-  //               );
-  //             }
-  //           }
-  //         }
-
-  //         break;
-  //       default:
-  //         "loading";
-  //     }
-  //   };
-
-  return (
-    <ResultsContainer myTheme={myTheme}>
-      holis los nuevos resultados son los del console.log status:{" "}
-    </ResultsContainer>
-  );
-};
-
-function ShowResults({ setPage, showmap, setShowmap }) {
-  const myTheme = useTheme();
-
-  const [selNations, setSelNations] = useState([]);
-  const [selectedPos, setSelectedPos] = useState("");
-
-  const value = useGlobalState("scoutValue")[0];
-  const positions = useGlobalState("scoutPositions")[0]
-    .toString()
-    .replace(/,/g, "|");
-  const contract = useGlobalState("scoutContract")[0];
-  const minAge = useGlobalState("scoutMinAge")[0];
-  const maxAge = useGlobalState("scoutMaxAge")[0];
-
-  const posiciones = useGlobalState("scoutPositions")[0];
-
-  const fetchPlayers = async () => {
+    dispatch(setStatus("loading"));
+    const posiciones = state.positions.toString().replace(/,/g, "|");
     try {
-      if ((value != 0) & (positions?.length != 0)) {
-        const res = await fetch(
-          `${window.location.origin}/api/scout?value=${value}&positions=${positions}&contract=${contract}&minage=${minAge}&maxage=${maxAge}`
-        );
-        return res.json();
+      const res = await axios.get(
+        `${window.location.origin}/api/scout?value=${state.value}&positions=${posiciones}&contract=${state.contract}&minage=${state.minAge}&maxage=${state.maxAge}&attributes=${state.attributes}`
+      );
+      if (res.data.success === true) {
+        dispatch(setResults(res.data.data));
+        dispatch(setStatus("success"));
       }
     } catch (error) {
-      console.log("error getting players");
-      console.log(error);
-
-      return res.json();
+      dispatch(setStatus("error"));
     }
-  };
-
-  useEffect(() => {
-    console.log("holis 1 vez");
-    const { data, status } = useQuery("players", fetchPlayers);
   }, []);
 
-  if (value === "" || positions === "") {
+  if (!state.value || state.positions.length === 0) {
     return (
       <ResultsContainer myTheme={myTheme}>
         <Alert
@@ -260,54 +115,38 @@ function ShowResults({ setPage, showmap, setShowmap }) {
         case "loading":
           return <CustomLoader />;
         case "success":
-          if (data.success === false) {
+          if (showmap === 0) {
             return (
               <>
-                <Alert
-                  type="error"
-                  message="Error obteniendo los datos. Por favor inténtelo nuevamente."
-                />
-                <AnimatedButton
-                  action={() => setPage("scout")}
-                  text="SCOUT"
-                  size="small"
-                />
+                {state.data && state.data.length > 0 && (
+                  <ScoutPlayersList
+                    data={state.data}
+                    setPage={setPage}
+                    posiciones={state.positions}
+                    selNations={selNations}
+                    selectedPos={selectedPos}
+                    setSelectedPos={setSelectedPos}
+                  />
+                )}
               </>
             );
           } else {
-            if (showmap === 0) {
+            if (showmap === 1) {
               return (
                 <>
-                  {data.data && data.data.length > 0 && (
-                    <ScoutPlayersList
-                      data={data}
-                      setPage={setPage}
-                      posiciones={posiciones}
+                  {state.data && state.data.length > 0 && (
+                    <ScoutMap
+                      data={state.data}
+                      setShowmap={setShowmap}
                       selNations={selNations}
+                      setSelNations={setSelNations}
+                      posiciones={state.positions}
                       selectedPos={selectedPos}
                       setSelectedPos={setSelectedPos}
                     />
                   )}
                 </>
               );
-            } else {
-              if (showmap === 1) {
-                return (
-                  <>
-                    {data.data && data.data.length > 0 && (
-                      <ScoutMap
-                        data={data}
-                        setShowmap={setShowmap}
-                        selNations={selNations}
-                        setSelNations={setSelNations}
-                        posiciones={posiciones}
-                        selectedPos={selectedPos}
-                        setSelectedPos={setSelectedPos}
-                      />
-                    )}
-                  </>
-                );
-              }
             }
           }
 
@@ -318,9 +157,11 @@ function ShowResults({ setPage, showmap, setShowmap }) {
     };
 
     return (
-      <ResultsContainer myTheme={myTheme}>{setStatus(status)}</ResultsContainer>
+      <ResultsContainer myTheme={myTheme}>
+        {setStatus(state.status)}
+      </ResultsContainer>
     );
   }
-}
+};
 
 export default ScoutResults;

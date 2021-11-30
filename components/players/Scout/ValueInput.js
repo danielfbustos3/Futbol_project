@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
 import AnimatingNumber from "./AnimatingNumber";
 import { useTheme } from "utils/functions";
-import { useGlobalState, setGlobalState } from "state";
+import { useDispatch, useSelector } from "react-redux";
+import { setValue } from "redux/ducks/scoutapi";
 
 const Container = styled.div`
   display: flex;
@@ -63,23 +64,24 @@ const Container = styled.div`
 
 const ValueInput = () => {
   const myTheme = useTheme();
+  const dispatch = useDispatch();
 
-  const globalPlayerValue = useGlobalState("scoutValue")[0];
+  const playerValue = useSelector((state) => state.scouted.value);
 
   const [playerValueLabel, setPlayerValueLabel] = useState(false);
 
   useEffect(() => {
-    if (globalPlayerValue === "") {
+    if (playerValue === "") {
       setPlayerValueLabel(false);
     } else {
       setPlayerValueLabel(true);
     }
-  }, [globalPlayerValue]);
+  }, [playerValue]);
 
   const handleParamUser = () => (e) => {
     if (e.target.value.length <= 10) {
       const handleValue = e.target.value;
-      setGlobalState("scoutValue", handleValue);
+      dispatch(setValue(handleValue));
     }
   };
   return (
@@ -90,17 +92,15 @@ const ValueInput = () => {
         </label>
         <input
           type="number"
-          value={globalPlayerValue}
+          value={playerValue}
           onFocus={() => setPlayerValueLabel(true)}
-          onBlur={() =>
-            globalPlayerValue == "" ? setPlayerValueLabel(false) : ""
-          }
+          onBlur={() => (playerValue == "" ? setPlayerValueLabel(false) : "")}
           onChange={handleParamUser()}
         />
       </div>
       <div className="labelContainer">
         <p className="label"> €</p>
-        <AnimatingNumber value={globalPlayerValue} />
+        <AnimatingNumber value={playerValue} />
       </div>
     </Container>
   );

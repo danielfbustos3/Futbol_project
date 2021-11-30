@@ -27,7 +27,7 @@ const ScoutPlayersList = ({
   const [comparePlayer, setComparePlayer] = useState("");
 
   console.log("holis estoy muestreado");
-  if (data?.data.length === 0) {
+  if (data && data.length === 0) {
     return (
       <ResultsWrapper>
         <Alert
@@ -44,10 +44,10 @@ const ScoutPlayersList = ({
       </ResultsWrapper>
     );
   } else {
-    if (data && data?.data.length > 0) {
+    if (data && data.length > 0) {
       const players =
         data &&
-        data?.data.filter((element) => element.Positions.includes(selectedPos));
+        data?.filter((element) => element.Positions.includes(selectedPos));
 
       const playerData =
         selNations && selNations?.length > 0

@@ -11,9 +11,12 @@ export default async (req, res) => {
   const contract = parseInt(req.query.contract);
   const minAge = parseInt(req.query.minage);
   const maxAge = parseInt(req.query.maxage);
+  const attributes = req.query.attributes;
 
   switch (method) {
     case "GET":
+      console.log("no hay atributos");
+      console.log(attributes);
       try {
         const players = await Player.find({
           $and: [
@@ -31,6 +34,7 @@ export default async (req, res) => {
       } catch (error) {
         res.status(500).json({ success: false });
       }
+
       break;
     default:
       res.status(400).json({ success: false });

@@ -69,8 +69,7 @@ const ScoutMap = ({
   }, []);
 
   const players =
-    data &&
-    data?.data.filter((element) => element.Positions.includes(selectedPos));
+    data && data?.filter((element) => element.Positions.includes(selectedPos));
 
   return (
     <MapContainer myTheme={myTheme} maptooltip={maptooltip}>

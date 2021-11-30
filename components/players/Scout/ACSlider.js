@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { useTheme } from "../../../utils/functions";
-import { useGlobalState, setGlobalState } from "../../../state";
+import { useDispatch, useSelector } from "react-redux";
+import { setMinAge, setMaxAge, setContract } from "redux/ducks/scoutapi";
 
 const SliderContainer = styled.div`
   .values {
@@ -113,6 +114,7 @@ const SliderContainer = styled.div`
 
 const ACSlider = ({ tip }) => {
   const myTheme = useTheme();
+  const dispatch = useDispatch();
 
   const minGap = 2;
   const maxAge = 43;
@@ -120,37 +122,37 @@ const ACSlider = ({ tip }) => {
   const contractMin = 2021;
   const contractMax = 2031;
 
-  const globalMinAge = useGlobalState("scoutMinAge")[0];
+  const globalMinAge = useSelector((state) => state.scouted.minAge);
   const [percent1, setPercent1] = useState(
     ((globalMinAge - minAge) / (maxAge - minAge)) * 100
   );
   const handleParam1 = () => (e) => {
     if (e.target.value <= globalMaxAge - minGap) {
       const handleMin = parseInt(e.target.value);
-      setGlobalState("scoutMinAge", handleMin);
+      dispatch(setMinAge(handleMin));
       setPercent1(((handleMin - minAge) / (maxAge - minAge)) * 100);
     }
   };
 
-  const globalMaxAge = useGlobalState("scoutMaxAge")[0];
+  const globalMaxAge = useSelector((state) => state.scouted.maxAge);
   const [percent2, setPercent2] = useState(
     ((globalMaxAge - minAge) / (maxAge - minAge)) * 100
   );
   const handleParam2 = () => (e) => {
     if (e.target.value >= globalMinAge + minGap) {
       const handleMax = parseInt(e.target.value);
-      setGlobalState("scoutMaxAge", handleMax);
+      dispatch(setMaxAge(handleMax));
       setPercent2(((handleMax - minAge) / (maxAge - minAge)) * 100);
     }
   };
 
-  const globalContract = useGlobalState("scoutContract")[0];
+  const globalContract = useSelector((state) => state.scouted.contract);
   const [percent3, setPercent3] = useState(
     ((globalContract - contractMin) / (contractMax - contractMin)) * 100
   );
   const handleParam3 = () => (e) => {
     const handle = parseInt(e.target.value);
-    setGlobalState("scoutContract", handle);
+    dispatch(setContract(handle));
     setPercent3(((handle - contractMin) / (contractMax - contractMin)) * 100);
   };
 

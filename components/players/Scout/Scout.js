@@ -9,7 +9,15 @@ import { useEffect, useState } from "react";
 import { BiError } from "react-icons/bi";
 import { keyframes } from "@emotion/react";
 import AnimatedButton from "components/AnimatedButton";
-
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setValue,
+  setPositions,
+  setAttributes,
+  setMinAge,
+  setMaxAge,
+  setContract,
+} from "redux/ducks/scoutapi";
 const rotate = keyframes`
   0%, 20%, 80%, 100% {transform: translateY(0);}
     40% {transform: translateY(-0.5rem);}
@@ -110,6 +118,7 @@ const ScoutContainer = styled.div`
 
 const Scout = ({ setPage }) => {
   const myTheme = useTheme();
+  const dispatch = useDispatch();
 
   const [alert, setAlert] = useState(false);
   const [alertText, setAlertText] = useState("");
@@ -119,8 +128,8 @@ const Scout = ({ setPage }) => {
     window.scrollTo(0, 0);
   }, []);
 
-  const value = useGlobalState("scoutValue")[0];
-  const positions = useGlobalState("scoutPositions")[0];
+  const value = useSelector((state) => state.scouted.value);
+  const positions = useSelector((state) => state.scouted.positions);
 
   useEffect(() => {
     if (value == 0 && positions?.length == 0) {
@@ -133,12 +142,12 @@ const Scout = ({ setPage }) => {
   }, [value, positions]);
 
   const refreshData = () => {
-    setGlobalState("scoutValue", "");
-    setGlobalState("scoutPositions", []);
-    setGlobalState("scoutAttributes", []);
-    setGlobalState("scoutMinAge", 23);
-    setGlobalState("scoutMaxAge", 35);
-    setGlobalState("scoutContract", 2023);
+    dispatch(setValue(""));
+    dispatch(setPositions([]));
+    dispatch(setAttributes([]));
+    dispatch(setMinAge(23));
+    dispatch(setMaxAge(35));
+    dispatch(setContract(2023));
     setPage("scout");
   };
 

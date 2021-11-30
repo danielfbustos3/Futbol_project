@@ -1,8 +1,7 @@
 import CanchaFutbol from "components/players/Scout/CanchaFutbol";
 import styled from "@emotion/styled";
-import { useState } from "react";
 import { useTheme } from "../../../utils/functions";
-import { useGlobalState } from "../../../state";
+import { useSelector } from "react-redux";
 
 const PositionContainer = styled.div`
   margin-top: 1rem;
@@ -27,7 +26,8 @@ const PositionContainer = styled.div`
 
 const PositionInput = ({}) => {
   const myTheme = useTheme();
-  const selPositions = useGlobalState("scoutPositions")[0];
+
+  const myPositions = useSelector((state) => state.scouted.positions);
   return (
     <PositionContainer myTheme={myTheme}>
       <div className="contCancha">
@@ -35,7 +35,7 @@ const PositionInput = ({}) => {
       </div>
       <div className="selecPos">
         <h1>Posiciones Seleccionadas:</h1>
-        <p>{selPositions.join(", ")}</p>
+        <p>{myPositions.join(", ")}</p>
       </div>
     </PositionContainer>
   );
