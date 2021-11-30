@@ -82,7 +82,7 @@ const ScoutResults = ({ setPage, showmap, setShowmap }) => {
     fetchData();
   }, []);
 
-  const setStatus = (status) => {
+  const setStatusPage = (status) => {
     switch (status) {
       case "error":
         return (
@@ -179,7 +179,7 @@ const ScoutResults = ({ setPage, showmap, setShowmap }) => {
   } else {
     return (
       <ResultsContainer myTheme={myTheme}>
-        {setStatus(state.status)}
+        {setStatusPage(state.status)}
       </ResultsContainer>
     );
   }
