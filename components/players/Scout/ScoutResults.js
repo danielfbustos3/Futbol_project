@@ -62,21 +62,24 @@ const ScoutResults = ({ setPage, showmap, setShowmap }) => {
   const [selNations, setSelNations] = useState([]);
   const [selectedPos, setSelectedPos] = useState("");
 
-  useEffect(async () => {
+  useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(setStatus("loading"));
     const posiciones = state.positions.toString().replace(/,/g, "|");
-    try {
-      const res = await axios.get(
-        `${window.location.origin}/api/scout?value=${state.value}&positions=${posiciones}&contract=${state.contract}&minage=${state.minAge}&maxage=${state.maxAge}&attributes=${state.attributes}`
-      );
-      if (res.data.success === true) {
-        dispatch(setResults(res.data.data));
-        dispatch(setStatus("success"));
+    async function fetchData() {
+      try {
+        const res = await axios.get(
+          `${window.location.origin}/api/scout?value=${state.value}&positions=${posiciones}&contract=${state.contract}&minage=${state.minAge}&maxage=${state.maxAge}&attributes=${state.attributes}`
+        );
+        if (res.data.success === true) {
+          dispatch(setResults(res.data.data));
+          dispatch(setStatus("success"));
+        }
+      } catch (error) {
+        dispatch(setStatus("error"));
       }
-    } catch (error) {
-      dispatch(setStatus("error"));
     }
+    fetchData();
   }, []);
 
   if (!state.value || state.positions.length === 0) {
