@@ -59,6 +59,9 @@ const ScoutResults = ({ setPage, showmap, setShowmap }) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.scouted);
 
+  const [selNations, setSelNations] = useState([]);
+  const [selectedPos, setSelectedPos] = useState("");
+
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(setStatus("loading"));
@@ -97,16 +100,25 @@ const ScoutResults = ({ setPage, showmap, setShowmap }) => {
   } else {
     return (
       <ResultsContainer myTheme={myTheme}>
-        {setStatusPage(state)}
+        {setStatusPage(
+          state,
+          selNations,
+          setSelNations,
+          selectedPos,
+          setSelectedPos
+        )}
       </ResultsContainer>
     );
   }
 };
 
-const setStatusPage = (state) => {
-  const [selNations, setSelNations] = useState([]);
-  const [selectedPos, setSelectedPos] = useState("");
-
+const setStatusPage = (
+  state,
+  selNations,
+  setSelNations,
+  selectedPos,
+  setSelectedPos
+) => {
   switch (state.status) {
     case "error":
       return (
