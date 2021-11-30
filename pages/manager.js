@@ -55,44 +55,44 @@ const ManagerPage = () => {
   };
 
   return (
+    // {authorized ? (
     <ThemeProvider>
-      {authorized ? (
-        <>
-          <ManagerNavbar
-            isOpen={isOpen}
-            toggleKeepOpen={toggleKeepOpen}
-            toggle={toggle}
-            setPage={setPage}
-            showmap={showmap}
-            setShowmap={setShowmap}
-            page={page}
-          />
-          <PageLayout isOpen={isOpen}>
-            <ManagerSidebar
-              isOpen={isOpen}
-              setPage={setPage}
-              keepOpen={keepOpen}
-              toggle={toggle}
-              setIsOpen={setIsOpen}
-            />
-            <main className="main-content">
-              <ManagerLayout
-                page={page}
-                setPage={setPage}
-                isOpen={isOpen}
-                showmap={showmap}
-                setShowmap={setShowmap}
-              />
-              <ManagerFooter />
-            </main>
-          </PageLayout>
-        </>
-      ) : (
+      <>
+        <ManagerNavbar
+          isOpen={isOpen}
+          toggleKeepOpen={toggleKeepOpen}
+          toggle={toggle}
+          setPage={setPage}
+          showmap={showmap}
+          setShowmap={setShowmap}
+          page={page}
+        />
         <PageLayout isOpen={isOpen}>
-          <CustomLoader />
+          <ManagerSidebar
+            isOpen={isOpen}
+            setPage={setPage}
+            keepOpen={keepOpen}
+            toggle={toggle}
+            setIsOpen={setIsOpen}
+          />
+          <main className="main-content">
+            <ManagerLayout
+              page={page}
+              setPage={setPage}
+              isOpen={isOpen}
+              showmap={showmap}
+              setShowmap={setShowmap}
+            />
+            <ManagerFooter />
+          </main>
         </PageLayout>
-      )}
+      </>
     </ThemeProvider>
+    // ) : (
+    //   <PageLayout isOpen={isOpen}>
+    //     <CustomLoader />
+    //   </PageLayout>
+    // )}
   );
 };
 
