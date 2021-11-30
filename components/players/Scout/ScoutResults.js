@@ -105,7 +105,10 @@ const ScoutResults = ({ setPage, showmap, setShowmap }) => {
           selNations,
           setSelNations,
           selectedPos,
-          setSelectedPos
+          setSelectedPos,
+          showmap,
+          setShowmap,
+          setPage
         )}
       </ResultsContainer>
     );
@@ -117,7 +120,10 @@ const setStatusPage = (
   selNations,
   setSelNations,
   selectedPos,
-  setSelectedPos
+  setSelectedPos,
+  showmap,
+  setShowmap,
+  setPage
 ) => {
   switch (state.status) {
     case "error":
@@ -138,7 +144,7 @@ const setStatusPage = (
     case "loading":
       return <CustomLoader />;
     case "success":
-      if (state?.data.length === 0) {
+      if (state && state?.data.length === 0) {
         return (
           <>
             <Alert
