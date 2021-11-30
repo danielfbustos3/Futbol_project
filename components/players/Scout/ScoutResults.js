@@ -62,96 +62,31 @@ const ScoutResults = ({ setPage, showmap, setShowmap }) => {
   const [selNations, setSelNations] = useState([]);
   const [selectedPos, setSelectedPos] = useState("");
 
-  useEffect(() => {
+  useEffect(async () => {
     window.scrollTo(0, 0);
     dispatch(setStatus("loading"));
     const posiciones = state.positions.toString().replace(/,/g, "|");
-    async function fetchData() {
-      try {
-        const res = await axios.get(
-          `${window.location.origin}/api/scout?value=${state.value}&positions=${posiciones}&contract=${state.contract}&minage=${state.minAge}&maxage=${state.maxAge}&attributes=${state.attributes}`
-        );
-        if (res.data.success === true) {
-          dispatch(setResults(res.data.data));
-          dispatch(setStatus("success"));
-        }
-      } catch (error) {
-        dispatch(setStatus("error"));
+    try {
+      const res = await axios.get(
+        `${window.location.origin}/api/scout?value=${state.value}&positions=${posiciones}&contract=${state.contract}&minage=${state.minAge}&maxage=${state.maxAge}&attributes=${state.attributes}`
+      );
+      if (res.data.success === true) {
+        dispatch(setResults(res.data.data));
+        dispatch(setStatus("success"));
       }
+    } catch (error) {
+      dispatch(setStatus("error"));
     }
-    fetchData();
   }, []);
 
-  if (!state.value || state.positions.length === 0) {
-    return (
-      <ResultsContainer myTheme={myTheme}>
-        <Alert
-          type="alert"
-          message="No hemos encontrado jugadores. Para encontrar un jugador, vaya a
-          SCOUT y llene los campos requeridos para la búsqueda."
-        />
-        <AnimatedButton
-          action={() => setPage("scout")}
-          text="SCOUT"
-          size="small"
-        />
-      </ResultsContainer>
-    );
-  } else {
-    return (
-      <ResultsContainer myTheme={myTheme}>
-        {setStatusPage(
-          state,
-          selNations,
-          setSelNations,
-          selectedPos,
-          setSelectedPos,
-          showmap,
-          setShowmap,
-          setPage
-        )}
-      </ResultsContainer>
-    );
-  }
-};
-
-const setStatusPage = (
-  state,
-  selNations,
-  setSelNations,
-  selectedPos,
-  setSelectedPos,
-  showmap,
-  setShowmap,
-  setPage
-) => {
-  switch (state.status) {
-    case "error":
-      return (
-        <>
-          <Alert
-            type="error"
-            message="Error obteniendo los datos. Por favor inténtelo nuevamente."
-          />
-          <AnimatedButton
-            action={() => setPage("scout")}
-            text="SCOUT"
-            size="small"
-          />
-        </>
-      );
-
-    case "loading":
-      return <CustomLoader />;
-    case "success":
-      if (state && state?.data.length === 0) {
+  const setStatusPage = (status) => {
+    switch (status) {
+      case "error":
         return (
           <>
             <Alert
-              type="alert"
-              message="No encontramos jugadores con las características seleccionadas.
-                Regrese a SCOUT y seleccione nuevas características para la
-                búsqueda."
+              type="error"
+              message="Error obteniendo los datos. Por favor inténtelo nuevamente."
             />
             <AnimatedButton
               action={() => setPage("scout")}
@@ -160,46 +95,87 @@ const setStatusPage = (
             />
           </>
         );
-      } else {
-        if (showmap === 0) {
+
+      case "loading":
+        return <CustomLoader />;
+      case "success":
+        if (state && state?.data.length === 0) {
           return (
             <>
-              {state.data && state.data.length > 0 && (
-                <ScoutPlayersList
-                  data={state.data}
-                  setPage={setPage}
-                  posiciones={state.positions}
-                  selNations={selNations}
-                  selectedPos={selectedPos}
-                  setSelectedPos={setSelectedPos}
-                />
-              )}
+              <Alert
+                type="alert"
+                message="No encontramos jugadores con las características seleccionadas.
+                  Regrese a SCOUT y seleccione nuevas características para la
+                  búsqueda."
+              />
+              <AnimatedButton
+                action={() => setPage("scout")}
+                text="SCOUT"
+                size="small"
+              />
             </>
           );
         } else {
-          if (showmap === 1) {
+          if (showmap === 0) {
             return (
               <>
                 {state.data && state.data.length > 0 && (
-                  <ScoutMap
+                  <ScoutPlayersList
                     data={state.data}
-                    setShowmap={setShowmap}
-                    selNations={selNations}
-                    setSelNations={setSelNations}
+                    setPage={setPage}
                     posiciones={state.positions}
+                    selNations={selNations}
                     selectedPos={selectedPos}
                     setSelectedPos={setSelectedPos}
                   />
                 )}
               </>
             );
+          } else {
+            if (showmap === 1) {
+              return (
+                <>
+                  {state.data && state.data.length > 0 && (
+                    <ScoutMap
+                      data={state.data}
+                      setShowmap={setShowmap}
+                      selNations={selNations}
+                      setSelNations={setSelNations}
+                      posiciones={state.positions}
+                      selectedPos={selectedPos}
+                      setSelectedPos={setSelectedPos}
+                    />
+                  )}
+                </>
+              );
+            }
           }
         }
-      }
 
-      break;
-    default:
-      "loading";
-  }
+        break;
+      default:
+        "loading";
+    }
+  };
+  return (
+    <ResultsContainer myTheme={myTheme}>
+      {!state.value || state.positions.length === 0 ? (
+        <>
+          <Alert
+            type="alert"
+            message="No hemos encontrado jugadores. Para encontrar un jugador, vaya a
+          SCOUT y llene los campos requeridos para la búsqueda."
+          />
+          <AnimatedButton
+            action={() => setPage("scout")}
+            text="SCOUT"
+            size="small"
+          />
+        </>
+      ) : (
+        <>{setStatusPage(state.status)}</>
+      )}
+    </ResultsContainer>
+  );
 };
 export default ScoutResults;

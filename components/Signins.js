@@ -422,7 +422,7 @@ const Signins = () => {
                   <FormButton type="submit" />
                 </a>
               </form>
-              <a className="signup" href="/signup">
+              <a className="signup" href="signup">
                 ¿No tienes una cuenta? ¡Regístrate!
               </a>
             </div>
