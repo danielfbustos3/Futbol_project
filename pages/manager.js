@@ -8,7 +8,6 @@ import { ThemeProvider } from "utils/functions";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth, readToken } from "redux/ducks/authenticator";
-import CustomLoader from "components/CustomLoader";
 
 const PageLayout = styled.div`
   display: flex;
@@ -56,7 +55,7 @@ const ManagerPage = () => {
 
   return (
     <ThemeProvider>
-      {authorized ? (
+      {authorized && (
         <>
           <ManagerNavbar
             isOpen={isOpen}
@@ -87,10 +86,6 @@ const ManagerPage = () => {
             </main>
           </PageLayout>
         </>
-      ) : (
-        <PageLayout isOpen={isOpen}>
-          <CustomLoader />
-        </PageLayout>
       )}
     </ThemeProvider>
   );
