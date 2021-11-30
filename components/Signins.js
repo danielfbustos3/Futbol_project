@@ -281,6 +281,7 @@ const FormWrap = styled.div`
     .signup {
       color: #01bf71;
       font-size: 0.7rem;
+      margin-top: 1rem;
     }
   }
 `;
@@ -387,7 +388,7 @@ const Signins = () => {
               <form onSubmit={submit}>
                 <div className="user-box">
                   <label className={userLabel ? "inlabel" : "offlabel"}>
-                    Username
+                    Correo Electrónico
                   </label>
                   <input
                     type="email"
@@ -400,7 +401,7 @@ const Signins = () => {
                 </div>
                 <div className="user-box">
                   <label className={passLabel ? "inlabel" : "offlabel"}>
-                    Password
+                    Contraseña
                   </label>
                   <input
                     type="password"
@@ -413,7 +414,7 @@ const Signins = () => {
                 </div>
                 <p className="mensaje">{alert ? alertMessage : "\u00A0"}</p>
                 <a className="submitBtn">
-                  Submit
+                  Ingresar
                   <span></span>
                   <span></span>
                   <span></span>
@@ -421,7 +422,7 @@ const Signins = () => {
                   <FormButton type="submit" />
                 </a>
               </form>
-              <a className="signup" href="signup">
+              <a className="signup" href="/signup">
                 ¿No tienes una cuenta? ¡Regístrate!
               </a>
             </div>

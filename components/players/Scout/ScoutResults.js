@@ -115,38 +115,56 @@ const ScoutResults = ({ setPage, showmap, setShowmap }) => {
         case "loading":
           return <CustomLoader />;
         case "success":
-          if (showmap === 0) {
+          if (state?.data.length === 0) {
             return (
               <>
-                {state.data && state.data.length > 0 && (
-                  <ScoutPlayersList
-                    data={state.data}
-                    setPage={setPage}
-                    posiciones={state.positions}
-                    selNations={selNations}
-                    selectedPos={selectedPos}
-                    setSelectedPos={setSelectedPos}
-                  />
-                )}
+                <Alert
+                  type="alert"
+                  message="No encontramos jugadores con las características seleccionadas.
+                  Regrese a SCOUT y seleccione nuevas características para la
+                búsqueda."
+                />
+                <AnimatedButton
+                  action={() => setPage("scout")}
+                  text="SCOUT"
+                  size="small"
+                />
               </>
             );
           } else {
-            if (showmap === 1) {
+            if (showmap === 0) {
               return (
                 <>
                   {state.data && state.data.length > 0 && (
-                    <ScoutMap
+                    <ScoutPlayersList
                       data={state.data}
-                      setShowmap={setShowmap}
-                      selNations={selNations}
-                      setSelNations={setSelNations}
+                      setPage={setPage}
                       posiciones={state.positions}
+                      selNations={selNations}
                       selectedPos={selectedPos}
                       setSelectedPos={setSelectedPos}
                     />
                   )}
                 </>
               );
+            } else {
+              if (showmap === 1) {
+                return (
+                  <>
+                    {state.data && state.data.length > 0 && (
+                      <ScoutMap
+                        data={state.data}
+                        setShowmap={setShowmap}
+                        selNations={selNations}
+                        setSelNations={setSelNations}
+                        posiciones={state.positions}
+                        selectedPos={selectedPos}
+                        setSelectedPos={setSelectedPos}
+                      />
+                    )}
+                  </>
+                );
+              }
             }
           }
 

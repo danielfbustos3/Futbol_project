@@ -241,7 +241,7 @@ const FormWrap = styled.div`
     .signin {
       color: #01bf71;
       font-size: 0.7rem;
-      margin-top: -1rem;
+      margin-top: -0.5rem;
     }
   }
 `;
@@ -405,7 +405,7 @@ const Signins = () => {
                 </div>
                 <p className="mensaje">{alert ? alertMessage : "\u00A0"}</p>
                 <a className="submitBtn">
-                  Submit
+                  Crear
                   <span></span>
                   <span></span>
                   <span></span>
