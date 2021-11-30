@@ -55,44 +55,44 @@ const ManagerPage = () => {
   };
 
   return (
-    // {authorized ? (
     <ThemeProvider>
-      <>
-        <ManagerNavbar
-          isOpen={isOpen}
-          toggleKeepOpen={toggleKeepOpen}
-          toggle={toggle}
-          setPage={setPage}
-          showmap={showmap}
-          setShowmap={setShowmap}
-          page={page}
-        />
-        <PageLayout isOpen={isOpen}>
-          <ManagerSidebar
+      {authorized ? (
+        <>
+          <ManagerNavbar
             isOpen={isOpen}
-            setPage={setPage}
-            keepOpen={keepOpen}
+            toggleKeepOpen={toggleKeepOpen}
             toggle={toggle}
-            setIsOpen={setIsOpen}
+            setPage={setPage}
+            showmap={showmap}
+            setShowmap={setShowmap}
+            page={page}
           />
-          <main className="main-content">
-            <ManagerLayout
-              page={page}
-              setPage={setPage}
+          <PageLayout isOpen={isOpen}>
+            <ManagerSidebar
               isOpen={isOpen}
-              showmap={showmap}
-              setShowmap={setShowmap}
+              setPage={setPage}
+              keepOpen={keepOpen}
+              toggle={toggle}
+              setIsOpen={setIsOpen}
             />
-            <ManagerFooter />
-          </main>
+            <main className="main-content">
+              <ManagerLayout
+                page={page}
+                setPage={setPage}
+                isOpen={isOpen}
+                showmap={showmap}
+                setShowmap={setShowmap}
+              />
+              <ManagerFooter />
+            </main>
+          </PageLayout>
+        </>
+      ) : (
+        <PageLayout isOpen={isOpen}>
+          <CustomLoader />
         </PageLayout>
-      </>
+      )}
     </ThemeProvider>
-    // ) : (
-    //   <PageLayout isOpen={isOpen}>
-    //     <CustomLoader />
-    //   </PageLayout>
-    // )}
   );
 };
 
