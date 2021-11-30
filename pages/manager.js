@@ -1,4 +1,3 @@
-import Head from "next/head";
 import styled from "@emotion/styled";
 import ManagerLayout from "components/ManagerLayout";
 import ManagerSidebar from "components/ManagerSidebar";
@@ -9,9 +8,11 @@ import { ThemeProvider } from "utils/functions";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth, readToken } from "redux/ducks/authenticator";
+import CustomLoader from "components/CustomLoader";
 
 const PageLayout = styled.div`
   display: flex;
+  min-height: 100vh;
   height: 100%;
   max-width: 100%;
   background: #0d0d0d;
@@ -36,7 +37,7 @@ const ManagerPage = () => {
   }, []);
 
   useEffect(() => {
-    if (authorized === false) {
+    if (!authorized) {
       router.push("/signin");
     }
   }, [authorized]);
@@ -55,34 +56,42 @@ const ManagerPage = () => {
 
   return (
     <ThemeProvider>
-      <ManagerNavbar
-        isOpen={isOpen}
-        toggleKeepOpen={toggleKeepOpen}
-        toggle={toggle}
-        setPage={setPage}
-        showmap={showmap}
-        setShowmap={setShowmap}
-        page={page}
-      />
-      <PageLayout isOpen={isOpen}>
-        <ManagerSidebar
-          isOpen={isOpen}
-          setPage={setPage}
-          keepOpen={keepOpen}
-          toggle={toggle}
-          setIsOpen={setIsOpen}
-        />
-        <main className="main-content">
-          <ManagerLayout
-            page={page}
-            setPage={setPage}
+      {authorized ? (
+        <>
+          <ManagerNavbar
             isOpen={isOpen}
+            toggleKeepOpen={toggleKeepOpen}
+            toggle={toggle}
+            setPage={setPage}
             showmap={showmap}
             setShowmap={setShowmap}
+            page={page}
           />
-          <ManagerFooter />
-        </main>
-      </PageLayout>
+          <PageLayout isOpen={isOpen}>
+            <ManagerSidebar
+              isOpen={isOpen}
+              setPage={setPage}
+              keepOpen={keepOpen}
+              toggle={toggle}
+              setIsOpen={setIsOpen}
+            />
+            <main className="main-content">
+              <ManagerLayout
+                page={page}
+                setPage={setPage}
+                isOpen={isOpen}
+                showmap={showmap}
+                setShowmap={setShowmap}
+              />
+              <ManagerFooter />
+            </main>
+          </PageLayout>
+        </>
+      ) : (
+        <PageLayout isOpen={isOpen}>
+          <CustomLoader />
+        </PageLayout>
+      )}
     </ThemeProvider>
   );
 };
